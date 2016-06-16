@@ -1,2 +1,2 @@
-# meeting-room-booking
-会議室管理システム
+# 会議室管理アプリ
+

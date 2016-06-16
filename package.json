@@ -1,0 +1,20 @@
+{
+  "name": "ixui-rooms",
+  "version": "1.0.0",
+  "description": "会議室管理アプリケーション",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ixui/ixui-rooms"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "~4.2.x"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=4.1"
+  }
+}
