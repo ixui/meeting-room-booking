@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>予約状況</title>
+		<link href="css/bootstrap.css" rel="stylesheet" />
+		<link href="css/bootstrap.theme.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.min.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/script.js"></script>
+	</head>
+	<body>
+		<div class="header"></div>
+		<div class="container" align="center">
+			<h2>○月○日</h2>
+			<div class="table-responsive col-sm-offset-1 col-sm-10">
+				<form action="modify.html">
+					<table class="table table-bordered table table-striped">
+						<tr><th class="col-sm-2">タイトル</th><th class="col-sm-2">予約者</th><th class="col-sm-2">開始時間</th><th class="col-sm-2">終了時間</th><th class="col-sm-2"></th></tr>
+						<tr><td>会議</td><td>田村 俊亮</td><td>10時30分</td><td>12時00分</td>
+							<td><button type="submit" class="btn btn-default btn-sm active">確認</button>
+								<button type="button" class="btn btn-default btn-sm active delete">取消</button></td></tr>
+						<tr><td>勉強会</td><td>田村 俊亮</td><td>18時30分</td><td>20時00分</td>
+							<td><button type="submit" class="btn btn-default btn-sm active">確認</button>
+								<button type="button" class="btn btn-default btn-sm active delete">取消</button></td></tr>
+					</table>
+				</form>
+				<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='register-reserve.html'">新規予約</button>
+				<button type="button" class="btn btn-default btn-sm active" onclick="location.href='refer-all.html'">戻る</button>
+			</div>
+		</div>
+		<div id="confirm-delete" title="予約取消">
+			<p>本当に取り消しますか？</p>
+			<hr>
+			<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='refer-date.html'">はい</button>
+			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
+		</div>
+	</body>
+</html>
