@@ -11,7 +11,7 @@
 		<style>
 		p { margin: 0; }
 		hr { margin:0; }
-		td { height: 50px; }
+		td { height: 50px; text-align: center;}
 		a { display:block; width: 100%; height: 100%; }
 		a:hover { background-color:#ffcccc; }
 		</style>
@@ -26,7 +26,7 @@
 				<div class="panel-body col-sm-offset-2 col-sm-8">
 					<table class="table table-bordered">
 						<tr>
-							<td align="center" colspan="7" bgcolor="#EEEEEE" height="50" style="color: #666666;">2016年6月</td></tr>
+							<td colspan="7" bgcolor="#EEEEEE" height="50" style="color: #666666;" th:text="${currentDate.yearMonth}"></td></tr>
 						<tr>
 							<td align="center" width="100" height="50" bgcolor="#FF3300" style="color: #FFFFFF;">日</td>
 							<td align="center" width="100" bgcolor="#C7D8ED" style="color: #666666;">月</td>

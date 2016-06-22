@@ -41,6 +41,7 @@ public class LoginController {
 	 * @param pass
 	 * @param mav
 	 * @return mav
+	 * カレンダーを表示
 	 */
 	@RequestMapping(value = "/refer-all.html", method = RequestMethod.POST)
 	public ModelAndView referAll(
@@ -63,6 +64,7 @@ public class LoginController {
 			return mav;
 		}
 		
+		mav.addObject("currentDate", new CurrentDate());
 		mav.setViewName("refer-all");
 		return mav;
 	}
