@@ -20,7 +20,7 @@ import jp.co.ixui.tamura.mapper.EmpMstMapper;
 public class LoginController {
 	
 	/**
-	 * 
+	 * DB操作を行うMapperインタフェースを関連付ける
 	 */
 	@Autowired
 	EmpMstMapper empMstMapper;
@@ -65,6 +65,15 @@ public class LoginController {
 		
 		mav.setViewName("refer-all");
 		return mav;
-		
+	}
+	
+	/**
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value="/register-user.html", method = RequestMethod.POST)
+	public static ModelAndView registerUser(ModelAndView mav) {
+		mav.setViewName("register-user");
+		return mav;
 	}
 }
