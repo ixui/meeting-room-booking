@@ -20,7 +20,11 @@ import jp.co.ixui.tamura.mapper.EmpMstMapper;
 public class LoginController {
 	
 	/**
+<<<<<<< HEAD
 	 * 
+=======
+	 *
+>>>>>>> refs/remotes/origin/master
 	 */
 	@Autowired
 	EmpMstMapper empMstMapper;
@@ -34,23 +38,42 @@ public class LoginController {
 		mav.setViewName("index");
 		return mav;
 	}
+<<<<<<< HEAD
 
 	/**
 	 * @param id 
 	 * @param pass 
+=======
+	
+	/**
+	 * @param id
+	 * @param pass
+>>>>>>> refs/remotes/origin/master
 	 * @param mav
 	 * @return mav
 	 */
 	@RequestMapping(value = "/refer-all.html", method = RequestMethod.POST)
 	public ModelAndView referAll(
+<<<<<<< HEAD
 			@RequestParam(value="empNo")String id,
 			@RequestParam(value="pass")String pass,
+=======
+			@RequestParam(value = "empNo") String id,
+			@RequestParam(value = "pass") String pass,
+>>>>>>> refs/remotes/origin/master
 			ModelAndView mav) {
 		
 		if ("".equals(id) || "".equals(pass)) {
 			mav.setViewName("index");
+<<<<<<< HEAD
 			if ("".equals(id)) mav.addObject("errMsg1", "社員番号を入力してください");
 			if ("".equals(pass)) mav.addObject("errMsg2", "パスワードを入力してください");
+=======
+			if ("".equals(id))
+				mav.addObject("errMsg1", "社員番号を入力してください");
+			if ("".equals(pass))
+				mav.addObject("errMsg2", "パスワードを入力してください");
+>>>>>>> refs/remotes/origin/master
 			return mav;
 		}
 		
