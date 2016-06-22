@@ -20,7 +20,7 @@ import jp.co.ixui.tamura.mapper.EmpMstMapper;
 public class LoginController {
 	
 	/**
-	 *
+	 * 
 	 */
 	@Autowired
 	EmpMstMapper empMstMapper;
@@ -34,7 +34,8 @@ public class LoginController {
 		mav.setViewName("index");
 		return mav;
 	}
-	
+
+
 	/**
 	 * @param id
 	 * @param pass
@@ -49,10 +50,8 @@ public class LoginController {
 		
 		if ("".equals(id) || "".equals(pass)) {
 			mav.setViewName("index");
-			if ("".equals(id))
-				mav.addObject("errMsg1", "社員番号を入力してください");
-			if ("".equals(pass))
-				mav.addObject("errMsg2", "パスワードを入力してください");
+			if ("".equals(id)) mav.addObject("errMsg1", "社員番号を入力してください");
+			if ("".equals(pass)) mav.addObject("errMsg2", "パスワードを入力してください");
 			return mav;
 		}
 		
