@@ -1,3 +1,16 @@
-<div class="header-left">株式会社イクスイ</div>
-<div class="header-right">ユーザー名を表示<br><a href="index.html" >logout</a></div>
-  
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+		<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+	</head>
+	<body>
+		<div th:fragment="frag_header">
+			<div class="header">
+				<div class="header-left">株式会社イクスイ</div>
+				<div class="header-right">ユーザー名を表示<br></br><a href="index.html" >logout</a></div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,8 +1,3 @@
-
-$(document).ready(function() {
-	$('.header').load('header.html');
-});
-
 $(function() {
 	$('#dialog').dialog({
 		autoOpen: false,

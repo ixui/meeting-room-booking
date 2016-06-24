@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ReservationMapper">
+<mapper namespace="jp.co.ixui.tamura.mapper.ReservationMapper">
+	<select id="selectReservationByCurrentMonth" resultType="Reservation">
+		SELECT ID, RSV_DATE, TITLE, RSV_NAME, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO
+		  FROM RESERVATION
+		 WHERE to_char(RSV_DATE, 'yyyymmdd') LIKE #{currentMonth}
+	</select>
 </mapper>

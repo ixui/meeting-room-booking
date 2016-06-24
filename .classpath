@@ -27,7 +27,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/meeting-room-booking/MeetingRoomBookingApp/ojdbc6.jar"/>
-	<classpathentry kind="lib" path="C:/meeting-room-booking/MeetingRoomBookingApp/lombok.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

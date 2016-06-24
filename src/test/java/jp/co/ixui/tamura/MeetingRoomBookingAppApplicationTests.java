@@ -13,6 +13,7 @@ public class MeetingRoomBookingAppApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		// test
 	}
 
 }
