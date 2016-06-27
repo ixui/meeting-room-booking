@@ -12,8 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @SessionAttributes("EmpMst")
-public class LoginController {
-	
+public class SessionController {
+
 	/**
 	 * @param mav
 	 * @return mav
@@ -23,7 +23,7 @@ public class LoginController {
 		mav.setViewName("index");
 		return mav;
 	}
-	
+
 	/**
 	 * @param mav
 	 * @return mav

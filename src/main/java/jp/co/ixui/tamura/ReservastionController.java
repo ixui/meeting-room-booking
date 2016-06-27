@@ -81,11 +81,34 @@ public class ReservastionController {
 
 		System.out.println(reservationMap.get("23"));
 
+		int[] calendarParts = makeCalendarParts();
+
 		// カレンダーを表示するための値をmavにつめる
 		mav.setViewName("refer-all");
 		mav.addObject("reservationMap", reservationMap);
 		mav.addObject("calendarDay", calendarDay);
+		mav.addObject("calendarParts", calendarParts);
 		return mav;
+	}
+
+
+	private static int[] makeCalendarParts() {
+		Calendar calendar = Calendar.getInstance();
+		// 現在の年・月・日を取得
+		int year = calendar.get(Calendar.YEAR);
+		int month = calendar.get(Calendar.MONTH);
+		// 今月が何曜日からか
+		calendar.set(year, month, 1);
+		int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+		// 今月が何日までか
+		calendar.set(year, month + 1, 0);
+		int thisMonthLastDay = calendar.get(Calendar.DATE);
+		// 先月が何日までか
+		calendar.set(year, month, 0);
+		int beforeMonthLastDay = calendar.get(Calendar.DATE);
+
+		int[] calendarParts = {startDayOfWeek, thisMonthLastDay, beforeMonthLastDay};
+		return calendarParts;
 	}
 
 
@@ -112,32 +135,23 @@ public class ReservastionController {
 	 * @return calendarDay
 	 */
 	private static int[] makeCalendar() {
+		int[] calendarParts = makeCalendarParts();
+		int startDayOfWeek = calendarParts[0];
+		int beforeMonthLastDay = calendarParts[1];
+		int thisMonthLastDay = calendarParts[2];
 
-		Calendar calendar = Calendar.getInstance();
-		// 現在の年・月・日を取得
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH);
-		// 今月が何曜日からか
-		calendar.set(year, month, 1);
-		int startWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
-		// 今月の日数
-		calendar.set(year, month + 1, 0);
-		int thisMonthlastDay = calendar.get(Calendar.DATE);
-		// 先月の日数
-		calendar.set(year, month, 0);
-		int beforeMonthlastDay = calendar.get(Calendar.DATE);
-
-		// カレンダーの日付の格納
+		// カレンダーの日付を格納するための配列
 		int[] calendarDay = new int[CELL_COUNT];
 		int count = 0;
-		// TODO
-		for (int i = startWeek - 2; i >= 0; i--) {
-			calendarDay[count++] = beforeMonthlastDay - i;
+		// カレンダーの頭の先月の日付を格納
+		for (int i = startDayOfWeek - 2; i >= 0; i--) {
+			calendarDay[count++] = beforeMonthLastDay - i;
 		}
-		for (int i = 1 ; i <= thisMonthlastDay ; i++){
+		// 今月の日付を格納
+		for (int i = 1 ; i <= thisMonthLastDay ; i++){
 			calendarDay[count++] = i;
 		}
+		// カレンダーの終わりの来月の日付を格納
 		int nextMonthDay = 1;
 		while (count < CELL_COUNT){
 			calendarDay[count++] = nextMonthDay++;

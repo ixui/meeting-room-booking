@@ -39,6 +39,8 @@
 						// コントローラーから送られた値を代入
 						var calendarDay = [[${calendarDay}]];
 						var reservationMap = [[${reservationMap}]];
+						var startDayOfWeek = [[${calendarParts[0]}]];
+						var thisMonthLastDay = [[${calendarParts[1]}]];
 						// カレンダー作成
 						// 行のループ
 						for (var i = 0; i < 6; i++) {
@@ -47,10 +49,18 @@
 							for (var n = 0; n < 7; n++) {
 								// セルの色の分岐
 								if (n == 0) {
-									document.write("<td bgcolor='#FFCC99'>");
+									document.write("<td bgcolor='#FFCC99'");
 								} else {
-									document.write("<td bgcolor='#FFFFFF'>");
+									document.write("<td bgcolor='#FFFFFF'");
 								}
+								// 先月と来月の日付の色を灰色に
+								if (i == 0 && n <= startDayOfWeek - 2) {
+									document.write(" style='color: #DCDCDC'");
+								}
+								if (n + i * 7 >= startDayOfWeek + thisMonthLastDay) {
+									document.write(" style='color: #DCDCDC'");
+								}
+								document.write(">");
 								// 予約が入っている場合予約情報を表示し、リンクを貼る
 								if (calendarDay[n+i*7] in reservationMap) {
 									document.write("<a href='refer-date.html'>",calendarDay[n+i*7],"<hr></hr>",reservationMap[calendarDay[n+i*7]]);
