@@ -88,9 +88,28 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.3.5.RELEASE</version>
+				<executions>
+					<execution>
+					<goals>
+						<goal>repackage</goal>
+					</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
 
+	<repositories>
+	    <!--other repositories if any-->
+	    <repository>
+	        <id>project.local</id>
+	        <name>project</name>
+	        <releases>
+	        <checksumPolicy>ignore</checksumPolicy>
+	    </releases>
+	        <url>file:${project.basedir}/repo</url>
+	    </repository>
+	</repositories>
 
 </project>
