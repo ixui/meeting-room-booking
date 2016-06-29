@@ -1,14 +1,17 @@
 package jp.co.ixui.tamura;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
-import jp.co.ixui.tamura.mapper.ReservationMapper;
+import jp.co.ixui.tamura.service.ReservationService;
 
 /**
  * @author tamura
@@ -26,136 +29,160 @@ import jp.co.ixui.tamura.mapper.ReservationMapper;
 @Controller
 public class ReservastionController {
 
-
 	/**
-	 * カレンダーのセル数
-	 */
-	private static final int CELL_COUNT = 42;
-
-	/**
-	 * DB操作を行うMapperインタフェースを関連付ける
+	 * EmpMstテーブル操作を行うMapperインタフェースを関連付ける
 	 */
 	@Autowired
 	EmpMstMapper empMstMapper;
 
-	/**
-	 * Reservastionテーブルの操作を行うMapperインタフェースを関連付ける
-	 */
 	@Autowired
-	ReservationMapper reservationMapper;
+	ReservationService reservationService;
 
 	/**
-	 * @param id
-	 * @param pass
+	 * カレンダー表示画面に遷移する
+	 * @param mav カレンダー表示するために使う値
+	 * @return mav カレンダーを表示するために使う値
+	 */
+	@RequestMapping(value = "refer-all", method = RequestMethod.GET)
+	public ModelAndView referAll(ModelAndView mav) {
+
+		// カレンダーに表示する予約情報の取得
+		MakeCalendar makeCalendar = this.reservationService.makeReservationMap();
+
+		// カレンダーを表示するための値をmavにつめる
+		mav.addObject("makeCalendar", makeCalendar);
+		return mav;
+	}
+
+	/**
+	 * カレンダー表示画面に遷移する
+	 * @param id 入力された社員番号
+	 * @param pass 入力されたパスワード
+	 * @param empMst
+	 * @param result
+	 * @param request
 	 * @param mav
 	 * @return mav
 	 * カレンダーを表示
 	 */
-	@RequestMapping(value = "/refer-all.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/refer-all", method = RequestMethod.POST)
 	public ModelAndView referAll(
-			@RequestParam(value = "empNo") String id,
-			@RequestParam(value = "pass") String pass,
+			@ModelAttribute("formModel") @Validated EmpMst empMst,
+			BindingResult result,
+			HttpServletRequest request,
 			ModelAndView mav) {
+		// TODO 修正中
+//		// 入力チェック1
+//		if (!result.hasErrors()) {
+//			mav.setViewName("index");
+//			return mav;
+//		}
 
-		// 入力チェック
-		if ("".equals(id) || "".equals(pass)) {
-			mav.setViewName("index");
-			if ("".equals(id)) mav.addObject("errMsg1", "社員番号を入力してください");
-			if ("".equals(pass)) mav.addObject("errMsg2", "パスワードを入力してください");
-			return mav;
-		}
-
-		int empNo = Integer.parseInt(id);
-		EmpMst empMst = this.empMstMapper.selectUser(empNo);
-		if (null == empMst || !empMst.getPass().equals(pass)) {
+		// 入力チェック2
+		EmpMst eMst = this.empMstMapper.selectUser(empMst.getEmpNo());
+		if (null == eMst || !eMst.getPass().equals(empMst.getPass())) {
 			mav.setViewName("index");
 			mav.addObject("errMsg1", "社員番号かパスワードが違います");
 			return mav;
 		}
 
-		// カレンダーの日付作成
-		int[] calendarDay = makeCalendar();
+		// セッションにユーザー情報を格納
+		HttpSession session = request.getSession();
+		session.setAttribute("empMst",eMst);
 
 		// カレンダーに表示する予約情報の取得
-		Map<String, String> reservationMap = makeReservationMap();
-
-		System.out.println(reservationMap.get("23"));
-
-		int[] calendarParts = makeCalendarParts();
+		MakeCalendar makeCalendar = this.reservationService.makeReservationMap();
 
 		// カレンダーを表示するための値をmavにつめる
-		mav.setViewName("refer-all");
-		mav.addObject("reservationMap", reservationMap);
-		mav.addObject("calendarDay", calendarDay);
-		mav.addObject("calendarParts", calendarParts);
+		mav.setViewName("/refer-all");
+		mav.addObject("makeCalendar", makeCalendar);
 		return mav;
 	}
 
-
-	private static int[] makeCalendarParts() {
-		Calendar calendar = Calendar.getInstance();
-		// 現在の年・月・日を取得
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH);
-		// 今月が何曜日からか
-		calendar.set(year, month, 1);
-		int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-		// 今月が何日までか
-		calendar.set(year, month + 1, 0);
-		int thisMonthLastDay = calendar.get(Calendar.DATE);
-		// 先月が何日までか
-		calendar.set(year, month, 0);
-		int beforeMonthLastDay = calendar.get(Calendar.DATE);
-
-		int[] calendarParts = {startDayOfWeek, thisMonthLastDay, beforeMonthLastDay};
-		return calendarParts;
+	/**
+	 * 日付ごとの予約情報表示画面に遷移する
+	 * @param rsvDate 予約日
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value = "refer-date", method = RequestMethod.GET)
+	public ModelAndView returnReferDate(
+			@RequestParam(value="rsvDate") Date rsvDate,
+			ModelAndView mav) {
+		String reservationDate = new SimpleDateFormat("yyyyMMdd").format(rsvDate);
+		List<Reservation> reservationList = this.reservationService.getReservationByDate(reservationDate);
+		mav.addObject("reservationList", reservationList);
+		return mav;
 	}
 
-
 	/**
-	 * @return reservationMap
+	 * 日付ごとの予約情報表示画面に遷移する
+	 * @param mav
+	 * @param calendarDay カレンダー表示画面で選択された日付
+	 * @param flg
+	 * @param id 予約ID
+	 * @return mav
 	 */
-	private Map<String, String> makeReservationMap() {
-		// 今日の日付を取得しString型に変換
+	@RequestMapping(value = "refer-date", method = RequestMethod.POST)
+	public ModelAndView referDate(
+			ModelAndView mav,
+			@RequestParam(value="calendarDay", required=false) String calendarDay,
+			@RequestParam(value="flg", required=false) int flg,
+			@RequestParam(value="id", required=false) String id) {
+		// 予約を削除する
+		if (1 == flg) {
+			this.reservationService.deleteReservation(id);
+		}
+
+		// 選択日の予約情報を取得する
 		Date currentDate = new Date();
-		String datePattern = "yyyyMM";
-		String currentMonth = new SimpleDateFormat(datePattern).format(currentDate) + "%";
-		// reservationテーブルから今月の予約情報を取得
-		List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentMonth(currentMonth);
-		// カレンダーに表示する予定を渡すために日付と開始時間をMapにつめる
-		Map<String, String> reservationMap = new HashMap<>();
-		for (Reservation rsv : reservationList) {
-			reservationMap.put(new SimpleDateFormat("dd").format(rsv.getRsvDate()), rsv.getStartTime());
-		}
-		return reservationMap;
+		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate);
+		List<Reservation> reservationList = this.reservationService.getReservationByDate(currentMonth + calendarDay);
+
+		mav.setViewName("refer-date");
+		mav.addObject("reservationList", reservationList);
+		mav.addObject("calendarDay", calendarDay);
+		return mav;
 	}
 
+	/**
+	 * 確認･修正画面に遷移する
+	 * @param id 予約ID
+	 * @param empNo 社員番号
+	 * @param request
+	 * @param mav
+	 * @return mav
+	 */
+	@SuppressWarnings("boxing")
+	@RequestMapping(value = "modify", method = RequestMethod.POST)
+	public ModelAndView modify(
+			@RequestParam(value="id") int id,
+			@RequestParam(value="empNo") String empNo,
+			HttpServletRequest request,
+			ModelAndView mav) {
+		// 予約者本人かどうか確認する
+		boolean principal = ReservationService.booleanPrincipal(empNo, request);
+		// 選択日の予約情報をidから取得する
+		Reservation reservation = this.reservationService.getReservsationById(id);
+
+		mav.addObject("reservation", reservation);
+		mav.addObject("id", id);
+		mav.addObject("principal", principal);
+		return mav;
+	}
 
 	/**
-	 * @return calendarDay
+	 * 予約登録画面に遷移する
+	 * @param reservation
+	 * @param mav
+	 * @return mav
 	 */
-	private static int[] makeCalendar() {
-		int[] calendarParts = makeCalendarParts();
-		int startDayOfWeek = calendarParts[0];
-		int beforeMonthLastDay = calendarParts[1];
-		int thisMonthLastDay = calendarParts[2];
-
-		// カレンダーの日付を格納するための配列
-		int[] calendarDay = new int[CELL_COUNT];
-		int count = 0;
-		// カレンダーの頭の先月の日付を格納
-		for (int i = startDayOfWeek - 2; i >= 0; i--) {
-			calendarDay[count++] = beforeMonthLastDay - i;
-		}
-		// 今月の日付を格納
-		for (int i = 1 ; i <= thisMonthLastDay ; i++){
-			calendarDay[count++] = i;
-		}
-		// カレンダーの終わりの来月の日付を格納
-		int nextMonthDay = 1;
-		while (count < CELL_COUNT){
-			calendarDay[count++] = nextMonthDay++;
-		}
-		return calendarDay;
+	@SuppressWarnings("static-method")
+	@RequestMapping(value="register-reserve", method=RequestMethod.GET)
+	public ModelAndView registerReservation(
+			@ModelAttribute("formModel") Reservation reservation,
+			ModelAndView mav) {
+		mav.setViewName("register-reserve");
+		return mav;
 	}
 }

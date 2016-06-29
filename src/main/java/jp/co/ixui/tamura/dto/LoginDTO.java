@@ -1,4 +1,4 @@
-package jp.co.ixui.tamura.domain;
+package jp.co.ixui.tamura.dto;
 
 import javax.validation.constraints.NotNull;
 
@@ -7,33 +7,15 @@ import lombok.Setter;
 
 /**
  * @author tamura
- * EmpMstテーブル
+ *
  */
 @Getter
 @Setter
-public class EmpMst {
+public class LoginDTO {
 
-	/**
-	 * 社員番号
-	 */
 	@NotNull(message="社員番号を入力してください")
-	private String empNo;
-
-	/**
-	 * パスワード
-	 */
+	private int empNo;
 	@NotNull(message="パスワードを入力してください")
 	private String pass;
 
-	/**
-	 * 社員名
-	 */
-	@NotNull
-	private String name;
-
-	/**
-	 * メールアドレス
-	 */
-	@NotNull
-	private String mail;
 }

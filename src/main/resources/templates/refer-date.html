@@ -8,36 +8,53 @@
 		<link rel="stylesheet"  href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
 		<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
 		<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.min.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/script.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
+				th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
+		<script src="js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+		<script src="js/dialog.js" th:src="@{js/dialog.js}"></script>
+		<script type="text/javascript">
+			function clickDelete(i) {
+				document.getElementById('delete').value=i;
+			}
+		</script>
 	</head>
 	<body>
 		<div class="header"></div>
 		<div class="container" align="center">
-			<h2>○月○日</h2>
+			<h2 th:text="|${#dates.format(new java.util.Date(),'MM月')} ${calendarDay}日|"></h2>
 			<div class="table-responsive col-sm-offset-1 col-sm-10">
-				<form action="modify.html">
-					<table class="table table-bordered table table-striped">
+				<form action="/modify.html" method="post" id="modify" th:object="${formModel}">
+					<table class="table table-bordered table table-striped" th:inline="text">
 						<tr><th class="col-sm-2">タイトル</th><th class="col-sm-2">予約者</th><th class="col-sm-2">開始時間</th><th class="col-sm-2">終了時間</th><th class="col-sm-2"></th></tr>
-						<tr><td>会議</td><td>田村 俊亮</td><td>10時30分</td><td>12時00分</td>
+						<tr th:each="reservation : ${reservationList}">
+							<td>[[${reservation.title}]]</td>
+							<td>[[${reservation.rsvName}]]</td>
+							<td>[[${#strings.substring(__${reservation.startTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.startTime}__, 2, 4)}]]分</td>
+							<td>[[${#strings.substring(__${reservation.endTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.endTime}__, 2, 4)}]]分</td>
 							<td><button type="submit" class="btn btn-default btn-sm active">確認</button>
-								<button type="button" class="btn btn-default btn-sm active delete">取消</button></td></tr>
-						<tr><td>勉強会</td><td>田村 俊亮</td><td>18時30分</td><td>20時00分</td>
-							<td><button type="submit" class="btn btn-default btn-sm active">確認</button>
-								<button type="button" class="btn btn-default btn-sm active delete">取消</button></td></tr>
+								<button type="button" class="btn btn-default btn-sm active delete" onclick="clickDelete(1)">取消</button>
+								<input type="hidden" name="title" th:value="${reservation.title}"></input>
+								<input type="hidden" name="rsvName" th:value="${reservation.rsvName}"></input>
+								<input type="hidden" name="startTime" th:value="${reservation.startTime}"></input>
+								<input type="hidden" name="endTime" th:value="${reservation.endTime}"></input>
+								<input type="hidden" name="rsvDate" th:value="${reservation.rsvDate}"></input>
+								<input type="hidden" name="empNo" th:value="${reservation.empNo}"></input>
+								<input type="hidden" name="id" th:value="${reservation.id}"></input></td>
+						</tr>
 					</table>
+					<input type="hidden" name="checkFlg" value="checkflg" id="delete"></input>
 				</form>
-				<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='register-reserve.html'">新規予約</button>
+				<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='register-reserve.html'" form="modify">新規予約</button>
 				<button type="button" class="btn btn-default btn-sm active" onclick="location.href='refer-all.html'">戻る</button>
 			</div>
 		</div>
 		<div id="confirm-delete" title="予約取消">
 			<p>本当に取り消しますか？</p>
-			<hr>
-			<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='refer-date.html'">はい</button>
-			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
+			<hr></hr>
+				<button type="submit" class="btn btn-default btn-sm active" form="modify" formaction="/refer-date.html">はい</button>
+				<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
 		</div>
 	</body>
 </html>

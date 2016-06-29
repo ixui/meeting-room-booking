@@ -16,8 +16,8 @@ public interface EmpMstMapper {
 	 * @param empNo
 	 * @return EmpMst
 	 */
-	EmpMst selectUser(int empNo);
-	
+	EmpMst selectUser(String empNo);
+
 	/**
 	 * @return List<EmpMst>
 	 */

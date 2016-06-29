@@ -7,4 +7,17 @@
 		  FROM RESERVATION
 		 WHERE to_char(RSV_DATE, 'yyyymmdd') LIKE #{currentMonth}
 	</select>
+	<select id="selectReservationByCurrentDay" resultType="Reservation">
+		SELECT TITLE, RSV_NAME, START_TIME, END_TIME, ID, EMP_NO, RSV_DATE
+		  FROM RESERVATION
+		 WHERE to_char(RSV_DATE, 'yyyymmdd') = #{reservationDate}
+	</select>
+	<select id="selectReservationById" resultType="Reservation">
+		SELECT ID, RSV_DATE, TITLE, RSV_NAME, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO
+		  FROM RESERVATION
+		 WHERE ID = #{id}
+	</select>
+	<delete id="deleteReservationById">
+		DELETE FROM RESERVATION WHERE ID = #{id}
+	</delete>
 </mapper>

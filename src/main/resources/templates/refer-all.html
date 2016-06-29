@@ -21,7 +21,7 @@
 	<body>
 		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
-			<form action="refer-date.html">
+			<form action="/refer-date.html" method="post" name="refer">
 				<div class="panel-body col-sm-offset-2 col-sm-8">
 					<script type="text/javascript" th:inline="javascript">
 						/*<![CDATA[*/
@@ -37,10 +37,11 @@
 						document.write("<td bgcolor='#A6C0E1' style='color: #666666;'>土</td>");
 						document.write("</tr>");
 						// コントローラーから送られた値を代入
-						var calendarDay = [[${calendarDay}]];
-						var reservationMap = [[${reservationMap}]];
-						var startDayOfWeek = [[${calendarParts[0]}]];
-						var thisMonthLastDay = [[${calendarParts[1]}]];
+						var calendarDay = [[${makeCalendar.calendarDay}]];
+						var reservationMap = [[${makeCalendar.reservationMap}]];
+						var startDayOfWeek = [[${makeCalendar.calendarParts[0]}]];
+						var thisMonthLastDay = [[${makeCalendar.calendarParts[1]}]];
+						var count;
 						// カレンダー作成
 						// 行のループ
 						for (var i = 0; i < 6; i++) {
@@ -63,7 +64,7 @@
 								document.write(">");
 								// 予約が入っている場合予約情報を表示し、リンクを貼る
 								if (calendarDay[n+i*7] in reservationMap) {
-									document.write("<a href='refer-date.html'>",calendarDay[n+i*7],"<hr></hr>",reservationMap[calendarDay[n+i*7]]);
+									document.write("<a href='javascript:void(0)' onclick='clickNumber(",calendarDay[n+i*7],");document.refer.submit();return false;'>",calendarDay[n+i*7],"<hr></hr>",reservationMap[calendarDay[n+i*7]]);
 								} else {
 									document.write(calendarDay[n+i*7],"<hr></hr>");
 								}
@@ -72,6 +73,12 @@
 							document.write("</tr>");
 						}
 						document.write("</table>");
+
+						function clickNumber(i){
+							document.getElementById('count').value=i;
+						}
+						document.write("<input id='count' type='hidden' value='calendarDay' name='calendarDay'>");
+						document.write("<input type='hidden' value='4' name='flg'>");
 						/*]]>*/
 					</script>
 				</div>
