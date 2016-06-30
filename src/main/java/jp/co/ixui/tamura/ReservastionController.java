@@ -115,14 +115,14 @@ public class ReservastionController {
 	 */
 	@RequestMapping(value = "/reservationList", method = RequestMethod.POST)
 	public ModelAndView referDate(
-			ModelAndView mav,
-			@RequestParam(value="calendarDay") String calendarDay) {
+			@RequestParam(value="calendarDay") String calendarDay,
+			ModelAndView mav) {
 		// 選択日の予約情報を取得する
 		Date currentDate = new Date();
 		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate);
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(currentMonth + calendarDay);
-		for (Reservation reservation : reservationList) {
-			System.out.println(reservation.getRsvDate());
+		for (Reservation rsv : reservationList) {
+			System.out.println(rsv.getRsvDate());
 		}
 
 		mav.setViewName("/refer-date");
