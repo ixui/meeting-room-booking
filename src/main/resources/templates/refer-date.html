@@ -15,8 +15,9 @@
 		<script src="js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
 		<script src="js/dialog.js" th:src="@{js/dialog.js}"></script>
 		<script type="text/javascript">
-			function clickDelete(i) {
-				document.getElementById('delete').value=i;
+			function clickDelete(reservationId, rsvDate) {
+				document.getElementById('deleteId').value = reservationId;
+				document.getElementById('rsvDate').value = rsvDate;
 			}
 		</script>
 	</head>
@@ -25,7 +26,7 @@
 		<div class="container" align="center">
 			<h2 th:text="|${#dates.format(new java.util.Date(),'MM月')} ${calendarDay}日|"></h2>
 			<div class="table-responsive col-sm-offset-1 col-sm-10">
-				<form action="/modify" method="post" id="modify" th:object="${formModel}">
+				<form action="/modify" method="post" id="modifyForm" th:object="${formModel}">
 					<table class="table table-bordered table table-striped" th:inline="text">
 						<tr><th class="col-sm-2">タイトル</th><th class="col-sm-2">予約者</th><th class="col-sm-2">開始時間</th><th class="col-sm-2">終了時間</th><th class="col-sm-2"></th></tr>
 						<tr th:each="reservation : ${reservationList}">
@@ -34,29 +35,26 @@
 							<td>[[${#strings.substring(__${reservation.startTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.startTime}__, 2, 4)}]]分</td>
 							<td>[[${#strings.substring(__${reservation.endTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.endTime}__, 2, 4)}]]分</td>
 							<td><button type="submit" class="btn btn-default btn-sm active">確認</button>
-								<button type="button" class="btn btn-default btn-sm active delete" onclick="clickDelete(1)">取消</button>
-								<input type="hidden" name="title" th:value="${reservation.title}"></input>
-								<input type="hidden" name="rsvName" th:value="${reservation.rsvName}"></input>
-								<input type="hidden" name="startTime" th:value="${reservation.startTime}"></input>
-								<input type="hidden" name="endTime" th:value="${reservation.endTime}"></input>
+								<button type="button" class="btn btn-default btn-sm active delete" th:onclick="'clickDelete(' + ${reservation.id} + ')'">取消</button>
 								<input type="hidden" name="rsvDate" th:value="${reservation.rsvDate}"></input>
 								<input type="hidden" name="empNo" th:value="${reservation.empNo}"></input>
 								<input type="hidden" name="id" th:value="${reservation.id}"></input></td>
 						</tr>
 					</table>
 				</form>
-				<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='/reservation/new'" form="modify">新規予約</button>
+				<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='/reservation/new'" form="modifyForm">新規予約</button>
 				<button type="button" class="btn btn-default btn-sm active" onclick="location.href='/calendar'">戻る</button>
 			</div>
+			<form action="/reservation/delete" method="post" id="deleteForm">
 			<div id="confirm-delete" title="予約取消">
-			<form action="/reservation/delete" method="post" th:object="${formModel}">
-					<input type="hidden" name="deleteId" value="deleteId" id="delete"></input>
 				<p>本当に取り消しますか？</p>
 				<hr></hr>
-					<button type="submit" class="btn btn-default btn-sm active" form="modify">はい</button>
+					<button type="submit" class="btn btn-default btn-sm active" formaction="/reservation/delete">はい</button>
 					<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
-			</form>
 			</div>
+			<input type="hidden" name="deleteId" id="deleteId"></input>
+			<input type="hidden" name="rsvDate" id="rsvDate"></input>
+			</form>
 		</div>
 	</body>
 </html>

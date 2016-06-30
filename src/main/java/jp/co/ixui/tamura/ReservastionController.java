@@ -121,9 +121,6 @@ public class ReservastionController {
 		Date currentDate = new Date();
 		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate);
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(currentMonth + calendarDay);
-		for (Reservation rsv : reservationList) {
-			System.out.println(rsv.getRsvDate());
-		}
 
 		mav.setViewName("/refer-date");
 		mav.addObject("reservationList", reservationList);

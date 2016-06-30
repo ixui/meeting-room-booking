@@ -12,8 +12,8 @@
 				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
 				th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
-		<script src="js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
-		<script src="js/dialog.js" th:src="@{js/dialog.js}"></script>
+		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
 	</head>
 	<body>
 		<div class="header"></div>
@@ -81,7 +81,7 @@
 			<p>入力した内容は消えてしまいます。</p>
 			<p>本当に戻りますか？</p>
 			<hr></hr>
-			<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='refer-date.html'">はい</button>
+			<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='/calendar'">はい</button>
 			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
 		</div>
 		<div id="confirm-register" title="予約更新">
