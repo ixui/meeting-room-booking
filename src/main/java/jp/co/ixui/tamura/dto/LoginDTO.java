@@ -1,6 +1,6 @@
 package jp.co.ixui.tamura.dto;
 
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,10 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginDTO {
-
-	@NotNull(message="社員番号を入力してください")
-	private int empNo;
-	@NotNull(message="パスワードを入力してください")
+	@NotEmpty(message="社員番号を入力してください")
+	private String empNo;
+	@NotEmpty(message="パスワードを入力してください")
 	private String pass;
-
 }

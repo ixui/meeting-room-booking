@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.domain.Reservation;
-import jp.co.ixui.tamura.mapper.EmpMstMapper;
+import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.service.ReservationService;
+import jp.co.ixui.tamura.service.SessionService;
 
 /**
  * @author tamura
@@ -29,14 +28,11 @@ import jp.co.ixui.tamura.service.ReservationService;
 @Controller
 public class ReservastionController {
 
-	/**
-	 * EmpMstテーブル操作を行うMapperインタフェースを関連付ける
-	 */
-	@Autowired
-	EmpMstMapper empMstMapper;
-
 	@Autowired
 	ReservationService reservationService;
+
+	@Autowired
+	SessionService sessionService;
 
 	/**
 	 * カレンダー表示画面に遷移する
@@ -56,6 +52,7 @@ public class ReservastionController {
 
 	/**
 	 * カレンダー表示画面に遷移する
+	 * @param loginDTO
 	 * @param id 入力された社員番号
 	 * @param pass 入力されたパスワード
 	 * @param empMst
@@ -67,28 +64,24 @@ public class ReservastionController {
 	 */
 	@RequestMapping(value = "/refer-all", method = RequestMethod.POST)
 	public ModelAndView referAll(
-			@ModelAttribute("formModel") @Validated EmpMst empMst,
+			@ModelAttribute("formModel") @Validated LoginDTO loginDTO,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
 		// TODO 修正中
-//		// 入力チェック1
-//		if (!result.hasErrors()) {
-//			mav.setViewName("index");
-//			return mav;
-//		}
-
-		// 入力チェック2
-		EmpMst eMst = this.empMstMapper.selectUser(empMst.getEmpNo());
-		if (null == eMst || !eMst.getPass().equals(empMst.getPass())) {
+		// 入力チェック
+		if (SessionService.checkNotEmpty(result)) {
+			mav.setViewName("index");
+			return mav;
+		}
+		if (this.sessionService.checkEmpNo(loginDTO)) {
 			mav.setViewName("index");
 			mav.addObject("errMsg1", "社員番号かパスワードが違います");
 			return mav;
 		}
 
 		// セッションにユーザー情報を格納
-		HttpSession session = request.getSession();
-		session.setAttribute("empMst",eMst);
+		this.sessionService.setUserSession(request, loginDTO);
 
 		// カレンダーに表示する予約情報の取得
 		MakeCalendar makeCalendar = this.reservationService.makeReservationMap();

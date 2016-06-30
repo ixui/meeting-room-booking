@@ -1,7 +1,7 @@
 .header {
     background: #f1f1f1;
     height: 52px;
-    margin-bottom:30px;
+    margin-bottom: 30px;
     }
 
 .header-left {
@@ -21,22 +21,22 @@ h1 {
 	padding: .5em .75em;
 	background-color: #f6f6f6;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
-	width:30%;
-	font-size:30px;
-	font-weight:bold;
-	color:#696969;
-	margin-bottom:30px;
-	padding:5px;
+	width: 30%;
+	font-size: 30px;
+	font-weight: bold;
+	color: #696969;
+	margin-bottom: 30px;
+	padding: 5px;
 }
 
 h2 {
 	padding-bottom: .5em;
 	border-bottom: 3px double #ccc;
-	width:20%;
-	font-weight:bold;
-	color:#696969;
-	margin-bottom:30px;
-	padding:5px;
+	width: 20%;
+	font-weight: bold;
+	color: #696969;
+	margin-bottom: 30px;
+	padding: 5px;
 }
 
 table {
@@ -46,9 +46,9 @@ table {
 }
 
 th {
-	background:#B0C4DE;
+	background: #B0C4DE;
 }
 
-td {
-
+.err {
+	color: #FF0000;
 }

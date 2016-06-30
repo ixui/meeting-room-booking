@@ -2,6 +2,8 @@ package jp.co.ixui.tamura.domain;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,13 +18,13 @@ public class EmpMst {
 	/**
 	 * 社員番号
 	 */
-	@NotNull(message="社員番号を入力してください")
+	@NotEmpty(message="社員番号を入力してください")
 	private String empNo;
 
 	/**
 	 * パスワード
 	 */
-	@NotNull(message="パスワードを入力してください")
+	@NotEmpty(message="パスワードを入力してください")
 	private String pass;
 
 	/**
