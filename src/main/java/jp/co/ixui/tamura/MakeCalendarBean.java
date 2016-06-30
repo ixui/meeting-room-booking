@@ -14,7 +14,7 @@ import lombok.Setter;
 @Service
 @Getter
 @Setter
-public class MakeCalendar {
+public class MakeCalendarBean {
 	private int[] calendarDay;
 	private int[] calendarParts;
 	private Map<String, String> reservationMap;

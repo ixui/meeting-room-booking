@@ -17,7 +17,7 @@
 		</div>
 		<div class="container" align="center">
 			<p style="color:#FF0000;" th:text="${errMsg1}"></p>
-			<form action="/refer-all" method="post" th:object="${formModel}">
+			<form action="/calendar" method="post" th:object="${formModel}">
 				<p>社員番号<input type="text" name="empNo" th:value="*{empNo}" /></p>
 				<div th:if="${#fields.hasErrors('empNo')}" th:errors="*{empNo}" th:errorclass="err"></div>
 				<p>パスワード<input type="password" name="pass" th:value="*{pass}" /></p>

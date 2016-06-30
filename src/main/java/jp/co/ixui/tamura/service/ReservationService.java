@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jp.co.ixui.tamura.MakeCalendar;
+import jp.co.ixui.tamura.MakeCalendarBean;
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.mapper.ReservationMapper;
@@ -29,7 +29,7 @@ public class ReservationService {
 	ReservationMapper reservationMapper;
 
 	@Autowired
-	MakeCalendar makeCalendar;
+	MakeCalendarBean makeCalendar;
 
 	/**
 	 * カレンダーのセル数
@@ -92,7 +92,7 @@ public class ReservationService {
 	 * カレンダーに表示する予約情報(開始時間)を日付をkeyにしてmapにつめる
 	 * @return reservationMap
 	 */
-	public MakeCalendar makeReservationMap() {
+	public MakeCalendarBean makeReservationMap() {
 		// 今日の日付を取得しString型に変換
 		Date currentDate = new Date();
 		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate) + "%";
@@ -131,6 +131,16 @@ public class ReservationService {
 	public Reservation getReservsationById(int id) {
 		Reservation reservation = this.reservationMapper.selectReservationById(id);
 		return reservation;
+	}
+
+	/**
+	 * @param rsvDate
+	 * @return reservationList
+	 */
+	public List<Reservation> getReservaionListByDay(Date rsvDate) {
+		String reservationDate = new SimpleDateFormat("yyyyMMdd").format(rsvDate);
+		List<Reservation> reservationList = this.getReservationByDate(reservationDate);
+		return reservationList;
 	}
 
 	/**

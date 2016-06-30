@@ -2,6 +2,7 @@ package jp.co.ixui.tamura;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,13 +40,14 @@ public class ReservastionController {
 	 * @param mav カレンダー表示するために使う値
 	 * @return mav カレンダーを表示するために使う値
 	 */
-	@RequestMapping(value = "refer-all", method = RequestMethod.GET)
+	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
 	public ModelAndView referAll(ModelAndView mav) {
 
 		// カレンダーに表示する予約情報の取得
-		MakeCalendar makeCalendar = this.reservationService.makeReservationMap();
+		MakeCalendarBean makeCalendar = this.reservationService.makeReservationMap();
 
 		// カレンダーを表示するための値をmavにつめる
+		mav.setViewName("/refer-all");
 		mav.addObject("makeCalendar", makeCalendar);
 		return mav;
 	}
@@ -53,22 +55,17 @@ public class ReservastionController {
 	/**
 	 * カレンダー表示画面に遷移する
 	 * @param loginDTO
-	 * @param id 入力された社員番号
-	 * @param pass 入力されたパスワード
-	 * @param empMst
 	 * @param result
 	 * @param request
 	 * @param mav
 	 * @return mav
-	 * カレンダーを表示
 	 */
-	@RequestMapping(value = "/refer-all", method = RequestMethod.POST)
+	@RequestMapping(value = "/calendar", method = RequestMethod.POST)
 	public ModelAndView referAll(
 			@ModelAttribute("formModel") @Validated LoginDTO loginDTO,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
-		// TODO 修正中
 		// 入力チェック
 		if (SessionService.checkNotEmpty(result)) {
 			mav.setViewName("index");
@@ -84,7 +81,7 @@ public class ReservastionController {
 		this.sessionService.setUserSession(request, loginDTO);
 
 		// カレンダーに表示する予約情報の取得
-		MakeCalendar makeCalendar = this.reservationService.makeReservationMap();
+		MakeCalendarBean makeCalendar = this.reservationService.makeReservationMap();
 
 		// カレンダーを表示するための値をmavにつめる
 		mav.setViewName("/refer-all");
@@ -98,13 +95,13 @@ public class ReservastionController {
 	 * @param mav
 	 * @return mav
 	 */
-	@RequestMapping(value = "refer-date", method = RequestMethod.GET)
+	@RequestMapping(value = "/reservationList", method = RequestMethod.GET)
 	public ModelAndView returnReferDate(
 			@RequestParam(value="rsvDate") Date rsvDate,
 			ModelAndView mav) {
-		String reservationDate = new SimpleDateFormat("yyyyMMdd").format(rsvDate);
-		List<Reservation> reservationList = this.reservationService.getReservationByDate(reservationDate);
+		List<Reservation> reservationList = this.reservationService.getReservaionListByDay(rsvDate);
 		mav.addObject("reservationList", reservationList);
+		mav.setViewName("/refer-date");
 		return mav;
 	}
 
@@ -116,25 +113,39 @@ public class ReservastionController {
 	 * @param id 予約ID
 	 * @return mav
 	 */
-	@RequestMapping(value = "refer-date", method = RequestMethod.POST)
+	@RequestMapping(value = "/reservationList", method = RequestMethod.POST)
 	public ModelAndView referDate(
 			ModelAndView mav,
-			@RequestParam(value="calendarDay", required=false) String calendarDay,
-			@RequestParam(value="flg", required=false) int flg,
-			@RequestParam(value="id", required=false) String id) {
-		// 予約を削除する
-		if (1 == flg) {
-			this.reservationService.deleteReservation(id);
-		}
-
+			@RequestParam(value="calendarDay") String calendarDay) {
 		// 選択日の予約情報を取得する
 		Date currentDate = new Date();
 		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate);
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(currentMonth + calendarDay);
+		for (Reservation reservation : reservationList) {
+			System.out.println(reservation.getRsvDate());
+		}
 
-		mav.setViewName("refer-date");
+		mav.setViewName("/refer-date");
 		mav.addObject("reservationList", reservationList);
 		mav.addObject("calendarDay", calendarDay);
+		return mav;
+	}
+
+	/**
+	 * @param id
+	 * @param rsvDate
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value = "/reservation/delete", method = RequestMethod.POST)
+	public ModelAndView deleteReservation(
+			@RequestParam(value="deleteId") String id,
+			@RequestParam(value="rsvDate") Date rsvDate,
+			ModelAndView mav) {
+		this.reservationService.deleteReservation(id);
+		List<Reservation> reservationList = this.reservationService.getReservaionListByDay(rsvDate);
+		mav.addObject("reservationList", reservationList);
+		mav.setViewName("/refer-date");
 		return mav;
 	}
 
@@ -147,7 +158,7 @@ public class ReservastionController {
 	 * @return mav
 	 */
 	@SuppressWarnings("boxing")
-	@RequestMapping(value = "modify", method = RequestMethod.POST)
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public ModelAndView modify(
 			@RequestParam(value="id") int id,
 			@RequestParam(value="empNo") String empNo,
@@ -161,6 +172,7 @@ public class ReservastionController {
 		mav.addObject("reservation", reservation);
 		mav.addObject("id", id);
 		mav.addObject("principal", principal);
+		mav.setViewName("/modify");
 		return mav;
 	}
 
@@ -171,11 +183,11 @@ public class ReservastionController {
 	 * @return mav
 	 */
 	@SuppressWarnings("static-method")
-	@RequestMapping(value="register-reserve", method=RequestMethod.GET)
-	public ModelAndView registerReservation(
+	@RequestMapping(value="/reservation/new", method=RequestMethod.GET)
+	public ModelAndView register(
 			@ModelAttribute("formModel") Reservation reservation,
 			ModelAndView mav) {
-		mav.setViewName("register-reserve");
+		mav.setViewName("/register-reserve");
 		return mav;
 	}
 }
