@@ -21,7 +21,7 @@ public class SessionController {
 	 * @param mav
 	 * @return mav
 	 */
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public static ModelAndView index(
 			@ModelAttribute("formModel") EmpMst empMst,
 			ModelAndView mav) {
@@ -34,9 +34,9 @@ public class SessionController {
 	 * @param mav
 	 * @return mav
 	 */
-	@RequestMapping(value="/register-user", method = RequestMethod.POST)
+	@RequestMapping(value="/usr/register", method = RequestMethod.POST)
 	public static ModelAndView registerUser(ModelAndView mav) {
-		mav.setViewName("/usr/register");
+		mav.setViewName("/register-user");
 		return mav;
 	}
 }

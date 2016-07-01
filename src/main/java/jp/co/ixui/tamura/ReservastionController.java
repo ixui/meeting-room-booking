@@ -2,7 +2,6 @@ package jp.co.ixui.tamura;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,8 @@ public class ReservastionController {
 	SessionService sessionService;
 
 	/**
-	 * カレンダー表示画面に遷移する
+	 * カレンダー画面を表示する
+	 *
 	 * @param mav カレンダー表示するために使う値
 	 * @return mav カレンダーを表示するために使う値
 	 */
@@ -53,7 +53,8 @@ public class ReservastionController {
 	}
 
 	/**
-	 * カレンダー表示画面に遷移する
+	 * ログイン画面から遷移して、カレンダー画面を表示する
+	 *
 	 * @param loginDTO
 	 * @param result
 	 * @param request
@@ -90,7 +91,8 @@ public class ReservastionController {
 	}
 
 	/**
-	 * 日付ごとの予約情報表示画面に遷移する
+	 * 日付ごとの予約情報表示画面を表示する
+	 *
 	 * @param rsvDate 予約日
 	 * @param mav
 	 * @return mav
@@ -99,14 +101,15 @@ public class ReservastionController {
 	public ModelAndView returnReferDate(
 			@RequestParam(value="rsvDate") Date rsvDate,
 			ModelAndView mav) {
-		List<Reservation> reservationList = this.reservationService.getReservaionListByDay(rsvDate);
+		List<Reservation> reservationList = this.reservationService.getReservationListByDay(rsvDate);
 		mav.addObject("reservationList", reservationList);
 		mav.setViewName("/refer-date");
 		return mav;
 	}
 
 	/**
-	 * 日付ごとの予約情報表示画面に遷移する
+	 * カレンダー画面から遷移して、日付ごとの予約情報表示画面を表示する
+	 *
 	 * @param mav
 	 * @param calendarDay カレンダー表示画面で選択された日付
 	 * @param flg
@@ -129,6 +132,8 @@ public class ReservastionController {
 	}
 
 	/**
+	 * 削除後の予約情報表示画面を表示する
+	 *
 	 * @param id
 	 * @param rsvDate
 	 * @param mav
@@ -137,17 +142,24 @@ public class ReservastionController {
 	@RequestMapping(value = "/reservation/delete", method = RequestMethod.POST)
 	public ModelAndView deleteReservation(
 			@RequestParam(value="deleteId") String id,
-			@RequestParam(value="rsvDate") Date rsvDate,
+			@RequestParam(value="rsvDate") String rsvDate,
 			ModelAndView mav) {
+		// 予約を削除する
 		this.reservationService.deleteReservation(id);
-		List<Reservation> reservationList = this.reservationService.getReservaionListByDay(rsvDate);
+		// 受け取った日付の dd 部分を取り出す
+		String calendarDay = rsvDate.substring(rsvDate.length()-2);
+		// 予約情報を取得
+		List<Reservation> reservationList = this.reservationService.getReservationByDate(rsvDate);
+
 		mav.addObject("reservationList", reservationList);
+		mav.addObject("calendarDay", calendarDay);
 		mav.setViewName("/refer-date");
 		return mav;
 	}
 
 	/**
-	 * 確認･修正画面に遷移する
+	 * 確認･修正画面を表示する
+	 *
 	 * @param id 予約ID
 	 * @param empNo 社員番号
 	 * @param request
@@ -174,7 +186,8 @@ public class ReservastionController {
 	}
 
 	/**
-	 * 予約登録画面に遷移する
+	 * 予約登録画面を表示する
+	 *
 	 * @param reservation
 	 * @param mav
 	 * @return mav

@@ -137,7 +137,7 @@ public class ReservationService {
 	 * @param rsvDate
 	 * @return reservationList
 	 */
-	public List<Reservation> getReservaionListByDay(Date rsvDate) {
+	public List<Reservation> getReservationListByDay(Date rsvDate) {
 		String reservationDate = new SimpleDateFormat("yyyyMMdd").format(rsvDate);
 		List<Reservation> reservationList = this.getReservationByDate(reservationDate);
 		return reservationList;
