@@ -35,4 +35,9 @@ public interface ReservationMapper {
 	 * @param id
 	 */
 	void deleteReservationById(int id);
+
+	/**
+	 * @param reservation
+	 */
+	void insertReservation(Reservation reservation);
 }

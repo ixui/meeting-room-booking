@@ -1,5 +1,6 @@
 package jp.co.ixui.tamura.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,6 +39,7 @@ public class ReservationService {
 
 	/**
 	 * カレンダーで使う日付を配列に格納する
+	 *
 	 * @return calendarDay
 	 */
 	public static int[] makeCalendar() {
@@ -67,6 +69,7 @@ public class ReservationService {
 
 	/**
 	 * カレンダー表示に使う値を配列につめる
+	 *
 	 * @return calendarParts
 	 */
 	public static int[] makeCalendarParts() {
@@ -90,6 +93,7 @@ public class ReservationService {
 
 	/**
 	 * カレンダーに表示する予約情報(開始時間)を日付をkeyにしてmapにつめる
+	 *
 	 * @return reservationMap
 	 */
 	public MakeCalendarBean makeReservationMap() {
@@ -115,6 +119,7 @@ public class ReservationService {
 
 	/**
 	 * 選択日の予約情報を取得する
+	 *
 	 * @param reservationDate
 	 * @return reservationList
 	 */
@@ -125,6 +130,7 @@ public class ReservationService {
 
 	/**
 	 * 送られてきたidの予約情報を取得する
+	 *
 	 * @param id
 	 * @return reservation
 	 */
@@ -145,6 +151,7 @@ public class ReservationService {
 
 	/**
 	 * セッション情報.empNo と 予約.empNo が同じか調べる
+	 *
 	 * @param empNo
 	 * @param request
 	 * @return principal
@@ -163,9 +170,36 @@ public class ReservationService {
 
 	/**
 	 * 予約情報を削除する
+	 *
 	 * @param id
 	 */
 	public void deleteReservation(String id) {
 		this.reservationMapper.deleteReservationById(Integer.parseInt(id));
+	}
+
+	/**
+	 * 新規予約処理
+	 *
+	 * @param rsvDate 予約日
+	 * @param reservation エンティティ
+	 * @param request
+	 */
+	public void registerReservation(String rsvDate, Reservation reservation, HttpServletRequest request) {
+		// フォームから受け取った日付をDate型に変換する
+		Date reservationDay = null;
+		try {
+			reservationDay = new SimpleDateFormat("yyyy-MM-dd").parse(rsvDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		// 変換した日付をインスタンスに追加
+		reservation.setRsvDate(reservationDay);
+		// セッションに保存されているempNo, nameをそれぞれreservation.empNo, reservation.empNameに追加
+		HttpSession session = request.getSession();
+		EmpMst empMst = (EmpMst)session.getAttribute("empMst");
+		reservation.setEmpNo(empMst.getEmpNo());
+		reservation.setRsvName(empMst.getName());
+		// 予約を登録する
+		this.reservationMapper.insertReservation(reservation);
 	}
 }
