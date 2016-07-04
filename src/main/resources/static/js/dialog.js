@@ -52,6 +52,12 @@ $(function() {
 });
 
 $(function() {
+	$('#register-reservation').click(function() {
+		registerForm.submit();
+	});
+});
+
+$(function() {
 	$('.close-dialog').click(function() {
 		$('#dialog-message').dialog('close');
 		$('#confirm-register').dialog('close');
