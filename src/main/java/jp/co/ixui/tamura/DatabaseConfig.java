@@ -30,7 +30,7 @@ public class DatabaseConfig {
 		if (null != databaseUrl) {
 			//heroku
 			URI dbUri = new URI(databaseUrl);
-			url = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath() + ":" + dbUri.getPort() + dbUri.getPath();
+			url = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
 			userName = dbUri.getUserInfo().split(":")[0];
 			password = dbUri.getUserInfo().split(":")[1];
 		} else {
