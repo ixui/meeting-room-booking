@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>会議室予約管理</title>
+		<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+		<link type="text/css" rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+		<style>
+		p { margin: 0; }
+		hr { margin:0; }
+		td { height: 50px; width: 100px; text-align: center;}
+		a { display:block; width: 100%; height: 100%; }
+		a:hover { background-color:#ffcccc; }
+		</style>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<div th:include="header :: frag_header"></div>
+		<div class="container" align="center">
+			<form action="/reservationList" method="post" name="refer">
+				<div class="panel-body col-sm-offset-2 col-sm-8">
+					<script type="text/javascript" th:inline="javascript">
+						/*<![CDATA[*/
+						document.write("<table class='table table-bordered'>");
+						document.write("<tr><td colspan='7' bgcolor='#EEEEEE' style='color: #666666;'>[[${#dates.format(new java.util.Date(), 'yyyy/MM')}]]</td></tr>");
+						document.write("<tr>");
+						document.write("<td bgcolor='#FF3300' style='color: #FFFFFF;'>日</td>");
+						document.write("<td bgcolor='#C7D8ED' style='color: #666666;'>月</td>");
+						document.write("<td bgcolor='#C7D8ED' style='color: #666666;'>火</td>");
+						document.write("<td bgcolor='#C7D8ED' style='color: #666666;'>水</td>");
+						document.write("<td bgcolor='#C7D8ED' style='color: #666666;'>木</td>");
+						document.write("<td bgcolor='#C7D8ED' style='color: #666666;'>金</td>");
+						document.write("<td bgcolor='#A6C0E1' style='color: #666666;'>土</td>");
+						document.write("</tr>");
+						// コントローラーから送られた値を代入
+						var calendarDay = [[${makeCalendar.calendarDay}]];
+						var reservationMap = [[${makeCalendar.reservationMap}]];
+						var startDayOfWeek = [[${makeCalendar.calendarParts[0]}]];
+						var thisMonthLastDay = [[${makeCalendar.calendarParts[1]}]];
+						var count;
+						// カレンダー作成
+						// 行のループ
+						for (var i = 0; i < 6; i++) {
+							document.write("<tr>");
+							// 列のループ
+							for (var n = 0; n < 7; n++) {
+								// セルの色の分岐
+								if (n == 0) {
+									document.write("<td bgcolor='#FFCC99'");
+								} else {
+									document.write("<td bgcolor='#FFFFFF'");
+								}
+								// 先月と来月の日付の色を灰色に
+								if (i == 0 && n <= startDayOfWeek - 2) {
+									document.write(" style='color: #DCDCDC'");
+								}
+								if (n + i * 7 >= startDayOfWeek + thisMonthLastDay) {
+									document.write(" style='color: #DCDCDC'");
+								}
+								document.write(">");
+								// 予約が入っている場合予約情報を表示し、リンクを貼る
+								if (calendarDay[n+i*7] in reservationMap) {
+									document.write("<a href='javascript:void(0)' onclick='clickNumber(",calendarDay[n+i*7],");document.refer.submit();return false;'>",calendarDay[n+i*7],"<hr></hr>",reservationMap[calendarDay[n+i*7]]);
+								} else {
+									document.write(calendarDay[n+i*7],"<hr></hr>");
+								}
+								document.write("</a></td>");
+							}
+							document.write("</tr>");
+						}
+						document.write("</table>");
+
+						function clickNumber(i){
+							document.getElementById('count').value=i;
+						}
+						document.write("<input id='count' type='hidden' value='calendarDay' name='calendarDay'>");
+						/*]]>*/
+					</script>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

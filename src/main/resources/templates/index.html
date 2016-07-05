@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>会議室予約管理</title>
+		<link type="text/css" rel="stylesheet"  href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+		<link type="text/css" rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<div class="header">
+			<div class="header-left">株式会社イクスイ</div>
+		</div>
+		<div class="container" align="center">
+			<p style="color:#FF0000;" th:text="${errMsg1}"></p>
+			<form action="/calendar" method="post" th:object="${formModel}">
+				<p>社員番号<input type="text" name="empNo" th:value="*{empNo}" /></p>
+				<div th:if="${#fields.hasErrors('empNo')}" th:errors="*{empNo}" th:errorclass="err"></div>
+				<p>パスワード<input type="password" name="pass" th:value="*{pass}" /></p>
+				<div th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}" th:errorclass="err"></div>
+				<button type="submit" class="btn btn-default btn-sm active">ログイン</button>
+				<button type="submit" formaction="register-user" class="btn btn-default btn-sm active">ユーザー登録</button>
+			</form>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>予約状況</title>
+		<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+		<link type="text/css" rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+		<link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.min.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
+				th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
+		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
+		<script type="text/javascript">
+			function clickDelete(reservationId, rsvDate) {
+				document.getElementById('deleteId').value = reservationId;
+				document.getElementById('rsvDate').value = rsvDate;
+			}
+		</script>
+	</head>
+	<body>
+		<div class="header"></div>
+		<div class="container" align="center">
+			<h2 th:text="|${#dates.format(new java.util.Date(),'MM月')} ${calendarDay}日|"></h2>
+			<div class="table-responsive col-sm-offset-1 col-sm-10">
+				<form action="/modify" method="post" th:object="${formModel}">
+					<table class="table table-bordered table table-striped" th:inline="text">
+						<tr><th class="col-sm-2">タイトル</th><th class="col-sm-2">予約者</th><th class="col-sm-2">開始時間</th><th class="col-sm-2">終了時間</th><th class="col-sm-2"></th></tr>
+						<tr th:each="reservation : ${reservationList}">
+							<td>[[${reservation.title}]]</td>
+							<td>[[${reservation.rsvName}]]</td>
+							<td>[[${#strings.substring(__${reservation.startTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.startTime}__, 2, 4)}]]分</td>
+							<td>[[${#strings.substring(__${reservation.endTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.endTime}__, 2, 4)}]]分</td>
+							<td th:with="rsvDate=${reservation.rsvDate}"><button type="submit" class="btn btn-default btn-sm active">確認</button>
+								<button type="button" class="btn btn-default btn-sm active delete" th:onclick="'clickDelete(' + ${reservation.id} + ' , ' + ${#dates.format(rsvDate, 'yyyyMMdd')} + ')'">取消</button>
+								<input type="hidden" name="rsvDate" th:value="${reservation.rsvDate}"></input>
+								<input type="hidden" name="empNo" th:value="${reservation.empNo}"></input>
+								<input type="hidden" name="id" th:value="${reservation.id}"></input></td>
+						</tr>
+					</table>
+				</form>
+				<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='/reservation/new'">新規予約</button>
+				<button type="button" class="btn btn-default btn-sm active" onclick="location.href='/calendar'">戻る</button>
+			</div>
+			<div id="confirm-delete" title="予約取消">
+				<form action="/reservation/delete" method="post">
+					<p>本当に取り消しますか？</p>
+					<hr/>
+					<button type="submit" class="btn btn-default btn-sm active">はい</button>
+					<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
+					<input type="hidden" name="deleteId" id="deleteId" />
+					<input type="hidden" name="rsvDate" id="rsvDate" />
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
