@@ -13,7 +13,7 @@ import jp.co.ixui.tamura.domain.EmpMst;
  *　ログイン処理
  */
 @Controller
-public class SessionController {
+public class UserController {
 
 	/**
 	 * @param empMst
