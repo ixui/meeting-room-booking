@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.ixui.tamura.mapper.ReservationMapper">
+	<select id="selectReservationByCurrentMonth" resultType="Reservation">
+		SELECT ID, RSV_DATE, TITLE, RSV_NAME, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO
+		  FROM RESERVATION
+		 WHERE to_char(RSV_DATE, 'yyyymmdd') LIKE #{currentMonth}
+	</select>
+	<select id="selectReservationByCurrentDay" resultType="Reservation">
+		SELECT TITLE, RSV_NAME, START_TIME, END_TIME, ID, EMP_NO, RSV_DATE
+		  FROM RESERVATION
+		 WHERE to_char(RSV_DATE, 'yyyymmdd') = #{reservationDate}
+	</select>
+	<select id="selectReservationById" resultType="Reservation">
+		SELECT ID, RSV_DATE, TITLE, RSV_NAME, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO
+		  FROM RESERVATION
+		 WHERE ID = #{id}
+	</select>
+	<delete id="deleteReservationById">
+		DELETE FROM RESERVATION WHERE ID = #{id}
+	</delete>
+	<insert id="insertReservation">
+		INSERT INTO RESERVATION (
+					RSV_DATE, TITLE, RSV_NAME, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO)
+					VALUES (
+					#{rsvDate}, #{title}, #{rsvName}, #{empNo}, #{startTime}, #{endTime}, #{detail}, #{memo})
+	</insert>
+</mapper>
