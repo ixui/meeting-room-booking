@@ -23,9 +23,8 @@ public class SessionController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public static ModelAndView index(
-			@ModelAttribute("formModel") EmpMst empMst,
 			ModelAndView mav) {
-		mav.addObject("formModel", empMst);
+		mav.addObject("formModel",new EmpMst());
 		mav.setViewName("/index");
 		return mav;
 	}
