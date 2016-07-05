@@ -3,24 +3,18 @@
 
 <mapper namespace="jp.co.ixui.tamura.mapper.ReservationMapper">
 	<select id="selectReservationByCurrentMonth" resultType="Reservation">
-		SELECT ID, RSV_DATE, TITLE, E.NAME AS RSV_NAME, R.EMP_NO, START_TIME, END_TIME, DETAIL, MEMO
-		  FROM RESERVATION AS R
-		  JOIN EMP_MST AS E
-		    ON R.EMP_NO = E.EMP_NO
-		 WHERE date_format(RSV_DATE, '%Y%m%d') LIKE #{currentMonth}
+		SELECT ID, RSV_DATE, TITLE, RSV_NAME, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO
+		  FROM RESERVATION
+		 WHERE to_char(RSV_DATE, 'yyyymmdd') LIKE #{currentMonth}
 	</select>
 	<select id="selectReservationByCurrentDay" resultType="Reservation">
-		SELECT TITLE, E.NAME AS RSV_NAME, START_TIME, END_TIME, ID, R.EMP_NO, RSV_DATE
-		  FROM RESERVATION AS R
-		  JOIN EMP_MST AS E
-		    ON R.EMP_NO = E.EMP_NO
-		 WHERE date_format(RSV_DATE, '%Y%m%d') = #{reservationDate}
+		SELECT TITLE, RSV_NAME, START_TIME, END_TIME, ID, EMP_NO, RSV_DATE
+		  FROM RESERVATION
+		 WHERE to_char(RSV_DATE, 'yyyymmdd') = #{reservationDate}
 	</select>
 	<select id="selectReservationById" resultType="Reservation">
-		SELECT ID, RSV_DATE, TITLE, E.NAME AS RSV_NAME, R.EMP_NO, START_TIME, END_TIME, DETAIL, MEMO
-		  FROM RESERVATION AS R
-		  JOIN EMP_MST AS E
-		    ON R.EMP_NO = E.EMP_NO
+		SELECT ID, RSV_DATE, TITLE, RSV_NAME, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO
+		  FROM RESERVATION
 		 WHERE ID = #{id}
 	</select>
 	<delete id="deleteReservationById">
