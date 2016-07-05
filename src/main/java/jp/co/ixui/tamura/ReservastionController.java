@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.service.ReservationService;
-import jp.co.ixui.tamura.service.SessionService;
+import jp.co.ixui.tamura.service.UserService;
 
 /**
  * @author tamura
@@ -32,7 +32,7 @@ public class ReservastionController {
 	ReservationService reservationService;
 
 	@Autowired
-	SessionService sessionService;
+	UserService sessionService;
 
 	/**
 	 * カレンダー画面を表示する
@@ -68,7 +68,7 @@ public class ReservastionController {
 			HttpServletRequest request,
 			ModelAndView mav) {
 		// 入力チェック
-		if (SessionService.checkNotEmpty(result)) {
+		if (UserService.checkNotEmpty(result)) {
 			mav.setViewName("index");
 			return mav;
 		}
