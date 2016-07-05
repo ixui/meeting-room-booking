@@ -1,7 +1,6 @@
 package jp.co.ixui.tamura;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,9 +22,8 @@ public class SessionController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public static ModelAndView index(
-			@ModelAttribute("formModel") EmpMst empMst,
 			ModelAndView mav) {
-		mav.addObject("formModel", empMst);
+		mav.addObject("formModel",new EmpMst());
 		mav.setViewName("/index");
 		return mav;
 	}
