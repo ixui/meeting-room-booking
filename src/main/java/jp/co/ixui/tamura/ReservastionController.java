@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.service.ReservationService;
-import jp.co.ixui.tamura.service.SessionService;
+import jp.co.ixui.tamura.service.UserService;
 
 /**
  * @author tamura
@@ -32,7 +32,7 @@ public class ReservastionController {
 	ReservationService reservationService;
 
 	@Autowired
-	SessionService sessionService;
+	UserService sessionService;
 
 	/**
 	 * カレンダー画面を表示する
@@ -47,7 +47,7 @@ public class ReservastionController {
 		MakeCalendarBean makeCalendar = this.reservationService.makeReservationMap();
 
 		// カレンダーを表示するための値をmavにつめる
-		mav.setViewName("/refer-all");
+		mav.setViewName("refer-all");
 		mav.addObject("makeCalendar", makeCalendar);
 		return mav;
 	}
@@ -68,7 +68,7 @@ public class ReservastionController {
 			HttpServletRequest request,
 			ModelAndView mav) {
 		// 入力チェック
-		if (SessionService.checkNotEmpty(result)) {
+		if (UserService.checkNotEmpty(result)) {
 			mav.setViewName("index");
 			return mav;
 		}
@@ -85,7 +85,7 @@ public class ReservastionController {
 		MakeCalendarBean makeCalendar = this.reservationService.makeReservationMap();
 
 		// カレンダーを表示するための値をmavにつめる
-		mav.setViewName("/refer-all");
+		mav.setViewName("refer-all");
 		mav.addObject("makeCalendar", makeCalendar);
 		return mav;
 	}
@@ -103,7 +103,7 @@ public class ReservastionController {
 			ModelAndView mav) {
 		List<Reservation> reservationList = this.reservationService.getReservationListByDay(rsvDate);
 		mav.addObject("reservationList", reservationList);
-		mav.setViewName("/refer-date");
+		mav.setViewName("refer-date");
 		return mav;
 	}
 
@@ -125,7 +125,7 @@ public class ReservastionController {
 		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate);
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(currentMonth + calendarDay);
 
-		mav.setViewName("/refer-date");
+		mav.setViewName("refer-date");
 		mav.addObject("reservationList", reservationList);
 		mav.addObject("calendarDay", calendarDay);
 		return mav;
@@ -153,7 +153,7 @@ public class ReservastionController {
 
 		mav.addObject("reservationList", reservationList);
 		mav.addObject("calendarDay", calendarDay);
-		mav.setViewName("/refer-date");
+		mav.setViewName("refer-date");
 		return mav;
 	}
 
@@ -181,23 +181,54 @@ public class ReservastionController {
 		mav.addObject("reservation", reservation);
 		mav.addObject("id", id);
 		mav.addObject("principal", principal);
-		mav.setViewName("/modify");
+		mav.setViewName("modify");
 		return mav;
 	}
 
 	/**
-	 * 予約登録画面を表示する
+	 * 新規予約画面を表示する
 	 *
 	 * @param reservation
 	 * @param mav
 	 * @return mav
 	 */
 	@SuppressWarnings("static-method")
-	@RequestMapping(value="/reservation/new", method=RequestMethod.GET)
-	public ModelAndView register(
+	@RequestMapping(value="/reservation/new", method = RequestMethod.GET)
+	public ModelAndView newRegistration(
 			@ModelAttribute("formModel") Reservation reservation,
 			ModelAndView mav) {
-		mav.setViewName("/register-reserve");
+		mav.setViewName("register-reserve");
+		return mav;
+	}
+
+	/**
+	 * 新規予約処理
+	 *
+	 * @param rsvDate 予約日
+	 * @param reservation エンティティ
+	 * @param request
+	 * @param result バリデーションの結果
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value="/reservation/register", method = RequestMethod.POST)
+	public ModelAndView register(
+			@RequestParam(value="rsvDate") String rsvDate,
+			@ModelAttribute("formModel") @Validated Reservation reservation,
+			BindingResult result,
+			HttpServletRequest request,
+			ModelAndView mav) {
+		// 予約を登録する
+		this.reservationService.registerReservation(rsvDate, reservation, request);
+		// 予約情報を取得
+		String reservationDate = new SimpleDateFormat("yyyyMMdd").format(reservation.getRsvDate());
+		List<Reservation> reservationList = this.reservationService.getReservationByDate(reservationDate);
+		// 日付を表示するためにddを切り取る
+		String calendarDay = rsvDate.substring(rsvDate.length()-2);
+
+		mav.addObject("calendarDay", calendarDay);
+		mav.addObject("reservationList", reservationList);
+		mav.setViewName("refer-date");
 		return mav;
 	}
 }

@@ -31,7 +31,7 @@ public class Reservation {
 	/**
 	 * 社員番号
 	 */
-	private int empNo;
+	private String empNo;
 	/**
 	 * 開始時間
 	 */

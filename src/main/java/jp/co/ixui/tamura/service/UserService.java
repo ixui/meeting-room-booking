@@ -23,7 +23,7 @@ import jp.co.ixui.tamura.mapper.EmpMstMapper;
  *
  */
 @Service
-public class SessionService {
+public class UserService {
 
 	@Autowired
 	EmpMstMapper empMstMapper;
@@ -44,7 +44,7 @@ public class SessionService {
 	 * @return checkFlg
 	 */
 	public boolean checkEmpNo(LoginDTO loginDTO) {
-		String password = SessionService.getSafetyPassword(loginDTO.getPass(), loginDTO.getEmpNo());
+		String password = UserService.getSafetyPassword(loginDTO.getPass(), loginDTO.getEmpNo());
 		System.out.println(password);
 		if (null == getUserEmpNo(loginDTO) || !getUserEmpNo(loginDTO).getPass().equals(password)) {
 			return true;

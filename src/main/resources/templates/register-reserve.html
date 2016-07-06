@@ -19,73 +19,37 @@
 		<div class="header"></div>
 		<div class="container" align="center">
 			<div class="table-responsive col-sm-offset-3 col-sm-6">
-				<form action="/refer-date.html" id="register-form" method="post" th:object="${formModel}">
-					<table class="table table-bordered">
+				<form action="/reservation/register" id="registerForm" method="post" th:object="${formModel}">
+					<table class="table table-bordered" th:inline="text">
+						<tr><th>日付</th>
+							<td><input type="date" name="rsvDate" th:field="*{rsvDate}" th:value="${rsvDate}"/> 例) 1990-10-28(IEの場合)</td></tr>
 						<tr><th>タイトル</th>
-							<td><input type="text" name="title"></input></td></tr>
+							<td><input type="text" name="title" th:field="*{title}"/></td></tr>
 						<tr><th>開始時間</th>
-							<td><select name="startTime">
-								<option value="10">10</option>
-								<option value="11">11</option>
-								<option value="12">12</option>
-								<option value="13">13</option>
-								<option value="14">14</option>
-								<option value="15">15</option>
-								<option value="16">16</option>
-								<option value="17">17</option>
-								<option value="18">18</option>
-								<option value="19">19</option>
-								<option value="20">20</option></select>時
-								<select name="startMin">
-								<option value="00">00</option>
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-								<option value="50">50</option></select>分
-							</td></tr>
-							<tr><th>終了時間</th>
-							<td><select name="endTime">
-								<option value="10">10</option>
-								<option value="11">11</option>
-								<option value="12">12</option>
-								<option value="13">13</option>
-								<option value="14">14</option>
-								<option value="15">15</option>
-								<option value="16">16</option>
-								<option value="17">17</option>
-								<option value="18">18</option>
-								<option value="19">19</option>
-								<option value="20">20</option></select>時
-								<select name="endMin">
-								<option value="00">00</option>
-								<option value="10">10</option>
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-								<option value="50">50</option></select>分
-							</td></tr>
+							<td><input type="text" name="startTime" th:field="*{startTime}"/> 例) 10時00分 → 1000</td></tr>
+						<tr><th>終了時間</th>
+							<td><input type="text" name="endTime" th:field="*{endTime}"/> 例) 10時30分 → 1030</td></tr>
 						<tr><th>詳細</th>
-							<td><textarea name="detail" cols="50" rows="6"></textarea></td></tr>
+							<td><textarea name="detail" cols="50" rows="6" th:field="*{detail}"></textarea></td></tr>
 						<tr><th>メモ</th>
-							<td><textarea name="memo" cols="50" rows="6"></textarea></td></tr>
+							<td><textarea name="memo" cols="50" rows="6" th:field="*{memo}"></textarea></td></tr>
 					</table>
 					<button type="button" class="btn btn-default btn-sm active" id="register">登録</button>
 					<button type="button" class="btn btn-default btn-sm active" id="return">戻る</button>
 				</form>
 			</div>
 		</div>
+		<div id="confirm-register" title="新規予約">
+			<p>登録いたしますか？</p>
+			<hr></hr>
+			<button type="submit" class="btn btn-default btn-sm active" id="register-reservation">はい</button>
+			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
+		</div>
 		<div id="dialog-message" title="確認">
 			<p>入力した内容は消えてしまいます。</p>
 			<p>本当に戻りますか？</p>
 			<hr></hr>
 			<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='/calendar'">はい</button>
-			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
-		</div>
-		<div id="confirm-register" title="新規予約">
-			<p>登録いたしますか？</p>
-			<hr></hr>
-			<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='refer-date.html'" form="register-form">はい</button>
 			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
 		</div>
 	</body>
