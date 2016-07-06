@@ -12,10 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.dto.LoginDTO;
+import jp.co.ixui.tamura.dto.SignupDTO;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
 
 /**
@@ -69,6 +71,21 @@ public class UserService {
 		HttpSession session = request.getSession();
 		session.setAttribute("empMst",getUserEmpNo(loginDTO));
 	}
+
+	/**
+	 * @param request
+	 * @param signupDTO
+	 */
+	@Transactional
+	public void createUser(SignupDTO signupDTO) {
+		EmpMst employee = new EmpMst();
+		employee.setEmpNo(signupDTO.getEmpNo());
+		employee.setName(signupDTO.getName());
+		employee.setMail(signupDTO.getEmail());
+		employee.setPass(UserService.getSafetyPassword(signupDTO.getPass(), signupDTO.getEmpNo()));
+		this.empMstMapper.create(employee);
+	}
+
 
 	 /** パスワードを安全にするためのアルゴリズム */
     private static final String ALGORITHM = "PBKDF2WithHmacSHA256";
