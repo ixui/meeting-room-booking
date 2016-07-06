@@ -10,7 +10,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 
-import jp.co.ixui.tamura.validator.UserValidator;
+import jp.co.ixui.tamura.validator.LoginValidator;
 
 /**
  * ユーザー情報のアノテーション
@@ -19,12 +19,12 @@ import jp.co.ixui.tamura.validator.UserValidator;
  *
  */
 @Documented
-@Constraint(validatedBy = UserValidator.class)
+@Constraint(validatedBy = LoginValidator.class)
 @Target({ ElementType.TYPE, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @ReportAsSingleViolation
 @SuppressWarnings("javadoc")
-public @interface User {
+public @interface Login {
 
 	String message() default "社員番号かパスワードが違います";
 
@@ -36,6 +36,6 @@ public @interface User {
 	@Retention(RetentionPolicy.RUNTIME)
 	@Documented
 	@interface List {
-		User[] value();
+		Login[] value();
 	}
 }

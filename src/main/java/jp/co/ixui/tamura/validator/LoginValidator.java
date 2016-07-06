@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jp.co.ixui.tamura.annotation.User;
+import jp.co.ixui.tamura.annotation.Login;
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
@@ -17,13 +17,13 @@ import jp.co.ixui.tamura.service.UserService;
  * @author tamura
  *
  */
-public class UserValidator implements ConstraintValidator<User, LoginDTO> {
+public class LoginValidator implements ConstraintValidator<Login, LoginDTO> {
 
 	@Autowired
 	EmpMstMapper empMstMapper;
 
 	@Override
-	public void initialize(User user) {
+	public void initialize(Login login) {
 		// 空でいい
 	}
 

@@ -2,7 +2,7 @@ package jp.co.ixui.tamura.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import jp.co.ixui.tamura.annotation.User;
+import jp.co.ixui.tamura.annotation.Login;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@User
+@Login
 public class LoginDTO {
 	@NotEmpty(message="社員番号を入力してください")
 	private String empNo;
