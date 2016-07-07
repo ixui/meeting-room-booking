@@ -42,12 +42,11 @@ public class ReservastionController {
 	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
 	public ModelAndView referAll(ModelAndView mav) {
 
-		// カレンダーに表示する予約情報の取得
-		MakeCalendarBean makeCalendar = this.reservationService.makeReservationMap();
+		// カレンダーに表示する日付インスタンスを取得
+		List<CalendarDate> calendarDateList = this.reservationService.makeCalendarDateList();
 
-		// カレンダーを表示するための値をmavにつめる
+		mav.addObject("calendarDateList", calendarDateList);
 		mav.setViewName("refer-all");
-		mav.addObject("makeCalendar", makeCalendar);
 		return mav;
 	}
 
@@ -79,12 +78,13 @@ public class ReservastionController {
 	 */
 	@RequestMapping(value = "/reservationList", method = RequestMethod.POST)
 	public ModelAndView referDate(
-			@RequestParam(value="calendarDay") String calendarDay,
+			@RequestParam(value="calendarDate") String calendarDay,
 			ModelAndView mav) {
 		// 選択日の予約情報を取得する
 		Date currentDate = new Date();
 		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate);
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(currentMonth + calendarDay);
+		System.out.println(calendarDay);
 
 		mav.setViewName("refer-date");
 		mav.addObject("reservationList", reservationList);

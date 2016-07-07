@@ -2,11 +2,11 @@ package jp.co.ixui.tamura.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.ixui.tamura.CalendarDate;
 import jp.co.ixui.tamura.MakeCalendarBean;
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.domain.Reservation;
@@ -37,85 +38,52 @@ public class ReservationService {
 	 */
 	private static final int CELL_COUNT = 42;
 
-	/**
-	 * カレンダーで使う日付を配列に格納する
-	 *
-	 * @return calendarDay
-	 */
-	public static int[] makeCalendar() {
-		int[] calendarParts = makeCalendarParts();
-		int startDayOfWeek = calendarParts[0];
-		int beforeMonthLastDay = calendarParts[1];
-		int thisMonthLastDay = calendarParts[2];
+	private static final int SUNDAY_NUMBER = 7;
 
-		// カレンダーの日付を格納するための配列
-		int[] calendarDay = new int[CELL_COUNT];
+	/**
+	 * カレンダーの日付のインスタンスを作る
+	 *
+	 * @return calendarDateList
+	 */
+	public List<CalendarDate> makeCalendarDateList() {
+
+		YearMonth yearMonth = YearMonth.now();
+		DateTimeFormatter formatTargetYear = DateTimeFormatter.ofPattern("yyyyMM");
+		String targetMonth = formatTargetYear.format(yearMonth);
+		String year = String.valueOf(yearMonth.getYear());
+		String month = String.valueOf(yearMonth.getMonthValue());
+		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
+		int currrentMonthLastDay = this.makeCalendar.getCurrrentMonthLastDay();
+
 		int count = 0;
-		// カレンダーの頭の先月の日付を格納
-		for (int i = startDayOfWeek - 2; i >= 0; i--) {
-			calendarDay[count++] = beforeMonthLastDay - i;
+		List<CalendarDate> calendarDateList = new ArrayList<>();
+		// カレンダーの頭の空白部分を格納
+		if (SUNDAY_NUMBER != startDayOfWeek) {
+			for (int i = 1; i <= startDayOfWeek; i++) {
+				calendarDateList.add(null);
+				count++;
+			}
 		}
-		// 今月の日付を格納
-		for (int i = 1 ; i <= thisMonthLastDay ; i++){
-			calendarDay[count++] = i;
+		// 今月の日付の情報を格納
+		for (int i = 1; i <= currrentMonthLastDay; i++) {
+			CalendarDate calendarDate = new CalendarDate();
+			calendarDate.setYear(year);
+			calendarDate.setMonth(month);
+			calendarDate.setDay(i);
+			calendarDate.setDayOfWeek(YearMonth.now().atDay(i).getDayOfWeek().getValue());
+			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(targetMonth + i);
+			calendarDate.setReservationList(reservationList);
+			calendarDateList.add(calendarDate);
+			count++;
 		}
-		// カレンダーの終わりの来月の日付を格納
-		int nextMonthDay = 1;
+		// カレンダーの終わりの空白部分を格納
 		while (count < CELL_COUNT){
-			calendarDay[count++] = nextMonthDay++;
+			calendarDateList.add(null);
+			count++;
 		}
-		return calendarDay;
+		return calendarDateList;
 	}
 
-	/**
-	 * カレンダー表示に使う値を配列につめる
-	 *
-	 * @return calendarParts
-	 */
-	public static int[] makeCalendarParts() {
-		// 現在の年・月を取得
-		Calendar calendar = Calendar.getInstance();
-		int year = calendar.get(Calendar.YEAR);
-		int month = calendar.get(Calendar.MONTH);
-		// 今月が何曜日からか
-		calendar.set(year, month, 1);
-		int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-		// 今月が何日までか
-		calendar.set(year, month + 1, 0);
-		int thisMonthLastDay = calendar.get(Calendar.DATE);
-		// 先月が何日までか
-		calendar.set(year, month, 0);
-		int beforeMonthLastDay = calendar.get(Calendar.DATE);
-
-		int[] calendarParts = {startDayOfWeek, thisMonthLastDay, beforeMonthLastDay};
-		return calendarParts;
-	}
-
-	/**
-	 * カレンダーに表示する予約情報(開始時間)を日付をkeyにしてmapにつめる
-	 *
-	 * @return reservationMap
-	 */
-	public MakeCalendarBean makeReservationMap() {
-		// 今日の日付を取得しString型に変換
-		Date currentDate = new Date();
-		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate) + "%";
-		// reservationテーブルから今月の予約情報を取得
-		List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentMonth(currentMonth);
-		// カレンダーに表示する予定を渡すために日付と開始時間をMapにつめる
-		Map<String, String> reservationMap = new HashMap<>();
-		for (Reservation rsv : reservationList) {
-			reservationMap.put(new SimpleDateFormat("dd").format(rsv.getRsvDate()), rsv.getStartTime());
-		}
-		int[] calendarDay = ReservationService.makeCalendar();
-		int[] calendarParts = ReservationService.makeCalendarParts();
-
-		this.makeCalendar.setCalendarDay(calendarDay);
-		this.makeCalendar.setCalendarParts(calendarParts);
-		this.makeCalendar.setReservationMap(reservationMap);
-
-		return this.makeCalendar;
-	}
 
 	/**
 	 * 選択日の予約情報を取得する
