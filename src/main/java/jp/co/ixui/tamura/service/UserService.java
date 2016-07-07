@@ -12,7 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import jp.co.ixui.tamura.controller.signup.SignupForm;
+import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
 
@@ -35,6 +38,20 @@ public class UserService {
 	public static void setEmpNoSession(HttpServletRequest request,LoginDTO loginDTO) {
 		HttpSession session = request.getSession();
 		session.setAttribute("empNo",UserService.getSafetyPassword(loginDTO.getPass(), loginDTO.getEmpNo()));
+	}
+
+	/**
+	 * @param request
+	 * @param signupDTO
+	 */
+	@Transactional
+	public void createUser(SignupForm signupDTO) {
+		EmpMst employee = new EmpMst();
+		employee.setEmpNo(signupDTO.getEmpNo());
+		employee.setName(signupDTO.getName());
+		employee.setMail(signupDTO.getEmail());
+		employee.setPass(UserService.getSafetyPassword(signupDTO.getPass(), signupDTO.getEmpNo()));
+		this.empMstMapper.create(employee);
 	}
 
 	 /** パスワードを安全にするためのアルゴリズム */

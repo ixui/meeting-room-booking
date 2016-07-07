@@ -66,13 +66,4 @@ public class UserController {
 		return mav;
 	}
 
-	/**
-	 * @param mav
-	 * @return mav
-	 */
-	@RequestMapping(value="/usr/register", method = RequestMethod.POST)
-	public static ModelAndView registerUser(ModelAndView mav) {
-		mav.setViewName("/register-user");
-		return mav;
-	}
 }
