@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.ixui.tamura.CalendarDate;
-import jp.co.ixui.tamura.MakeCalendarBean;
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.mapper.ReservationMapper;
@@ -29,9 +28,6 @@ public class ReservationService {
 
 	@Autowired
 	ReservationMapper reservationMapper;
-
-	@Autowired
-	MakeCalendarBean makeCalendar;
 
 	/**
 	 * カレンダーのセル数
@@ -53,7 +49,7 @@ public class ReservationService {
 		String year = String.valueOf(yearMonth.getYear());
 		String month = String.valueOf(yearMonth.getMonthValue());
 		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
-		int currrentMonthLastDay = this.makeCalendar.getCurrrentMonthLastDay();
+		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
 
 		int count = 0;
 		List<CalendarDate> calendarDateList = new ArrayList<>();
