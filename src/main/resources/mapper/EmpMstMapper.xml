@@ -2,11 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="jp.co.ixui.tamura.mapper.EmpMstMapper">
-	
+
 	<select id="selectUser" resultType="EmpMst">
 		SELECT * FROM EMP_MST WHERE EMP_NO = #{empNo}
 	</select>
 	<select id="selectAll" resultType="EmpMst">
 		SELECT * FROM EMP_MST
 	</select>
+	<insert id="create">
+		INSERT INTO
+			EMP_MST (
+				EMP_NO,
+				PASS,
+				NAME,
+				MAIL
+			) VALUES (
+				#{empNo},
+				#{pass},
+				#{name},
+				#{mail}
+			)
+	</insert>
+
 </mapper>
