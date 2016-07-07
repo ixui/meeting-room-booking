@@ -1,4 +1,4 @@
-package jp.co.ixui.tamura;
+package jp.co.ixui.tamura.controller.reservation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import jp.co.ixui.tamura.CalendarDate;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.service.ReservationService;
 import jp.co.ixui.tamura.service.UserService;
@@ -25,7 +26,7 @@ import jp.co.ixui.tamura.service.UserService;
  *
  */
 @Controller
-public class ReservastionController {
+public class ReservationController {
 
 	@Autowired
 	ReservationService reservationService;

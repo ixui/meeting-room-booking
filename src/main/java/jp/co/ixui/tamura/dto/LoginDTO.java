@@ -2,7 +2,7 @@ package jp.co.ixui.tamura.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import jp.co.ixui.tamura.annotation.Login;
+import jp.co.ixui.tamura.controller.user.validator.annotation.Login;
 import lombok.Getter;
 import lombok.Setter;
 

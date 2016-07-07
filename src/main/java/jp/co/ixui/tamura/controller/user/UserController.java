@@ -1,4 +1,4 @@
-package jp.co.ixui.tamura;
+package jp.co.ixui.tamura.controller.user;
 
 import javax.servlet.http.HttpServletRequest;
 
