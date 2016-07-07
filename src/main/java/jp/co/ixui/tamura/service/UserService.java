@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jp.co.ixui.tamura.controller.login.LoginForm;
 import jp.co.ixui.tamura.controller.signup.SignupForm;
 import jp.co.ixui.tamura.domain.EmpMst;
-import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
 
 /**
@@ -35,7 +35,7 @@ public class UserService {
 	 * @param request
 	 * @param loginDTO
 	 */
-	public static void setEmpNoSession(HttpServletRequest request,LoginDTO loginDTO) {
+	public static void setEmpNoSession(HttpServletRequest request,LoginForm loginDTO) {
 		HttpSession session = request.getSession();
 		session.setAttribute("empNo",UserService.getSafetyPassword(loginDTO.getPass(), loginDTO.getEmpNo()));
 	}
