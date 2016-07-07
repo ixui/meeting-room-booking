@@ -2,7 +2,6 @@ package jp.co.ixui.tamura;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -11,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import jp.co.ixui.tamura.domain.EmpMst;
-import jp.co.ixui.tamura.dto.SignupDTO;
+import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.service.UserService;
 
 
@@ -23,10 +21,9 @@ import jp.co.ixui.tamura.service.UserService;
 @Controller
 public class UserController {
 
-	@Autowired
-	UserService userService;
-
 	/**
+	 * ログイン画面を表示する
+	 *
 	 * @param empMst
 	 * @param mav
 	 * @return mav
@@ -34,42 +31,35 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public static ModelAndView index(
 			ModelAndView mav) {
-		mav.addObject("formModel",new EmpMst());
-		mav.setViewName("/index");
+		mav.addObject("formModel",new LoginDTO());
+		mav.setViewName("index");
 		return mav;
 	}
 
 	/**
-	 * ユーザの新規登録画面を表示する
+	 * 入力チェックをする、エラーがない場合はカレンダー画面へリダイレクト
+	 *
+	 * @param loginDTO
+	 * @param result
+	 * @param request
+	 * @param mav
+	 * @return mav
 	 */
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public ModelAndView signup(ModelAndView mav) {
-
-		// バリデーション用に空の画面用DTOを設定する
-		mav.addObject("formModel",new SignupDTO());
-		mav.setViewName("register-user");
-		return mav;
-	}
-
-	/**
-	 * ユーザ登録を行う
-	 */
-	@RequestMapping(value="/signup", method = RequestMethod.POST)
-	public ModelAndView signup(
-			@ModelAttribute("formModel") @Validated SignupDTO signupDTO,
+	@RequestMapping(value="/login/error")
+	public static ModelAndView login(
+			@ModelAttribute("formModel") @Validated LoginDTO loginDTO,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
-
-		// 入力チェック
-		if (UserService.checkNotEmpty(result)) {
-			mav.setViewName("register-user");
-			return mav;
+		// バリデーションの結果をチェック
+		if (!result.hasErrors()) {
+			// セッションに社員番号を格納
+			UserService.setEmpNoSession(request, loginDTO);
+			// カレンダー表示画面にリダイレクト
+			return new ModelAndView("redirect:/calendar");
 		}
-
-		userService.createUser(signupDTO);
-
-		mav.setViewName("redirect:login");
+		mav.setViewName("index");
 		return mav;
 	}
+
 }

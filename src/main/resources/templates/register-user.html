@@ -24,16 +24,18 @@
 
 			<div class="spacer"></div>
 
-			<p style="color:#FF0000;" th:text="${errMsg1}"></p>
-
 			<form action="/signup" method="post" th:object="${formModel}" class="form-horizontal">
+
+				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err"></div>
+
+				<div class="spacer"></div>
 
 				<div class="form-group">
     		        <div class="col-xs-2 col-xs-offset-2">
 	    		        <label>社員番号</label>
 					</div>
     		        <div class="col-xs-4">
-            			<input type="text" name="empNo" class="form-control"/>
+            			<input type="text" name="empNo" th:field="*{empNo}" class="form-control"/>
 						<p th:if="${#fields.hasErrors('empNo')}" th:errors="*{empNo}" th:errorclass="err"></p>
 					</div>
         		</div>
@@ -43,7 +45,7 @@
 	    		        <label>名前</label>
 					</div>
     		        <div class="col-xs-4">
-            			<input type="text" name="name" class="form-control"/>
+            			<input type="text" name="name" th:field="*{name}" class="form-control"/>
 						<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="err"></p>
 					</div>
         		</div>
@@ -53,7 +55,7 @@
 	    		        <label>メールアドレス</label>
 					</div>
     		        <div class="col-xs-4">
-            			<input type="text" name="email" class="form-control"/>
+            			<input type="text" name="email" th:field="*{email}" class="form-control"/>
 						<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="err"></p>
 					</div>
         		</div>
@@ -63,7 +65,7 @@
 	    		        <label>パスワード</label>
 					</div>
     		        <div class="col-xs-4">
-            			<input type="password" name="pass" class="form-control"/>
+            			<input type="password" name="pass" th:field="*{pass}" class="form-control"/>
 						<p th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}" th:errorclass="err"></p>
 					</div>
         		</div>
@@ -73,13 +75,17 @@
 	    		        <label>確認用パスワード</label>
 					</div>
     		        <div class="col-xs-4">
-            			<input type="password" name="confirmPass" class="form-control"/>
+            			<input type="password" name="confirmPass" th:field="*{confirmPass}" class="form-control"/>
 						<p th:if="${#fields.hasErrors('confirmPass')}" th:errors="*{confirmPass}" th:errorclass="err"></p>
 					</div>
         		</div>
 
+				<button type="submit" class="btn btn-default btn-sm active">登録する</button>
+
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+
 				<a href="/login" class="btn btn-default btn-sm active">ログイン画面へ戻る</a>
-				<button type="submit" class="btn btn-default btn-sm active">ユーザー登録</button>
 
 			</form>
 		</div>

@@ -13,11 +13,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 
+import jp.co.ixui.tamura.controller.signup.SignupForm;
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.dto.LoginDTO;
-import jp.co.ixui.tamura.dto.SignupDTO;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
 
 /**
@@ -31,45 +30,14 @@ public class UserService {
 	EmpMstMapper empMstMapper;
 
 	/**
-	 * @param result
-	 * @return number
-	 */
-	public static boolean checkNotEmpty(BindingResult result) {
-		if (result.hasFieldErrors("empNo") || result.hasFieldErrors("pass")) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @param loginDTO
-	 * @return checkFlg
-	 */
-	public boolean checkEmpNo(LoginDTO loginDTO) {
-		String password = UserService.getSafetyPassword(loginDTO.getPass(), loginDTO.getEmpNo());
-		System.out.println(password);
-		if (null == getUserEmpNo(loginDTO) || !getUserEmpNo(loginDTO).getPass().equals(password)) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @param loginDTO
-	 * @return eMst
-	 */
-	public EmpMst getUserEmpNo(LoginDTO loginDTO) {
-		EmpMst eMst = this.empMstMapper.selectUser(loginDTO.getEmpNo());
-		return eMst;
-	}
-
-	/**
+	 * セッションに社員番号を格納する
+	 *
 	 * @param request
 	 * @param loginDTO
 	 */
-	public void setUserSession(HttpServletRequest request,LoginDTO loginDTO) {
+	public static void setEmpNoSession(HttpServletRequest request,LoginDTO loginDTO) {
 		HttpSession session = request.getSession();
-		session.setAttribute("empMst",getUserEmpNo(loginDTO));
+		session.setAttribute("empNo",UserService.getSafetyPassword(loginDTO.getPass(), loginDTO.getEmpNo()));
 	}
 
 	/**
@@ -77,7 +45,7 @@ public class UserService {
 	 * @param signupDTO
 	 */
 	@Transactional
-	public void createUser(SignupDTO signupDTO) {
+	public void createUser(SignupForm signupDTO) {
 		EmpMst employee = new EmpMst();
 		employee.setEmpNo(signupDTO.getEmpNo());
 		employee.setName(signupDTO.getName());

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.ixui.tamura.domain.Reservation;
-import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.service.ReservationService;
 import jp.co.ixui.tamura.service.UserService;
 
@@ -32,7 +31,7 @@ public class ReservastionController {
 	ReservationService reservationService;
 
 	@Autowired
-	UserService sessionService;
+	UserService userService;
 
 	/**
 	 * カレンダー画面を表示する
@@ -42,44 +41,6 @@ public class ReservastionController {
 	 */
 	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
 	public ModelAndView referAll(ModelAndView mav) {
-
-		// カレンダーに表示する予約情報の取得
-		MakeCalendarBean makeCalendar = this.reservationService.makeReservationMap();
-
-		// カレンダーを表示するための値をmavにつめる
-		mav.setViewName("refer-all");
-		mav.addObject("makeCalendar", makeCalendar);
-		return mav;
-	}
-
-	/**
-	 * ログイン画面から遷移して、カレンダー画面を表示する
-	 *
-	 * @param loginDTO
-	 * @param result
-	 * @param request
-	 * @param mav
-	 * @return mav
-	 */
-	@RequestMapping(value = "/calendar", method = RequestMethod.POST)
-	public ModelAndView referAll(
-			@ModelAttribute("formModel") @Validated LoginDTO loginDTO,
-			BindingResult result,
-			HttpServletRequest request,
-			ModelAndView mav) {
-		// 入力チェック
-		if (UserService.checkNotEmpty(result)) {
-			mav.setViewName("index");
-			return mav;
-		}
-		if (this.sessionService.checkEmpNo(loginDTO)) {
-			mav.setViewName("index");
-			mav.addObject("errMsg1", "社員番号かパスワードが違います");
-			return mav;
-		}
-
-		// セッションにユーザー情報を格納
-		this.sessionService.setUserSession(request, loginDTO);
 
 		// カレンダーに表示する予約情報の取得
 		MakeCalendarBean makeCalendar = this.reservationService.makeReservationMap();
