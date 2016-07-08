@@ -28,8 +28,8 @@
 	</delete>
 	<insert id="insertReservation">
 		INSERT INTO RESERVATION (
-					RSV_DATE, TITLE, RSV_NAME, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO)
+					RSV_DATE, TITLE, EMP_NO, START_TIME, END_TIME, DETAIL, MEMO)
 					VALUES (
-					#{rsvDate}, #{title}, #{rsvName}, #{empNo}, #{startTime}, #{endTime}, #{detail}, #{memo})
+					#{rsvDate}, #{title}, #{empNo}, #{startTime}, #{endTime}, #{detail}, #{memo})
 	</insert>
 </mapper>
