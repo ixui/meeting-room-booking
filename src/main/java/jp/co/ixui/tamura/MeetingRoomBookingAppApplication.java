@@ -18,12 +18,13 @@ public class MeetingRoomBookingAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MeetingRoomBookingAppApplication.class, args);
 	}
-	
+
 	/**
 	 * @return java8日時
 	 */
+	@SuppressWarnings("static-method")
 	@Bean
-	public static Java8TimeDialect java8TimeDialect() {
+	public Java8TimeDialect java8TimeDialect() {
 		return new Java8TimeDialect();
 	}
 }

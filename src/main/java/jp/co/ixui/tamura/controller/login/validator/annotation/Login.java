@@ -1,4 +1,4 @@
-package jp.co.ixui.tamura.annotation;
+package jp.co.ixui.tamura.controller.login.validator.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -10,7 +10,7 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
 
-import jp.co.ixui.tamura.validator.LoginValidator;
+import jp.co.ixui.tamura.controller.login.validator.LoginValidator;
 
 /**
  * ユーザー情報のアノテーション

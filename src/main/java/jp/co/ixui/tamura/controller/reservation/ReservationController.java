@@ -1,4 +1,4 @@
-package jp.co.ixui.tamura;
+package jp.co.ixui.tamura.controller.reservation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import jp.co.ixui.tamura.CalendarDate;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.service.ReservationService;
 import jp.co.ixui.tamura.service.UserService;
@@ -25,7 +26,7 @@ import jp.co.ixui.tamura.service.UserService;
  *
  */
 @Controller
-public class ReservastionController {
+public class ReservationController {
 
 	@Autowired
 	ReservationService reservationService;
@@ -42,12 +43,11 @@ public class ReservastionController {
 	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
 	public ModelAndView referAll(ModelAndView mav) {
 
-		// カレンダーに表示する予約情報の取得
-		MakeCalendarBean makeCalendar = this.reservationService.makeReservationMap();
+		// カレンダーに表示する日付インスタンスを取得
+		List<CalendarDate> calendarDateList = this.reservationService.makeCalendarDateList();
 
-		// カレンダーを表示するための値をmavにつめる
+		mav.addObject("calendarDateList", calendarDateList);
 		mav.setViewName("refer-all");
-		mav.addObject("makeCalendar", makeCalendar);
 		return mav;
 	}
 
@@ -79,7 +79,7 @@ public class ReservastionController {
 	 */
 	@RequestMapping(value = "/reservationList", method = RequestMethod.POST)
 	public ModelAndView referDate(
-			@RequestParam(value="calendarDay") String calendarDay,
+			@RequestParam(value="calendarDate") String calendarDay,
 			ModelAndView mav) {
 		// 選択日の予約情報を取得する
 		Date currentDate = new Date();

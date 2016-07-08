@@ -1,4 +1,4 @@
-package jp.co.ixui.tamura;
+package jp.co.ixui.tamura.controller.login;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.service.UserService;
 
 
@@ -20,7 +19,7 @@ import jp.co.ixui.tamura.service.UserService;
  *　ログイン処理
  */
 @Controller
-public class UserController {
+public class LoginController {
 
 	@Autowired
 	UserService userService;
@@ -35,7 +34,7 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public static ModelAndView index(
 			ModelAndView mav) {
-		mav.addObject("formModel",new LoginDTO());
+		mav.addObject("formModel",new LoginForm());
 		mav.setViewName("index");
 		return mav;
 	}
@@ -51,7 +50,7 @@ public class UserController {
 	 */
 	@RequestMapping(value="/login/error")
 	public static ModelAndView login(
-			@ModelAttribute("formModel") @Validated LoginDTO loginDTO,
+			@ModelAttribute("formModel") @Validated LoginForm loginDTO,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {

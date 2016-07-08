@@ -1,13 +1,13 @@
-package jp.co.ixui.tamura.validator;
+package jp.co.ixui.tamura.controller.login.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jp.co.ixui.tamura.annotation.Login;
+import jp.co.ixui.tamura.controller.login.LoginForm;
+import jp.co.ixui.tamura.controller.login.validator.annotation.Login;
 import jp.co.ixui.tamura.domain.EmpMst;
-import jp.co.ixui.tamura.dto.LoginDTO;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
 import jp.co.ixui.tamura.service.UserService;
 
@@ -17,7 +17,7 @@ import jp.co.ixui.tamura.service.UserService;
  * @author tamura
  *
  */
-public class LoginValidator implements ConstraintValidator<Login, LoginDTO> {
+public class LoginValidator implements ConstraintValidator<Login, LoginForm> {
 
 	@Autowired
 	EmpMstMapper empMstMapper;
@@ -33,7 +33,7 @@ public class LoginValidator implements ConstraintValidator<Login, LoginDTO> {
 	 * @return boolean
 	 */
 	@Override
-	public boolean isValid(LoginDTO value, ConstraintValidatorContext cxt) {
+	public boolean isValid(LoginForm value, ConstraintValidatorContext cxt) {
 		// 社員番号またはパスワードが入力されていない場合はそちらでエラーがでるのでバリデーションしない
 		if ("".equals(value.getEmpNo()) || "".equals(value.getPass())) {
 			return true;
