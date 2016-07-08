@@ -24,7 +24,7 @@
 				<p>パスワード<input type="password" th:field="*{pass}" /></p>
 				<div th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}" th:errorclass="err"></div>
 				<button type="submit" class="btn btn-default btn-sm active">ログイン</button>
-				<button type="submit" formaction="register-user" class="btn btn-default btn-sm active">ユーザー登録</button>
+				<button type="submit" formaction="/signup" formmethod="get" class="btn btn-default btn-sm active">ユーザー登録</button>
 			</form>
 		</div>
 	</body>

@@ -34,26 +34,33 @@ public class ReservationService {
 	 */
 	private static final int CELL_COUNT = 42;
 
+	/**
+	 * 日曜日を示す数字
+	 */
 	private static final int SUNDAY_NUMBER = 7;
 
 	/**
-	 * カレンダーの日付のインスタンスを作る
+	 * カレンダー作成メソッド
 	 *
 	 * @return calendarDateList
 	 */
 	public List<CalendarDate> makeCalendarDateList() {
-
+		// 現在の年月を取得
 		YearMonth yearMonth = YearMonth.now();
+		// 年月を文字列に変換
 		DateTimeFormatter formatTargetYear = DateTimeFormatter.ofPattern("yyyyMM");
 		String targetMonth = formatTargetYear.format(yearMonth);
+		// 年と月をそれぞれ取得して文字列に変換
 		String year = String.valueOf(yearMonth.getYear());
 		String month = String.valueOf(yearMonth.getMonthValue());
+		// 取得した月の1日の曜日をintで取得
 		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
+		// 取得した月の日数を取得
 		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
 
 		int count = 0;
 		List<CalendarDate> calendarDateList = new ArrayList<>();
-		// カレンダーの頭の空白部分を格納
+		// カレンダーの頭の空白部分にnullを格納
 		if (SUNDAY_NUMBER != startDayOfWeek) {
 			for (int i = 1; i <= startDayOfWeek; i++) {
 				calendarDateList.add(null);
@@ -72,7 +79,7 @@ public class ReservationService {
 			calendarDateList.add(calendarDate);
 			count++;
 		}
-		// カレンダーの終わりの空白部分を格納
+		// カレンダーの終わりの空白部分にnullを格納
 		while (count < CELL_COUNT){
 			calendarDateList.add(null);
 			count++;
