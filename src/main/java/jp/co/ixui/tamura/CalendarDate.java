@@ -21,7 +21,7 @@ public class CalendarDate {
 	private List<Reservation> reservationList;
 
 	/**
-	 * @return カレンダーで選択された日付
+	 * @return 'yyyyMMdd'の日付文字列
 	 *
 	 */
 	public String makeSelectCalendarDate() {
