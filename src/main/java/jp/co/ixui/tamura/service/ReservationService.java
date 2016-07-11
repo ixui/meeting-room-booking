@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.ixui.tamura.CalendarDate;
-import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.mapper.ReservationMapper;
 
@@ -48,11 +47,11 @@ public class ReservationService {
 		// 現在の年月を取得
 		YearMonth yearMonth = YearMonth.now();
 		// 年月を文字列に変換
-		DateTimeFormatter formatTargetYear = DateTimeFormatter.ofPattern("yyyyMM");
-		String targetMonth = formatTargetYear.format(yearMonth);
-		// 年と月をそれぞれ取得して文字列に変換
-		String year = String.valueOf(yearMonth.getYear());
-		String month = String.valueOf(yearMonth.getMonthValue());
+		DateTimeFormatter formatCurrentYearMonth = DateTimeFormatter.ofPattern("yyyyMM");
+		String currentYearMonth = formatCurrentYearMonth.format(yearMonth);
+		// 年と月をそれぞれ切り取る
+		String year = currentYearMonth.substring(0, 4);
+		String month = currentYearMonth.substring(4, 6);
 		// 取得した月の1日の曜日をintで取得
 		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
 		// 取得した月の日数を取得
@@ -74,7 +73,12 @@ public class ReservationService {
 			calendarDate.setMonth(month);
 			calendarDate.setDay(i);
 			calendarDate.setDayOfWeek(YearMonth.now().atDay(i).getDayOfWeek().getValue());
-			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(targetMonth + i);
+			String currentDay = String.valueOf(i);
+			// iが一桁のとき dd の形にする
+			if (10 > i) {
+				currentDay = 0 + currentDay;
+			}
+			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(currentYearMonth + currentDay);
 			calendarDate.setReservationList(reservationList);
 			calendarDateList.add(calendarDate);
 			count++;
@@ -130,10 +134,10 @@ public class ReservationService {
 	public static boolean booleanPrincipal(String empNo, HttpServletRequest request) {
 		// セッション情報から社員番号を取得
 		HttpSession session = request.getSession();
-		EmpMst empMst = (EmpMst)session.getAttribute("empMst");
+		String sessionEmpNo = (String)session.getAttribute("empNo");
 		// 予約者かどうか調べる
 		boolean principal = false;
-		if (empMst.getEmpNo() == empNo) {
+		if (sessionEmpNo == empNo) {
 			principal = true;
 		}
 		return principal;

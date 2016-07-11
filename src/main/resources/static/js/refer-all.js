@@ -1,6 +1,6 @@
 $(function() {
 	$('#date').click(function(){
-		var date = $(this).text();
+		var date = $('input#selectCalendarDate').attr('value');
 		document.getElementById('calendarDate').value=date;
 		document.refer.submit();
 		return false;

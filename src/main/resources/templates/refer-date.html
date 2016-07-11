@@ -24,9 +24,9 @@
 	<body>
 		<div class="header"></div>
 		<div class="container" align="center">
-			<h2 th:text="|${#dates.format(new java.util.Date(),'MM月')} ${calendarDay}日|"></h2>
+			<h2 th:text="|${#strings.substring(__${selectCalendarDate}__, 0, 4)} 年 ${#strings.substring(__${selectCalendarDate}__, 4, 6)} 月 ${#strings.substring(__${selectCalendarDate}__, 6, 8)} 日 |"></h2>
 			<div class="table-responsive col-sm-offset-1 col-sm-10">
-				<form action="/modify" method="post" th:object="${formModel}">
+				<form action="/reservaton/confirm" method="post" th:object="${formModel}">
 					<table class="table table-bordered table table-striped" th:inline="text">
 						<tr><th class="col-sm-2">タイトル</th><th class="col-sm-2">予約者</th><th class="col-sm-2">開始時間</th><th class="col-sm-2">終了時間</th><th class="col-sm-2"></th></tr>
 						<tr th:each="reservation : ${reservationList}">

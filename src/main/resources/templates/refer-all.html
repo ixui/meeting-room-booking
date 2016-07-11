@@ -26,14 +26,18 @@
 						<tr th:each=" i : ${#numbers.sequence(0, 5)}">
 							<td th:each=" n : ${#numbers.sequence(0, 6)}" th:with="date = ${calendarDateList.get(__${n}__+i*7)}">
 								<p th:if="${date}">
-									<span th:if="${date.getReservationList().size()}"><a id="date">[[${date.getDay()}]]</a></span>
+									<span th:if="${date.getReservationList().size()}">
+										<a id="date">[[${date.getDay()}]]
+											<input type="hidden" id="selectCalendarDate" th:value="${date.makeSelectCalendarDate()}"/>
+										</a>
+									</span>
 									<span th:unless="${date.getReservationList().size()}">[[${date.getDay()}]]</span>
 								</p>
 								<p th:unless="${date}"></p>
 							</td>
 						</tr>
 					</table>
-					<input id="calendarDate" type="hidden" name="calendarDate"/>
+					<input type="hidden" id="calendarDate" name="calendarDate"/>
 				</form>
 				<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='/reservation/new'">新規予約</button>
 			</div>
