@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * @author tamura
@@ -20,7 +21,7 @@ public class DatabaseConfig {
 	@Autowired
 	DataSourceProperties properties;
 
-	//@Primary
+	@Primary
 	@Bean(destroyMethod="close")
 	DataSource datasource() throws URISyntaxException {
 		String url;
