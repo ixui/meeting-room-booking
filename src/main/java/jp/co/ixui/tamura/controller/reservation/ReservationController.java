@@ -71,24 +71,20 @@ public class ReservationController {
 	/**
 	 * カレンダー画面から遷移して、日付ごとの予約情報表示画面を表示する
 	 *
+	 * @param targetDate
 	 * @param mav
-	 * @param calendarDay カレンダー表示画面で選択された日付
-	 * @param flg
-	 * @param id 予約ID
 	 * @return mav
 	 */
 	@RequestMapping(value = "/reservationList", method = RequestMethod.POST)
 	public ModelAndView referDate(
-			@RequestParam(value="calendarDate") String calendarDay,
+			@RequestParam(value="calendarDate") String targetDate,
 			ModelAndView mav) {
 		// 選択日の予約情報を取得する
-		Date currentDate = new Date();
-		String currentMonth = new SimpleDateFormat("yyyyMM").format(currentDate);
-		List<Reservation> reservationList = this.reservationService.getReservationByDate(currentMonth + calendarDay);
+		List<Reservation> reservationList = this.reservationService.getReservationByDate(targetDate);
 
 		mav.setViewName("refer-date");
 		mav.addObject("reservationList", reservationList);
-		mav.addObject("calendarDay", calendarDay);
+		mav.addObject("targetDate", targetDate);
 		return mav;
 	}
 

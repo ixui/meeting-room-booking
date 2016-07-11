@@ -74,7 +74,14 @@ public class ReservationService {
 			calendarDate.setMonth(month);
 			calendarDate.setDay(i);
 			calendarDate.setDayOfWeek(YearMonth.now().atDay(i).getDayOfWeek().getValue());
-			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(targetMonth + i);
+			String targetDay = String.valueOf(i);
+			// iが一桁のとき dd の形にする
+			if (10 > i) {
+				targetDay = 0 + targetDay;
+			}
+			String targetDate = targetMonth + targetDay;
+			calendarDate.setTargetDate(targetDate);
+			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(targetDate);
 			calendarDate.setReservationList(reservationList);
 			calendarDateList.add(calendarDate);
 			count++;

@@ -13,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CalendarDate {
+	private String targetDate;
 	private String year;
 	private String month;
 	private int day;

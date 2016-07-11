@@ -10,7 +10,7 @@
 		 WHERE date_format(RSV_DATE, '%Y%m%d') LIKE #{currentMonth}
 	</select>
 	<select id="selectReservationByCurrentDay" resultType="Reservation">
-		SELECT TITLE, E.NAME AS RSV_NAME, START_TIME, END_TIME, ID, R.EMP_NO, RSV_DATE
+		SELECT ID, RSV_DATE, TITLE, E.NAME AS RSV_NAME, R.EMP_NO, START_TIME, END_TIME
 		  FROM RESERVATION AS R
 		  JOIN EMP_MST AS E
 		    ON R.EMP_NO = E.EMP_NO

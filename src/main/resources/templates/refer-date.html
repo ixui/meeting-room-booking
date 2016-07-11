@@ -24,7 +24,7 @@
 	<body>
 		<div class="header"></div>
 		<div class="container" align="center">
-			<h2 th:text="|${#dates.format(new java.util.Date(),'MM月')} ${calendarDay}日|"></h2>
+			<h2 th:text="|${#strings.substring(__${targetDate}__, 0, 4)} 年 ${#strings.substring(__${targetDate}__, 4, 6)} 月 ${#strings.substring(__${targetDate}__, 6, 8)} 日 |"></h2>
 			<div class="table-responsive col-sm-offset-1 col-sm-10">
 				<form action="/modify" method="post" th:object="${formModel}">
 					<table class="table table-bordered table table-striped" th:inline="text">
