@@ -21,10 +21,14 @@ public class CalendarDate {
 	private List<Reservation> reservationList;
 
 	/**
-	 * @return 'yyyyMMdd'の日付文字列
+	 * @return 'yyyyMMdd'形式の日付文字列
 	 *
 	 */
 	public String makeSelectCalendarDate() {
-		return this.year + this.month + this.day;
+		String currentDay = String.valueOf(this.day);
+		if (10 > this.day) {
+			currentDay = 0 + currentDay;
+		}
+		return this.year + this.month + currentDay;
 	}
 }
