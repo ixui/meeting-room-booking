@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.ixui.tamura.CalendarDate;
-import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.mapper.ReservationMapper;
 
@@ -79,9 +78,7 @@ public class ReservationService {
 			if (10 > i) {
 				targetDay = 0 + targetDay;
 			}
-			String targetDate = targetMonth + targetDay;
-			calendarDate.setTargetDate(targetDate);
-			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(targetDate);
+			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(targetMonth + targetDay);
 			calendarDate.setReservationList(reservationList);
 			calendarDateList.add(calendarDate);
 			count++;
@@ -137,10 +134,10 @@ public class ReservationService {
 	public static boolean booleanPrincipal(String empNo, HttpServletRequest request) {
 		// セッション情報から社員番号を取得
 		HttpSession session = request.getSession();
-		EmpMst empMst = (EmpMst)session.getAttribute("empMst");
+		String sessionEmpNo = (String)session.getAttribute("empNo");
 		// 予約者かどうか調べる
 		boolean principal = false;
-		if (empMst.getEmpNo() == empNo) {
+		if (sessionEmpNo == empNo) {
 			principal = true;
 		}
 		return principal;

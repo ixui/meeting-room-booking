@@ -28,7 +28,7 @@
 								<p th:if="${date}">
 									<span th:if="${date.getReservationList().size()}">
 										<a id="date">[[${date.getDay()}]]
-											<input type="hidden" id="targetDate" th:value="${date.getTargetDate()}"/>
+											<input type="hidden" id="selectCalendarDate" th:value="${date.makeSelectCalendarDate()}"/>
 										</a>
 									</span>
 									<span th:unless="${date.getReservationList().size()}">[[${date.getDay()}]]</span>

@@ -1,0 +1,1 @@
+alter table reservation add foreign key (emp_no) references emp_mst(emp_no);

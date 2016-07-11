@@ -71,20 +71,20 @@ public class ReservationController {
 	/**
 	 * カレンダー画面から遷移して、日付ごとの予約情報表示画面を表示する
 	 *
-	 * @param targetDate
+	 * @param selectCalendarDate
 	 * @param mav
 	 * @return mav
 	 */
 	@RequestMapping(value = "/reservationList", method = RequestMethod.POST)
 	public ModelAndView referDate(
-			@RequestParam(value="calendarDate") String targetDate,
+			@RequestParam(value="calendarDate") String selectCalendarDate,
 			ModelAndView mav) {
 		// 選択日の予約情報を取得する
-		List<Reservation> reservationList = this.reservationService.getReservationByDate(targetDate);
+		List<Reservation> reservationList = this.reservationService.getReservationByDate(selectCalendarDate);
 
 		mav.setViewName("refer-date");
 		mav.addObject("reservationList", reservationList);
-		mav.addObject("targetDate", targetDate);
+		mav.addObject("selectCalendarDate", selectCalendarDate);
 		return mav;
 	}
 
@@ -124,7 +124,7 @@ public class ReservationController {
 	 * @return mav
 	 */
 	@SuppressWarnings("boxing")
-	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	@RequestMapping(value = "/reservation/confirm", method = RequestMethod.POST)
 	public ModelAndView modify(
 			@RequestParam(value="id") int id,
 			@RequestParam(value="empNo") String empNo,

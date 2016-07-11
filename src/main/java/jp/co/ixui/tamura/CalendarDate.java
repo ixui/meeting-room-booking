@@ -13,10 +13,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CalendarDate {
-	private String targetDate;
+
 	private String year;
 	private String month;
 	private int day;
 	private int dayOfWeek;
 	private List<Reservation> reservationList;
+
+	/**
+	 * @return カレンダーで選択された日付
+	 *
+	 */
+	public String makeSelectCalendarDate() {
+		return this.year + this.month + this.day;
+	}
 }
