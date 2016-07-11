@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 /**
  * @author tamura
@@ -21,7 +20,7 @@ public class DatabaseConfig {
 	@Autowired
 	DataSourceProperties properties;
 
-	@Primary
+	//@Primary
 	@Bean(destroyMethod="close")
 	DataSource datasource() throws URISyntaxException {
 		String url;
@@ -32,7 +31,7 @@ public class DatabaseConfig {
 		if (null != databaseUrl) {
 			//heroku
 			URI dbUri = new URI(databaseUrl);
-			url = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath() + "?reconnect=true";
+			url = "jdbc:mysql://" + dbUri.getHost() + dbUri.getPath();
 			userName = dbUri.getUserInfo().split(":")[0];
 			password = dbUri.getUserInfo().split(":")[1];
 		} else {
