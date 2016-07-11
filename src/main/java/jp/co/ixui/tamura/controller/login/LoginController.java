@@ -65,4 +65,17 @@ public class LoginController {
 		return mav;
 	}
 
+	/**
+	 * ログアウトする
+	 *
+	 * @param request
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public static ModelAndView logout(HttpServletRequest request, ModelAndView mav) {
+		// セッションを破棄する
+		request.getSession(false).invalidate();
+		return new ModelAndView("redirect:/login");
+	}
 }
