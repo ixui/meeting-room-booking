@@ -30,6 +30,39 @@ public class UserService {
 	EmpMstMapper empMstMapper;
 
 	/**
+	 * セッションに社員番号が存在するか確認する
+	 *
+	 * @param request
+	 */
+	public static boolean isValidUserSession(HttpServletRequest request) {
+
+    	// セッションを取得し取得できなかった場合はタイムアウトとみなす
+        HttpSession currentSession = request.getSession(false);
+        if (currentSession == null) {
+            return false;
+        }
+
+    	// リクエストに含まれるセッションIDでセッションを再取得し
+        // 取得できないもしくは保持しているセッションと異なる場合はタイムアウトとみなす
+        String requestSession = request.getRequestedSessionId();
+        if( currentSession == null ||
+        		requestSession == null ||
+        		!request.isRequestedSessionIdValid() ||
+        		!requestSession.equals(currentSession.getId())){
+
+        	return false;
+        }
+
+        if (currentSession.getAttribute("empNo") == null ||
+    		"".equals(currentSession.getAttribute("empNo"))){
+
+        	return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * セッションに社員番号を格納する
 	 *
 	 * @param request
