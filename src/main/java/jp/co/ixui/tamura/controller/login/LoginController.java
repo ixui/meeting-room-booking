@@ -33,7 +33,13 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public static ModelAndView index(
+			HttpServletRequest request,
 			ModelAndView mav) {
+
+		if (UserService.isValidUserSession(request)) {
+			return new ModelAndView("redirect:/calendar");
+		}
+
 		mav.addObject("formModel",new LoginForm());
 		mav.setViewName("index");
 		return mav;

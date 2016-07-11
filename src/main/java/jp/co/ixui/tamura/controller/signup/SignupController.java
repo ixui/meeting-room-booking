@@ -28,7 +28,11 @@ public class SignupController {
 	 * ユーザの新規登録画面を表示する
 	 */
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public ModelAndView signup(ModelAndView mav) {
+	public ModelAndView signup(HttpServletRequest request, ModelAndView mav) {
+
+		if (UserService.isValidUserSession(request)) {
+			return new ModelAndView("redirect:/calendar");
+		}
 
 		// バリデーション用に空の画面用DTOを設定する
 		mav.addObject("formModel",new SignupForm());
