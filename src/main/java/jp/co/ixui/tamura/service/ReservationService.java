@@ -165,11 +165,10 @@ public class ReservationService {
 		}
 		// 変換した日付をインスタンスに追加
 		reservation.setRsvDate(reservationDay);
-		// セッションに保存されているempNo, nameをそれぞれreservation.empNo, reservation.empNameに追加
+		// セッションに保存されているempNoをreservation.empNoに追加
 		HttpSession session = request.getSession();
-		EmpMst empMst = (EmpMst)session.getAttribute("empMst");
-		reservation.setEmpNo(empMst.getEmpNo());
-		reservation.setRsvName(empMst.getName());
+		String empNo = (String) session.getAttribute("empNo");
+		reservation.setEmpNo(empNo);
 		// 予約を登録する
 		this.reservationMapper.insertReservation(reservation);
 	}

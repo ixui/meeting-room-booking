@@ -37,7 +37,7 @@ public class UserService {
 	 */
 	public static void setEmpNoSession(HttpServletRequest request,LoginForm loginDTO) {
 		HttpSession session = request.getSession();
-		session.setAttribute("empNo",UserService.getSafetyPassword(loginDTO.getPass(), loginDTO.getEmpNo()));
+		session.setAttribute("empNo", loginDTO.getEmpNo());
 	}
 
 	/**
