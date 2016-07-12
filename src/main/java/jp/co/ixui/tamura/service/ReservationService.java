@@ -1,6 +1,5 @@
 package jp.co.ixui.tamura.service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -137,7 +136,7 @@ public class ReservationService {
 		String sessionEmpNo = (String)session.getAttribute("empNo");
 		// 予約者かどうか調べる
 		boolean principal = false;
-		if (sessionEmpNo == empNo) {
+		if (sessionEmpNo.equals(empNo)) {
 			principal = true;
 		}
 		return principal;
@@ -159,21 +158,28 @@ public class ReservationService {
 	 * @param reservation エンティティ
 	 * @param request
 	 */
-	public void registerReservation(String rsvDate, Reservation reservation, HttpServletRequest request) {
-		// フォームから受け取った日付をDate型に変換する
-		Date reservationDay = null;
-		try {
-			reservationDay = new SimpleDateFormat("yyyy-MM-dd").parse(rsvDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		// 変換した日付をインスタンスに追加
-		reservation.setRsvDate(reservationDay);
+	public void registerReservation(Reservation reservation, HttpServletRequest request) {
 		// セッションに保存されているempNoをreservation.empNoに追加
 		HttpSession session = request.getSession();
 		String empNo = (String) session.getAttribute("empNo");
 		reservation.setEmpNo(empNo);
 		// 予約を登録する
 		this.reservationMapper.insertReservation(reservation);
+	}
+
+	/**
+	 * 予約更新処理
+	 *
+	 * @param reservation
+	 * @param request
+	 *
+	 */
+	public void updateReservation(Reservation reservation, HttpServletRequest request){
+		// セッションに保存されているempNoをreservation.empNoに追加
+		HttpSession session = request.getSession();
+		String empNo = (String) session.getAttribute("empNo");
+		reservation.setEmpNo(empNo);
+		// 予約を更新する
+		this.reservationMapper.updateReservation(reservation);
 	}
 }

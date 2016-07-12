@@ -32,4 +32,15 @@
 					VALUES (
 					#{rsvDate}, #{title}, #{empNo}, #{startTime}, #{endTime}, #{detail}, #{memo})
 	</insert>
+	<update id="updateReservation">
+		UPDATE RESERVATION
+		   SET RSV_DATE = #{rsvDate},
+			   TITLE = #{title},
+			   EMP_NO = #{empNo},
+			   START_TIME = #{startTime},
+			   END_TIME = #{endTime},
+			   DETAIL = #{detail},
+			   MEMO = #{memo}
+		 WHERE ID = #{id}
+	</update>
 </mapper>

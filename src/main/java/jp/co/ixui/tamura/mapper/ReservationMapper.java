@@ -40,4 +40,9 @@ public interface ReservationMapper {
 	 * @param reservation
 	 */
 	void insertReservation(Reservation reservation);
+
+	/**
+	 * @param reservation
+	 */
+	void updateReservation(Reservation reservation);
 }
