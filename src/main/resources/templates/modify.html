@@ -14,9 +14,10 @@
 				th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
 		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
+		<script src="/js/modify.js" th:src="@{/js/modify.js}"></script>
 	</head>
 	<body>
-		<div class="header"></div>
+		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
 			<div class="table-responsive col-sm-offset-3 col-sm-6">
 				<form action="/reservation/modify" id="modifyForm" method="post" th:object="${formModel}">
@@ -36,8 +37,8 @@
 					</table>
 					<button th:if="${principal}" type="button" class="btn btn-default btn-sm active" id="register">修正</button>
 					<button th:if="${principal}" type="button" class="btn btn-default btn-sm active delete">取消</button>
-					<input type="hidden" name="empNo" th:field="*{empNo}" th:value="${reservationList.empNo}"/>
-					<input type="hidden" name="id" th:value="${reservationList.id}"/>
+					<input type="hidden" name="empNo" th:value="${reservationList.empNo}"/>
+					<input type="hidden" name="id" id="id" th:value="${reservationList.id}"/>
 					<hr></hr>
 					<button type="button" class="btn btn-default btn-sm active" id="return">戻る</button>
 				</form>
@@ -60,10 +61,14 @@
 			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
 		</div>
 		<div id="confirm-delete" title="予約取消">
-			<p>本当に取り消しますか？</p>
-			<hr></hr>
-			<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='refer-date.html'">はい</button>
-			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
+			<form action="/reservation/delete" method="post">
+				<p>本当に取り消しますか？</p>
+				<hr/>
+				<button type="submit" class="btn btn-default btn-sm active">はい</button>
+				<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
+				<input type="hidden" name="deleteId" id="deleteId" />
+				<input type="hidden" name="reservationDate" id="reservationDate" />
+			</form>
 		</div>
 	</body>
 </html>

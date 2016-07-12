@@ -14,7 +14,6 @@ import lombok.Setter;
 public class ReservationForm {
 	private LocalDate rsvDate;
 	private String title;
-	private String empNo;
 	private String startTime;
 	private String endTime;
 	private String detail;

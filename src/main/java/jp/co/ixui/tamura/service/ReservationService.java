@@ -191,14 +191,18 @@ public class ReservationService {
 	 * @param rsvDate
 	 * @param id
 	 * @param reservationForm
+	 * @param request
 	 * @return reservation
 	 */
 	@SuppressWarnings("static-method")
-	public Reservation storeReservation(LocalDate rsvDate, ReservationForm reservationForm) {
+	public Reservation storeReservation(LocalDate rsvDate, ReservationForm reservationForm, HttpServletRequest request) {
+		// セッション情報から社員番号を取得
+		HttpSession session = request.getSession();
+		String sessionEmpNo = (String)session.getAttribute("empNo");
 		Reservation reservation = new Reservation();
 		reservation.setRsvDate(rsvDate);
 		reservation.setTitle(reservationForm.getTitle());
-		reservation.setEmpNo(reservationForm.getEmpNo());
+		reservation.setEmpNo(sessionEmpNo);
 		reservation.setStartTime(reservationForm.getStartTime());
 		reservation.setEndTime(reservationForm.getEndTime());
 		reservation.setDetail(reservationForm.getDetail());

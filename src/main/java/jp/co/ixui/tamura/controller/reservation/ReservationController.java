@@ -1,6 +1,5 @@
 package jp.co.ixui.tamura.controller.reservation;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -92,7 +91,7 @@ public class ReservationController {
 	}
 
 	/**
-	 * 削除後の予約情報表示画面を表示する
+	 * 予約を削除して予約情報表示画面へ遷移する
 	 *
 	 * @param id
 	 * @param rsvDate
@@ -102,15 +101,16 @@ public class ReservationController {
 	@RequestMapping(value = "/reservation/delete", method = RequestMethod.POST)
 	public ModelAndView deleteReservation(
 			@RequestParam(value="deleteId") String id,
-			@RequestParam(value="reservationDate") String rsvDate,
+			@DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(value="reservationDate") LocalDate rsvDate,
 			ModelAndView mav) {
 		// 予約を削除する
 		this.reservationService.deleteReservation(id);
 		// 予約情報を取得
-		List<Reservation> reservationList = this.reservationService.getReservationByDate(rsvDate);
+		String reservationDate = rsvDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		List<Reservation> reservationList = this.reservationService.getReservationByDate(reservationDate);
 
 		mav.addObject("reservationList", reservationList);
-		mav.addObject("selectCalendarDate", rsvDate);
+		mav.addObject("selectCalendarDate", reservationDate);
 		mav.setViewName("refer-date");
 		return mav;
 	}
@@ -167,7 +167,7 @@ public class ReservationController {
 			HttpServletRequest request,
 			ModelAndView mav) {
 		// 入力フォームから受け取った値をreservationに格納
-		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm);
+		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm, request);
 		reservation.setId(id);
 		// 予約情報を更新
 		this.reservationService.updateReservation(reservation, request);
@@ -215,7 +215,7 @@ public class ReservationController {
 			HttpServletRequest request,
 			ModelAndView mav) {
 		// 入力フォームから受け取った値をreservationに格納
-		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm);
+		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm, request);
 		// 予約を登録する
 		this.reservationService.registerReservation(reservation, request);
 		// 予約情報を取得

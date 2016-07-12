@@ -14,10 +14,9 @@
 				th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
 		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
-		<script src="/js/refer-date.js" th:src="@{/js/refer-date.js}"></script>
 	</head>
 	<body>
-		<div class="header"></div>
+		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
 			<h2 th:text="|${#strings.substring(__${selectCalendarDate}__, 0, 4)} 年 ${#strings.substring(__${selectCalendarDate}__, 4, 6)} 月 ${#strings.substring(__${selectCalendarDate}__, 6, 8)} 日 |"></h2>
 			<div class="table-responsive col-sm-offset-1 col-sm-10">
@@ -30,26 +29,14 @@
 							<td th:field="*{startTime}">[[${#strings.substring(__${reservation.startTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.startTime}__, 2, 4)}]]分</td>
 							<td th:field="*{endTime}">[[${#strings.substring(__${reservation.endTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.endTime}__, 2, 4)}]]分</td>
 							<td><button type="submit" class="btn btn-default btn-sm active">確認</button>
-								<button type="button" class="btn btn-default btn-sm active delete">取消</button>
 								<input type="hidden" name="empNo" th:value="${reservation.empNo}"></input>
-								<input type="hidden" id="rsvId" name="rsvId" th:value="${reservation.id}"></input>
-								<input type="hidden" id="rsvDate" name="rsvDate" th:value="${reservation.rsvDate}"></input>
+								<input type="hidden" name="rsvId" th:value="${reservation.id}"></input>
 							</td>
 						</tr>
 					</table>
 				</form>
 				<button type="submit" class="btn btn-default btn-sm active" onclick="location.href='/reservation/new'">新規予約</button>
 				<button type="button" class="btn btn-default btn-sm active" onclick="location.href='/calendar'">戻る</button>
-			</div>
-			<div id="confirm-delete" title="予約取消">
-				<form action="/reservation/delete" method="post">
-					<p>本当に取り消しますか？</p>
-					<hr/>
-					<button type="submit" class="btn btn-default btn-sm active">はい</button>
-					<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
-					<input type="hidden" name="deleteId" id="deleteId" />
-					<input type="hidden" name="reservationDate" id="reservationDate" />
-				</form>
 			</div>
 		</div>
 	</body>
