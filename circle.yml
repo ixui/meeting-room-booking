@@ -1,5 +1,5 @@
 deployment:
   staging:
-    branch: "#48"
+    branch: \#48
     heroku:
-      appname: ixui/meeting-room-booking
+      appname: meeting-room-booking
