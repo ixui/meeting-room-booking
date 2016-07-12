@@ -1,0 +1,5 @@
+deployment:
+  staging:
+    branch: #48
+    heroku:
+      appname: ixui/meeting-room-booking
