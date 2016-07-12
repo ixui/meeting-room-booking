@@ -16,7 +16,7 @@
 		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
 	</head>
 	<body>
-		<div class="header"></div>
+		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
 			<div class="table-responsive col-sm-offset-3 col-sm-6">
 				<form action="/reservation/register" id="registerForm" method="post" th:object="${formModel}">
