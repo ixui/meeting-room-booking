@@ -7,7 +7,8 @@ $(function() {
 
 	$('#return').click(function(){
 		$('#confirm-return').dialog('open');
-		var reservationDate = $('#rsvDate').attr('value');
+		var rsvDate = $('#rsvDate').attr('value');
+		var reservationDate = rsvDate.replace(/-/g, '');
 		document.getElementById('calendarDate').value = reservationDate;
 	});
 });

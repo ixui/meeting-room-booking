@@ -1,6 +1,7 @@
 package jp.co.ixui.tamura.service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jp.co.ixui.tamura.CalendarDate;
+import jp.co.ixui.tamura.controller.reservation.ReservationForm;
 import jp.co.ixui.tamura.domain.Reservation;
 import jp.co.ixui.tamura.mapper.ReservationMapper;
 
@@ -181,5 +183,26 @@ public class ReservationService {
 		reservation.setEmpNo(empNo);
 		// 予約を更新する
 		this.reservationMapper.updateReservation(reservation);
+	}
+
+	/**
+	 * フォームから受け取った値をドメインに格納する
+	 *
+	 * @param rsvDate
+	 * @param id
+	 * @param reservationForm
+	 * @return reservation
+	 */
+	@SuppressWarnings("static-method")
+	public Reservation storeReservation(LocalDate rsvDate, ReservationForm reservationForm) {
+		Reservation reservation = new Reservation();
+		reservation.setRsvDate(rsvDate);
+		reservation.setTitle(reservationForm.getTitle());
+		reservation.setEmpNo(reservationForm.getEmpNo());
+		reservation.setStartTime(reservationForm.getStartTime());
+		reservation.setEndTime(reservationForm.getEndTime());
+		reservation.setDetail(reservationForm.getDetail());
+		reservation.setMemo(reservationForm.getMemo());
+		return reservation;
 	}
 }

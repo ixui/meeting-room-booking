@@ -22,7 +22,7 @@
 				<form action="/reservation/modify" id="modifyForm" method="post" th:object="${formModel}">
 					<table class="table table-bordered" th:inline="text">
 						<tr><th>日付</th>
-							<td><input type="date" name="rsvDate" th:value="${reservationList.rsvDate}"/></td></tr>
+							<td><input type="date" name="rsvDate" id="rsvDate" th:value="${reservationList.rsvDate}"/></td></tr>
 						<tr><th>タイトル</th>
 							<td><input type="text" name="title" th:field="*{title}" th:value="${reservationList.title}" th:placeholder="${reservationList.title}"/></td></tr>
 						<tr><th>開始時間</th>

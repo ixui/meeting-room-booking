@@ -118,7 +118,7 @@ public class ReservationController {
 	/**
 	 * 確認･修正画面を表示する
 	 *
-	 * @param reservation
+	 * @param reservationForm
 	 * @param result
 	 * @param id 予約ID
 	 * @param empNo 社員番号
@@ -129,7 +129,7 @@ public class ReservationController {
 	@SuppressWarnings("boxing")
 	@RequestMapping(value = "/reservation/confirm", method = RequestMethod.POST)
 	public ModelAndView modify(
-			@ModelAttribute("formModel") Reservation reservation,
+			@ModelAttribute("formModel") ReservationForm reservationForm,
 			BindingResult result,
 			@RequestParam(value="rsvId") int id,
 			@RequestParam(value="empNo") String empNo,
@@ -152,7 +152,7 @@ public class ReservationController {
 	 *
 	 * @param rsvDate
 	 * @param id
-	 * @param reservation
+	 * @param reservationForm
 	 * @param result
 	 * @param request
 	 * @param mav
@@ -160,14 +160,14 @@ public class ReservationController {
 	 */
 	@RequestMapping(value = "/reservation/modify", method = RequestMethod.POST)
 	public ModelAndView update(
-			@DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(value="rsvDate")LocalDate rsvDate,
-			@RequestParam(value="id")int id,
-			@ModelAttribute("formModel")Reservation reservation,
+			@DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(value="rsvDate") LocalDate rsvDate,
+			@RequestParam(value="id") int id,
+			@ModelAttribute("formModel") ReservationForm reservationForm,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
-		// IDと日付をreservationに追加
-		reservation.setRsvDate(rsvDate);
+		// 入力フォームから受け取った値をreservationに格納
+		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm);
 		reservation.setId(id);
 		// 予約情報を更新
 		this.reservationService.updateReservation(reservation, request);
@@ -201,7 +201,7 @@ public class ReservationController {
 	 * 新規予約処理
 	 *
 	 * @param rsvDate 予約日
-	 * @param reservation エンティティ
+	 * @param reservationForm
 	 * @param request
 	 * @param result バリデーションの結果
 	 * @param mav
@@ -209,20 +209,20 @@ public class ReservationController {
 	 */
 	@RequestMapping(value="/reservation/register", method = RequestMethod.POST)
 	public ModelAndView register(
-			@RequestParam(value="rsvDate") String rsvDate,
-			@ModelAttribute("formModel") @Validated Reservation reservation,
+			@DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(value="rsvDate") LocalDate rsvDate,
+			@ModelAttribute("formModel") @Validated ReservationForm reservationForm,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
+		// 入力フォームから受け取った値をreservationに格納
+		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm);
 		// 予約を登録する
 		this.reservationService.registerReservation(reservation, request);
 		// 予約情報を取得
-		String reservationDate = new SimpleDateFormat("yyyyMMdd").format(reservation.getRsvDate());
+		String reservationDate = rsvDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(reservationDate);
-		// 日付を表示するためにddを切り取る
-		String calendarDay = rsvDate.substring(rsvDate.length()-2);
 
-		mav.addObject("calendarDay", calendarDay);
+		mav.addObject("selectCalendarDate", reservationDate);
 		mav.addObject("reservationList", reservationList);
 		mav.setViewName("refer-date");
 		return mav;
