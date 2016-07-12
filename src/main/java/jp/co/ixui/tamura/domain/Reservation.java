@@ -1,6 +1,6 @@
 package jp.co.ixui.tamura.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public class Reservation {
 	/**
 	 * 予約日
 	 */
-	private Date rsvDate;
+	private LocalDate rsvDate;
 	/**
 	 * タイトル
 	 */

@@ -1,29 +1,15 @@
 $(function() {
-	$('#dialog').dialog({
-		autoOpen: false,
-		modal: true,
-		closeOnEscape: false,
-		buttons: {
-			"OK": function(){
-				$(this).dialog('close');
-			}
-		}
-	});
-
-	$('#confirm').click(function(){
-		$('#dialog').dialog('open');
-	});
-});
-
-$(function() {
-	$('#dialog-message').dialog({
+	$('#confirm-return').dialog({
 		autoOpen: false,
 		modal: true,
 		closeOnEscape: false
 	});
 
 	$('#return').click(function(){
-		$('#dialog-message').dialog('open');
+		$('#confirm-return').dialog('open');
+		var rsvDate = $('#rsvDate').attr('value');
+		var reservationDate = rsvDate.replace(/-/g, '');
+		document.getElementById('calendarDate').value = reservationDate;
 	});
 });
 
@@ -58,8 +44,14 @@ $(function() {
 });
 
 $(function() {
+	$('#modify-reservation').click(function() {
+		modifyForm.submit();
+	});
+});
+
+$(function() {
 	$('.close-dialog').click(function() {
-		$('#dialog-message').dialog('close');
+		$('#confirm-return').dialog('close');
 		$('#confirm-register').dialog('close');
 		$('#confirm-delete').dialog('close');
 	});

@@ -1,12 +1,15 @@
 package jp.co.ixui.tamura.controller.reservation;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -99,17 +102,15 @@ public class ReservationController {
 	@RequestMapping(value = "/reservation/delete", method = RequestMethod.POST)
 	public ModelAndView deleteReservation(
 			@RequestParam(value="deleteId") String id,
-			@RequestParam(value="rsvDate") String rsvDate,
+			@RequestParam(value="reservationDate") String rsvDate,
 			ModelAndView mav) {
 		// 予約を削除する
 		this.reservationService.deleteReservation(id);
-		// 受け取った日付の dd 部分を取り出す
-		String calendarDay = rsvDate.substring(rsvDate.length()-2);
 		// 予約情報を取得
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(rsvDate);
 
 		mav.addObject("reservationList", reservationList);
-		mav.addObject("calendarDay", calendarDay);
+		mav.addObject("selectCalendarDate", rsvDate);
 		mav.setViewName("refer-date");
 		return mav;
 	}
@@ -117,6 +118,8 @@ public class ReservationController {
 	/**
 	 * 確認･修正画面を表示する
 	 *
+	 * @param reservationForm
+	 * @param result
 	 * @param id 予約ID
 	 * @param empNo 社員番号
 	 * @param request
@@ -126,19 +129,55 @@ public class ReservationController {
 	@SuppressWarnings("boxing")
 	@RequestMapping(value = "/reservation/confirm", method = RequestMethod.POST)
 	public ModelAndView modify(
-			@RequestParam(value="id") int id,
+			@ModelAttribute("formModel") ReservationForm reservationForm,
+			BindingResult result,
+			@RequestParam(value="rsvId") int id,
 			@RequestParam(value="empNo") String empNo,
 			HttpServletRequest request,
 			ModelAndView mav) {
 		// 予約者本人かどうか確認する
 		boolean principal = ReservationService.booleanPrincipal(empNo, request);
 		// 選択日の予約情報をidから取得する
-		Reservation reservation = this.reservationService.getReservsationById(id);
+		Reservation reservationList = this.reservationService.getReservsationById(id);
 
-		mav.addObject("reservation", reservation);
+		mav.addObject("reservationList", reservationList);
 		mav.addObject("id", id);
 		mav.addObject("principal", principal);
 		mav.setViewName("modify");
+		return mav;
+	}
+
+	/**
+	 * 予約更新処理
+	 *
+	 * @param rsvDate
+	 * @param id
+	 * @param reservationForm
+	 * @param result
+	 * @param request
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value = "/reservation/modify", method = RequestMethod.POST)
+	public ModelAndView update(
+			@DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(value="rsvDate") LocalDate rsvDate,
+			@RequestParam(value="id") int id,
+			@ModelAttribute("formModel") ReservationForm reservationForm,
+			BindingResult result,
+			HttpServletRequest request,
+			ModelAndView mav) {
+		// 入力フォームから受け取った値をreservationに格納
+		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm);
+		reservation.setId(id);
+		// 予約情報を更新
+		this.reservationService.updateReservation(reservation, request);
+		// 予約情報を取得
+		String reservationDate = rsvDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+		List<Reservation> reservationList = this.reservationService.getReservationByDate(reservationDate);
+
+		mav.addObject("selectCalendarDate", reservationDate);
+		mav.addObject("reservationList", reservationList);
+		mav.setViewName("refer-date");
 		return mav;
 	}
 
@@ -162,7 +201,7 @@ public class ReservationController {
 	 * 新規予約処理
 	 *
 	 * @param rsvDate 予約日
-	 * @param reservation エンティティ
+	 * @param reservationForm
 	 * @param request
 	 * @param result バリデーションの結果
 	 * @param mav
@@ -170,20 +209,20 @@ public class ReservationController {
 	 */
 	@RequestMapping(value="/reservation/register", method = RequestMethod.POST)
 	public ModelAndView register(
-			@RequestParam(value="rsvDate") String rsvDate,
-			@ModelAttribute("formModel") @Validated Reservation reservation,
+			@DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(value="rsvDate") LocalDate rsvDate,
+			@ModelAttribute("formModel") @Validated ReservationForm reservationForm,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
+		// 入力フォームから受け取った値をreservationに格納
+		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm);
 		// 予約を登録する
-		this.reservationService.registerReservation(rsvDate, reservation, request);
+		this.reservationService.registerReservation(reservation, request);
 		// 予約情報を取得
-		String reservationDate = new SimpleDateFormat("yyyyMMdd").format(reservation.getRsvDate());
+		String reservationDate = rsvDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(reservationDate);
-		// 日付を表示するためにddを切り取る
-		String calendarDay = rsvDate.substring(rsvDate.length()-2);
 
-		mav.addObject("calendarDay", calendarDay);
+		mav.addObject("selectCalendarDate", reservationDate);
 		mav.addObject("reservationList", reservationList);
 		mav.setViewName("refer-date");
 		return mav;
