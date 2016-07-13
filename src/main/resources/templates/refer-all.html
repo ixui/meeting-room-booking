@@ -27,7 +27,7 @@
 							<td th:each=" n : ${#numbers.sequence(0, 6)}" th:with="date = ${calendarDateList.get(__${n}__+i*7)}">
 								<p th:if="${date}">
 									<span th:if="${date.getReservationList().size()}">
-										<a id="date">[[${date.getDay()}]]
+										<a>[[${date.getDay()}]]
 											<input type="hidden" id="selectCalendarDate" th:value="${date.makeSelectCalendarDate()}"/>
 										</a>
 									</span>

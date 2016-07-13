@@ -3,7 +3,7 @@ p {
 }
 
 hr {
-	margin:0;
+	margin: 0;
 }
 
 td {
@@ -13,9 +13,10 @@ td {
 }
 
 a {
-	display:block;
+	display: block;
 	width: 100%;
 	height: 100%;
+	cursor: pointer;
 }
 
 a:hover {
@@ -23,15 +24,15 @@ a:hover {
 }
 
 tr:nth-of-type(1) {
-	background-color:#c7d8ed;
-	color:#666666;
+	background-color: #c7d8ed;
+	color: #666666;
 }
 
 .sunday {
-	background-color:#ff3300;
-	color:#ffffff;
+	background-color: #ff3300;
+	color: #ffffff;
 }
 
 .saturday {
-	background-color:#a6c0e1;
+	background-color: #a6c0e1;
 }

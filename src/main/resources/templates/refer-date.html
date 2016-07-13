@@ -13,7 +13,7 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
 				th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
 		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
+		<script src="/js/refer-date.js" th:src="@{/js/refer-date.js}"></script>
 	</head>
 	<body>
 		<div th:include="header :: frag_header"></div>
@@ -28,9 +28,9 @@
 							<td th:field="*{rsvName}">[[${reservation.rsvName}]]</td>
 							<td th:field="*{startTime}">[[${#strings.substring(__${reservation.startTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.startTime}__, 2, 4)}]]分</td>
 							<td th:field="*{endTime}">[[${#strings.substring(__${reservation.endTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.endTime}__, 2, 4)}]]分</td>
-							<td><button type="submit" class="btn btn-default btn-sm active">確認</button>
-								<input type="hidden" name="empNo" th:value="${reservation.empNo}"></input>
-								<input type="hidden" name="rsvId" th:value="${reservation.id}"></input>
+							<td><button type="submit" class="btn btn-default btn-sm active confirm">確認</button>
+								<input type="hidden" th:value="${reservation.empNo}"></input>
+								<input type="hidden" th:value="${reservation.id}"></input>
 							</td>
 						</tr>
 					</table>
