@@ -18,7 +18,7 @@
 	<body>
 		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
-			<h2 th:text="|${#strings.substring(__${selectCalendarDate}__, 0, 4)} 年 ${#strings.substring(__${selectCalendarDate}__, 4, 6)} 月 ${#strings.substring(__${selectCalendarDate}__, 6, 8)} 日 |"></h2>
+			<h1 th:text="|${#strings.substring(__${selectCalendarDate}__, 0, 4)} 年 ${#strings.substring(__${selectCalendarDate}__, 4, 6)} 月 ${#strings.substring(__${selectCalendarDate}__, 6, 8)} 日 |"></h1>
 			<div class="table-responsive col-sm-offset-1 col-sm-10">
 				<form action="/reservation/confirm" method="post" th:object="${formModel}">
 					<table class="table table-bordered table table-striped" th:inline="text">

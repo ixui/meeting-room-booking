@@ -197,4 +197,20 @@ public class ReservationService {
 		reservation.setMemo(reservationForm.getMemo());
 		return reservation;
 	}
+
+	/**
+	 * @param reservationForm
+	 * @param reservation
+	 * @return reservationForm
+	 */
+	@SuppressWarnings("static-method")
+	public ReservationForm putReservationForm(ReservationForm reservationForm, Reservation reservation) {
+		reservationForm.setRsvDate(String.valueOf(reservation.getRsvDate()));
+		reservationForm.setTitle(reservation.getTitle());
+		reservationForm.setStartTime(reservation.getStartTime());
+		reservationForm.setEndTime(reservation.getEndTime());
+		reservationForm.setDetail(reservation.getDetail());
+		reservationForm.setMemo(reservation.getMemo());
+		return reservationForm;
+	}
 }
