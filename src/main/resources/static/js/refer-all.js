@@ -6,3 +6,9 @@ $(function() {
 		return false;
 	});
 });
+
+$(function() {
+	$('#logout').click(function(){
+		location.href="/logout";
+	});
+});
