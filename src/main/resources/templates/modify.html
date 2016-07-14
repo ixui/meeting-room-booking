@@ -21,24 +21,42 @@
 		<div class="container" align="center">
 			<div class="table-responsive col-sm-offset-3 col-sm-6">
 				<form action="/reservation/modify" id="modifyForm" method="post" th:object="${formModel}">
+					<div align="left">
+						<ul>
+							<li th:each="error : ${#fields.errors('global')}" th:text="${error}" class="err"/>
+						</ul>
+					</div>
 					<table class="table table-bordered" th:inline="text">
 						<tr><th>日付</th>
-							<td><input type="date" name="rsvDate" id="rsvDate" th:value="${reservationList.rsvDate}"/></td></tr>
+							<td><input type="date" name="rsvDate" id="rsvDate" th:value="*{rsvDate}"/>
+								<div th:if="${#fields.hasErrors('rsvDate')}" th:errors="*{rsvDate}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>タイトル</th>
-							<td><input type="text" name="title" th:field="*{title}" th:value="${reservationList.title}" th:placeholder="${reservationList.title}"/></td></tr>
+							<td><input type="text" name="title" th:field="*{title}" th:placeholder="*{title}"/>
+								<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>開始時間</th>
-							<td><input type="text" name="startTime" th:field="*{startTime}" th:placeholder="${reservationList.startTime}"/></td></tr>
+							<td><input type="text" name="startTime" th:field="*{startTime}" th:value="*{startTime}"/>
+								<div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>終了時間</th>
-							<td><input type="text" name="endTime" th:field="*{endTime}" th:placeholder="${reservationList.endTime}"/></td></tr>
+							<td><input type="text" name="endTime" th:field="*{endTime}" th:value="*{endTime}"/>
+								<div th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>詳細</th>
-							<td><textarea name="detail" cols="50" rows="6" th:field="*{detail}">[[${reservationList.detail}]]</textarea></td></tr>
+							<td><textarea name="detail" cols="50" rows="6" th:field="*{detail}" th:value="*{detail}"></textarea>
+								<div th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}" th:errorclass="err"></div>
+							</td></tr>
 						<tr th:if="${principal}"><th>メモ</th>
-							<td><textarea name="memo" cols="50" rows="6" th:field="*{memo}">[[${reservationList.memo}]]</textarea></td></tr>
+							<td><textarea name="memo" cols="50" rows="6" th:field="*{memo}" th:value="*{memo}"></textarea>
+								<div th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}" th:errorclass="err"></div>
+							</td></tr>
 					</table>
 					<button th:if="${principal}" type="button" class="btn btn-default btn-sm active" id="register">修正</button>
 					<button th:if="${principal}" type="button" class="btn btn-default btn-sm active delete">取消</button>
-					<input type="hidden" name="empNo" th:value="${reservationList.empNo}"/>
-					<input type="hidden" name="id" id="id" th:value="${reservationList.id}"/>
+					<input type="hidden" name="empNo" th:value="${empNo}"/>
+					<input type="hidden" name="id" id="id" th:value="${id}"/>
+					<input type="hidden" name="principal" id="principal" th:value="${principal}"/>
 					<hr></hr>
 					<button type="button" class="btn btn-default btn-sm active" id="return">戻る</button>
 				</form>

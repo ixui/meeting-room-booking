@@ -20,19 +20,36 @@
 		<div class="container" align="center">
 			<div class="table-responsive col-sm-offset-3 col-sm-6">
 				<form action="/reservation/register" id="registerForm" method="post" th:object="${formModel}">
+					<div align="left">
+						<ul>
+							<li th:each="error : ${#fields.errors('global')}" th:text="${error}" class="err"/>
+						</ul>
+					</div>
 					<table class="table table-bordered" th:inline="text">
 						<tr><th>日付</th>
-							<td><input type="date" name="rsvDate" th:field="*{rsvDate}" th:value="${rsvDate}"/> 例) 1990-10-28(IEの場合)</td></tr>
+							<td><input type="date" name="rsvDate" th:field="*{rsvDate}" th:value="${rsvDate}"/> 例) 1990-10-28(IEの場合)
+								<div th:if="${#fields.hasErrors('rsvDate')}" th:errors="*{rsvDate}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>タイトル</th>
-							<td><input type="text" name="title" th:field="*{title}"/></td></tr>
+							<td><input type="text" name="title" th:field="*{title}"/>
+								<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>開始時間</th>
-							<td><input type="text" name="startTime" th:field="*{startTime}"/> 例) 10時00分 → 1000</td></tr>
+							<td><input type="text" name="startTime" th:field="*{startTime}"/> 例) 10時00分 → 1000
+								<div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>終了時間</th>
-							<td><input type="text" name="endTime" th:field="*{endTime}"/> 例) 10時30分 → 1030</td></tr>
+							<td><input type="text" name="endTime" th:field="*{endTime}"/> 例) 10時30分 → 1030
+								<div th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>詳細</th>
-							<td><textarea name="detail" cols="50" rows="6" th:field="*{detail}"></textarea></td></tr>
+							<td><textarea name="detail" cols="50" rows="6" th:field="*{detail}"></textarea>
+								<div th:if="${#fields.hasErrors('detail')}" th:errors="*{detail}" th:errorclass="err"></div>
+							</td></tr>
 						<tr><th>メモ</th>
-							<td><textarea name="memo" cols="50" rows="6" th:field="*{memo}"></textarea></td></tr>
+							<td><textarea name="memo" cols="50" rows="6" th:field="*{memo}"></textarea>
+								<div th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}" th:errorclass="err"></div>
+							</td></tr>
 					</table>
 					<button type="button" class="btn btn-default btn-sm active" id="register">登録</button>
 					<button type="button" class="btn btn-default btn-sm active" id="return">戻る</button>
