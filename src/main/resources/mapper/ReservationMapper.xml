@@ -23,6 +23,11 @@
 		    ON R.EMP_NO = E.EMP_NO
 		 WHERE ID = #{id}
 	</select>
+	<select id="selectTimeByRsvDate" resultType="Reservation">
+		SELECT START_TIME, END_TIME
+		  FROM RESERVATION
+		 WHERE RSV_DATE = #{rsvDate}
+	</select>
 	<delete id="deleteReservationById">
 		DELETE FROM RESERVATION WHERE ID = #{id}
 	</delete>

@@ -2,7 +2,6 @@ package jp.co.ixui.tamura.controller.reservation;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,23 +49,6 @@ public class ReservationController {
 
 		mav.addObject("calendarDateList", calendarDateList);
 		mav.setViewName("refer-all");
-		return mav;
-	}
-
-	/**
-	 * 日付ごとの予約情報表示画面を表示する
-	 *
-	 * @param rsvDate 予約日
-	 * @param mav
-	 * @return mav
-	 */
-	@RequestMapping(value = "/reservationList", method = RequestMethod.GET)
-	public ModelAndView returnReferDate(
-			@RequestParam(value="rsvDate") Date rsvDate,
-			ModelAndView mav) {
-		List<Reservation> reservationList = this.reservationService.getReservationListByDay(rsvDate);
-		mav.addObject("reservationList", reservationList);
-		mav.setViewName("refer-date");
 		return mav;
 	}
 
@@ -200,7 +182,6 @@ public class ReservationController {
 	/**
 	 * 新規予約処理
 	 *
-	 * @param rsvDate 予約日
 	 * @param reservationForm
 	 * @param request
 	 * @param result バリデーションの結果
@@ -209,11 +190,19 @@ public class ReservationController {
 	 */
 	@RequestMapping(value="/reservation/register", method = RequestMethod.POST)
 	public ModelAndView register(
-			@DateTimeFormat(pattern = "yyyy-MM-dd")@RequestParam(value="rsvDate") LocalDate rsvDate,
 			@ModelAttribute("formModel") @Validated ReservationForm reservationForm,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
+		// エラーがある場合新規予約画面へ戻す
+		if (result.hasErrors()) {
+			mav.setViewName("register-reserve");
+			return mav;
+		}
+
+		// 受け取った日付をLocalDateに変換
+		LocalDate rsvDate = LocalDate.parse(reservationForm.getRsvDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
 		// 入力フォームから受け取った値をreservationに格納
 		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm, request);
 		// 予約を登録する

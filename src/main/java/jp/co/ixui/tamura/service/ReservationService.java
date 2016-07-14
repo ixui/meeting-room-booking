@@ -1,11 +1,9 @@
 package jp.co.ixui.tamura.service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -113,16 +111,6 @@ public class ReservationService {
 	public Reservation getReservsationById(int id) {
 		Reservation reservation = this.reservationMapper.selectReservationById(id);
 		return reservation;
-	}
-
-	/**
-	 * @param rsvDate
-	 * @return reservationList
-	 */
-	public List<Reservation> getReservationListByDay(Date rsvDate) {
-		String reservationDate = new SimpleDateFormat("yyyyMMdd").format(rsvDate);
-		List<Reservation> reservationList = this.getReservationByDate(reservationDate);
-		return reservationList;
 	}
 
 	/**

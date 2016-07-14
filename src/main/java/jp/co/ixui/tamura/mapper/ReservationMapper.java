@@ -1,5 +1,6 @@
 package jp.co.ixui.tamura.mapper;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -45,4 +46,10 @@ public interface ReservationMapper {
 	 * @param reservation
 	 */
 	void updateReservation(Reservation reservation);
+
+	/**
+	 * @param rsvDate
+	 * @return 開始時間と終了時間
+	 */
+	List<Reservation> selectTimeByRsvDate(LocalDate rsvDate);
 }
