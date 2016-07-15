@@ -42,7 +42,12 @@ public class DuplicationValidator implements ConstraintValidator<Duplication, Re
 		for (Reservation reservation : reservationList) {
 			int startTime = Integer.parseInt(reservation.getStartTime());
 			int endTime = Integer.parseInt(reservation.getEndTime());
-			if (startTime <= Integer.parseInt(value.getStartTime()) && endTime >= Integer.parseInt(value.getStartTime())) {
+			// 開始時間がすでにある予約の使用時間中の場合
+			if (startTime <= Integer.parseInt(value.getStartTime()) && endTime > Integer.parseInt(value.getStartTime())) {
+				return false;
+			}
+			// 終了時間がすでにある予約の使用時間中の場合
+			if (startTime > Integer.parseInt(value.getStartTime()) && startTime < Integer.parseInt(value.getEndTime())) {
 				return false;
 			}
 		}
