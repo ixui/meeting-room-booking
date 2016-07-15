@@ -23,11 +23,11 @@
 				<form action="/reservation/confirm" method="post" th:object="${formModel}">
 					<table class="table table-bordered table table-striped" th:inline="text">
 						<tr><th class="col-sm-2">タイトル</th><th class="col-sm-2">予約者</th><th class="col-sm-2">開始時間</th><th class="col-sm-2">終了時間</th><th class="col-sm-2"></th></tr>
-						<tr th:each="reservation : ${reservationList}">
+						<tr th:each="reservation : ${reservationList}" th:with="sTime=${reservation.startTime},eTime=${reservation.endTime}">
 							<td th:field="*{title}">[[${reservation.title}]]</td>
 							<td th:field="*{rsvName}">[[${reservation.rsvName}]]</td>
-							<td th:field="*{startTime}">[[${#strings.substring(__${reservation.startTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.startTime}__, 2, 4)}]]分</td>
-							<td th:field="*{endTime}">[[${#strings.substring(__${reservation.endTime}__, 0, 2)}]]時[[${#strings.substring(__${reservation.endTime}__, 2, 4)}]]分</td>
+							<td th:field="*{startTime}">[[${#strings.substring(sTime, 0, 2)}]]時[[${#strings.substring(sTime, 2, 4)}]]分</td>
+							<td th:field="*{endTime}">[[${#strings.substring(eTime, 0, 2)}]]時[[${#strings.substring(eTime, 2, 4)}]]分</td>
 							<td><button type="submit" class="btn btn-default btn-sm active confirm">確認</button>
 								<input type="hidden" th:value="${reservation.empNo}"></input>
 								<input type="hidden" th:value="${reservation.id}"></input>
