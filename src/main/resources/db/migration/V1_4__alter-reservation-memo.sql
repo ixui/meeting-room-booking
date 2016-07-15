@@ -1,0 +1,1 @@
+alter table reservation modify column memo varchar(255) not null default 'なし';
