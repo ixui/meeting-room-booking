@@ -55,15 +55,15 @@ public class LoginController {
 	 * @return mav
 	 */
 	@RequestMapping(value="/login/error")
-	public static ModelAndView login(
+	public ModelAndView login(
 			@ModelAttribute("formModel") @Validated LoginForm loginDTO,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
 		// バリデーションの結果をチェック
 		if (!result.hasErrors()) {
-			// セッションに社員番号を格納
-			UserService.setEmpNoSession(request, loginDTO);
+			// セッションに社員番号とユーザー名を格納
+			this.userService.setEmpNoSession(request, loginDTO);
 			// カレンダー表示画面にリダイレクト
 			return new ModelAndView("redirect:/calendar");
 		}
