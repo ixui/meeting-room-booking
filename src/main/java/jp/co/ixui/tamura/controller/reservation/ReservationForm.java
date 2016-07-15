@@ -34,6 +34,5 @@ public class ReservationForm {
 	@NotEmpty(message="詳細を入力してください")
 	private String detail;
 
-	@NotEmpty(message="メモを入力してください")
 	private String memo;
 }
