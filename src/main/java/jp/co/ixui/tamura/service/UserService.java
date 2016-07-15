@@ -63,14 +63,16 @@ public class UserService {
 	}
 
 	/**
-	 * セッションに社員番号を格納する
+	 * セッションに社員番号とユーザー名を格納する
 	 *
 	 * @param request
 	 * @param loginDTO
 	 */
-	public static void setEmpNoSession(HttpServletRequest request,LoginForm loginDTO) {
+	public void setEmpNoSession(HttpServletRequest request,LoginForm loginDTO) {
+		String userName = this.empMstMapper.selectUser(loginDTO.getEmpNo()).getName();
 		HttpSession session = request.getSession();
 		session.setAttribute("empNo", loginDTO.getEmpNo());
+		session.setAttribute("userName", userName);
 	}
 
 	/**
