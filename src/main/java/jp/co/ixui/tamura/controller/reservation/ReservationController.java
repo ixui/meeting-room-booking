@@ -91,9 +91,23 @@ public class ReservationController {
 		String reservationDate = rsvDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 		List<Reservation> reservationList = this.reservationService.getReservationByDate(reservationDate);
 
+		if (reservationList.size() == 0) {
+			return new ModelAndView("redirect:/reservationList/empty");
+		}
+
 		mav.addObject("reservationList", reservationList);
 		mav.addObject("selectCalendarDate", reservationDate);
 		mav.setViewName("refer-date");
+		return mav;
+	}
+
+	/**
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value = "/reservationList/empty", method = RequestMethod.GET)
+	public static ModelAndView emptyData(ModelAndView mav) {
+		mav.setViewName("empty-data");
 		return mav;
 	}
 

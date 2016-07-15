@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<title>No Reservation</title>
+		<link type="text/css" rel="stylesheet"  href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+		<link type="text/css" rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	</head>
+	<body>
+		<div th:include="header :: frag_header"></div>
+		<div class="container" align="center">
+			<img alt="" src="/logo.jpg"/>
+			<h2>No Reservation</h2>
+			<a href="/calendar">カレンダー画面へ</a>
+		</div>
+	</body>
+</html>
