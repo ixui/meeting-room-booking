@@ -40,7 +40,7 @@ public class DuplicationValidator implements ConstraintValidator<Duplication, Re
 		List<Reservation> reservationList = this.reservationMapper.selectTimeByRsvDate(rsvDate);
 
 		for (Reservation reservation : reservationList) {
-			if (value.getId == reservation.getId) {
+			if (value.getId() == reservation.getId()) {
 				continue;
 			}
 			int startTime = Integer.parseInt(reservation.getStartTime());
