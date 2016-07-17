@@ -55,7 +55,7 @@
 					<button th:if="${principal}" type="button" class="btn btn-default btn-sm active" id="register">登録</button>
 					<button th:if="${principal}" type="button" class="btn btn-default btn-sm active delete">削除</button>
 					<input type="hidden" name="empNo" th:value="${empNo}"/>
-					<input type="hidden" name="id" id="id" th:value="${id}"/>
+					<input type="hidden" name="id" id="id" th:field="*{id}" th:value="${id}"/>
 					<input type="hidden" name="principal" id="principal" th:value="${principal}"/>
 					<hr></hr>
 					<button type="button" class="btn btn-default btn-sm active" id="return">戻る</button>

@@ -35,4 +35,6 @@ public class ReservationForm {
 	private String detail;
 
 	private String memo;
+
+	private int id;
 }

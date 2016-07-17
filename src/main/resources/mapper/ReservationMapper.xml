@@ -24,7 +24,7 @@
 		 WHERE ID = #{id}
 	</select>
 	<select id="selectTimeByRsvDate" resultType="Reservation">
-		SELECT START_TIME, END_TIME
+		SELECT ID, START_TIME, END_TIME
 		  FROM RESERVATION
 		 WHERE RSV_DATE = #{rsvDate}
 	</select>
