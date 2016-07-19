@@ -38,11 +38,11 @@ public class ReservationService {
 	private static final int SUNDAY_NUMBER = 7;
 
 	/**
-	 * カレンダー作成メソッド
+	 * 当月のカレンダーを作成するための情報を設定
 	 *
 	 * @return calendarDateList
 	 */
-	public List<CalendarDate> makeCalendarDateList() {
+	public List<CalendarDate> makeCurrentMonthCalendar() {
 		// 現在の年月を取得
 		YearMonth yearMonth = YearMonth.now();
 		// 年月を文字列に変換
@@ -56,6 +56,27 @@ public class ReservationService {
 		// 取得した月の日数を取得
 		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
 
+		List<CalendarDate> calendarDateList = makeCalendarList(currentYearMonth, year, month, startDayOfWeek,
+				currrentMonthLastDay);
+		return calendarDateList;
+	}
+
+	public List<CalendarDate> makeNextMonthCalendar(String calendarDate) {
+		// 次月の年と月を取得
+		return null;
+	}
+
+
+	/**
+	 * @param currentYearMonth
+	 * @param year
+	 * @param month
+	 * @param startDayOfWeek
+	 * @param currrentMonthLastDay
+	 * @return calendarDateList
+	 */
+	public List<CalendarDate> makeCalendarList(String currentYearMonth, String year, String month, int startDayOfWeek,
+			int currrentMonthLastDay) {
 		int count = 0;
 		List<CalendarDate> calendarDateList = new ArrayList<>();
 		// カレンダーの頭の空白部分にnullを格納

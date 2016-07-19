@@ -45,7 +45,7 @@ public class ReservationController {
 	public ModelAndView referAll(ModelAndView mav) {
 
 		// カレンダーに表示する日付インスタンスを取得
-		List<CalendarDate> calendarDateList = this.reservationService.makeCalendarDateList();
+		List<CalendarDate> calendarDateList = this.reservationService.makeCurrentMonthCalendar();
 
 		mav.addObject("calendarDateList", calendarDateList);
 		mav.setViewName("refer-all");
