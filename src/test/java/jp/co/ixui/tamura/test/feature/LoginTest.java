@@ -17,7 +17,7 @@ public class LoginTest extends FluentTest {
     public void ログイン情報を入力してログインする() {
 
 		//ログイン画面を表示
-        goTo("https://" + System.getenv("SECURITY_USER_NAME") + ":" + System.getenv("SECURITY_USER_PASSWORD") + "@meeting-room-booking.herokuapp.com/login");
+        goTo("https://" + System.getenv("SECURITY_USER_NAME") + ":" + System.getenv("SECURITY_USER_PASSWORD") + "@" + System.getenv("APP_URL") + "/login");
 
         fill("#empNo").with("1");
         fill("#pass").with("12345678");
