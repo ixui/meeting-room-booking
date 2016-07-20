@@ -61,9 +61,23 @@ public class ReservationService {
 		return calendarDateList;
 	}
 
+	/**
+	 * @param calendarDate
+	 * @return calendarDateList
+	 */
 	public List<CalendarDate> makeNextMonthCalendar(String calendarDate) {
 		// 次月の年と月を取得
-		return null;
+		int year = Integer.parseInt(calendarDate.substring(0, 4));
+		int month = Integer.parseInt(calendarDate.substring(4, 6) + 1);
+		YearMonth yearMonth = YearMonth.of(year, month);
+		// 取得した月の1日の曜日をintで取得
+		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
+		// 取得した月の日数を取得
+		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
+
+		List<CalendarDate> calendarDateList = makeCalendarList(calendarDate, String.valueOf(year), String.valueOf(month), startDayOfWeek,
+				currrentMonthLastDay);
+		return calendarDateList;
 	}
 
 

@@ -53,6 +53,24 @@ public class ReservationController {
 	}
 
 	/**
+	 * @param calendarDate
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value = "/calendar/move", method = RequestMethod.POST)
+	public ModelAndView calendar(
+			@RequestParam(value="calendarDate")String calendarDate,
+			ModelAndView mav) {
+
+		// カレンダーに表示する日付インスタンスを取得
+		List<CalendarDate> calendarDateList = this.reservationService.makeNextMonthCalendar(calendarDate);
+
+		mav.addObject("calendarDateList", calendarDateList);
+		mav.setViewName("refer-all");
+		return mav;
+	}
+
+	/**
 	 * カレンダー画面から遷移して、日付ごとの予約情報表示画面を表示する
 	 *
 	 * @param selectCalendarDate
