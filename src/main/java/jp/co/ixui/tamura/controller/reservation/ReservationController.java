@@ -143,9 +143,9 @@ public class ReservationController {
 		reservationForm.setEndTime(reservation.getEndTime());
 		reservationForm.setDetail(reservation.getDetail());
 		reservationForm.setMemo(reservation.getMemo());
+		reservationForm.setId(id);
 
 		mav.addObject("reservation", reservation);
-		mav.addObject("id", id);
 		mav.addObject("principal", principal);
 		mav.setViewName("modify");
 		return mav;
