@@ -12,6 +12,11 @@ td {
 	text-align: center;
 }
 
+.reservation {
+	display: block;
+	background-color:#fffacd;
+}
+
 a {
 	display: block;
 	width: 100%;
