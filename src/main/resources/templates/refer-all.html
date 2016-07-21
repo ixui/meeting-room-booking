@@ -18,8 +18,14 @@
 		<div class="container" align="center">
 			<div class="panel-body col-sm-offset-2 col-sm-8">
 				<form action="/reservationList" method="post" name="refer">
-					<h1 th:text="${#dates.format(new java.util.Date(), 'yyyy年MM月')}"></h1>
-					<div></div>
+					<input type="hidden" id="currentYearMonth" th:value="${calendarDateList.get(10).makeSelectCalendarDate()}"/>
+					<h1 th:text="${calendarDateList.get(10).getYear()} + 年  + ${calendarDateList.get(10).getMonth()} + 月"></h1>
+					<div class="before">
+						<a class="beforeMonth">前へ</a>
+					</div>
+					<div class="next">
+						<a class="nextMonth">次へ</a>
+					</div>
 					<table class="table table-bordered" th:inline="text">
 						<tr>
 							<td class="sunday">日</td><td>月</td><td>火</td><td>水</td><td>木</td><td>金</td><td class="saturday">土</td>

@@ -53,17 +53,39 @@ public class ReservationController {
 	}
 
 	/**
+	 * 次月のカレンダーを表示
+	 *
 	 * @param calendarDate
 	 * @param mav
 	 * @return mav
 	 */
-	@RequestMapping(value = "/calendar/move", method = RequestMethod.POST)
-	public ModelAndView calendar(
+	@RequestMapping(value = "/calendar/next", method = RequestMethod.POST)
+	public ModelAndView nextMonthCalendar(
 			@RequestParam(value="calendarDate")String calendarDate,
 			ModelAndView mav) {
 
 		// カレンダーに表示する日付インスタンスを取得
 		List<CalendarDate> calendarDateList = this.reservationService.makeNextMonthCalendar(calendarDate);
+
+		mav.addObject("calendarDateList", calendarDateList);
+		mav.setViewName("refer-all");
+		return mav;
+	}
+
+	/**
+	 * 前月のカレンダーを表示
+	 *
+	 * @param calendarDate
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value = "/calendar/before", method = RequestMethod.POST)
+	public ModelAndView beforeMonthCalendar(
+			@RequestParam(value="calendarDate")String calendarDate,
+			ModelAndView mav) {
+
+		// カレンダーに表示する日付インスタンスを取得
+		List<CalendarDate> calendarDateList = this.reservationService.makeBeforeMonthCalendar(calendarDate);
 
 		mav.addObject("calendarDateList", calendarDateList);
 		mav.setViewName("refer-all");

@@ -36,3 +36,13 @@ tr:nth-of-type(1) {
 .saturday {
 	background-color: #a6c0e1;
 }
+
+.next {
+	padding: 10px 60px;
+	float: right;
+}
+
+.before {
+	padding: 10px 60px;
+	float: left;
+}
