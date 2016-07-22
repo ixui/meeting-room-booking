@@ -2,27 +2,19 @@ $(function() {
 	$('a.calendar').click(function(){
 		var date = $(this).children('input').attr('value');
 		document.getElementById('calendarDate').value=date;
-		document.refer.submit();
-		return false;
+		$('form').submit();
 	});
 });
 
 $(function() {
-	$('a.nextMonth').click(function(){
+	$('a.moveMonth').click(function(){
 		var date = $('input#currentYearMonth').attr('value');
 		document.getElementById('calendarDate').value=date;
-		$('form').attr('action', '/calendar/next');
-		document.refer.submit();
-		return false;
-	});
-});
-
-$(function() {
-	$('a.beforeMonth').click(function(){
-		var date = $('input#currentYearMonth').attr('value');
-		document.getElementById('calendarDate').value=date;
-		$('form').attr('action', '/calendar/before');
-		document.refer.submit();
-		return false;
+		if ($(this).parent('div').attr('id') == 'next') {
+			$('form').attr('action', '/calendar/next');
+		} else {
+			$('form').attr('action', '/calendar/before');
+		};
+		$('form').submit();
 	});
 });
