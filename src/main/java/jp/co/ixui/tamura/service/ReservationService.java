@@ -38,7 +38,7 @@ public class ReservationService {
 	private static final int SUNDAY_NUMBER = 7;
 
 	/**
-	 * 当月のカレンダーを作成するための情報を設定
+	 * 現在の月のカレンダーを表示するための情報を設定
 	 *
 	 * @return calendarDateList
 	 */
@@ -62,58 +62,32 @@ public class ReservationService {
 	}
 
 	/**
+	 * URLで指定した月のカレンダーを表示するための情報を設定
+	 *
 	 * @param calendarDate
 	 * @return calendarDateList
 	 */
-	public List<CalendarDate> makeNextMonthCalendar(String calendarDate) {
-		// 次月の年と月を取得
-		int year = Integer.parseInt(calendarDate.substring(0, 4));
-		int month = Integer.parseInt(calendarDate.substring(4, 6));
-		YearMonth yearMonth = YearMonth.of(year, month).plusMonths(1);
+	public List<CalendarDate> makeDesignatedMonthCalendar(String designatedMonth) {
+		YearMonth yearMonth = YearMonth.parse(designatedMonth, DateTimeFormatter.ofPattern("yyyyMM"));
 		// 取得した月の1日の曜日をintで取得
 		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
 		// 取得した月の日数を取得
 		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
 
-		String nextYear = String.valueOf(year);
-		String nextMonth = String.valueOf(yearMonth.getMonthValue());
-		if (nextMonth.length() == 1) {
-			nextMonth = "0" + nextMonth;
+		String year = String.valueOf(yearMonth.getYear());
+		String month = String.valueOf(yearMonth.getMonthValue());
+		if (month.length() == 1) {
+			month = "0" + month;
 		}
-		String nextYearMonth = nextYear+ nextMonth;
 
-		List<CalendarDate> calendarDateList = makeCalendarList(nextYearMonth, nextYear, nextMonth, startDayOfWeek,
+		List<CalendarDate> calendarDateList = makeCalendarList(designatedMonth, year, month, startDayOfWeek,
 				currrentMonthLastDay);
 		return calendarDateList;
 	}
 
 	/**
-	 * @param calendarDate
-	 * @return calendarDateList
-	 */
-	public List<CalendarDate> makeBeforeMonthCalendar(String calendarDate) {
-		// 次月の年と月を取得
-		int year = Integer.parseInt(calendarDate.substring(0, 4));
-		int month = Integer.parseInt(calendarDate.substring(4, 6));
-		YearMonth yearMonth = YearMonth.of(year, month).minusMonths(1);
-		// 取得した月の1日の曜日をintで取得
-		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
-		// 取得した月の日数を取得
-		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
-
-		String beforeYear = String.valueOf(year);
-		String beforeMonth = String.valueOf(yearMonth.getMonthValue());
-		if (beforeMonth.length() == 1) {
-			beforeMonth = "0" + beforeMonth;
-		}
-		String beforeYearMonth = beforeYear+ beforeMonth;
-
-		List<CalendarDate> calendarDateList = makeCalendarList(beforeYearMonth, beforeYear, beforeMonth, startDayOfWeek,
-				currrentMonthLastDay);
-		return calendarDateList;
-	}
-
-	/**
+	 * カレンダーを表示するための日付インスタンスを格納
+	 *
 	 * @param currentYearMonth
 	 * @param year
 	 * @param month
