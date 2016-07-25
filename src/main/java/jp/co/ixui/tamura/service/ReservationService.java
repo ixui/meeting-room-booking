@@ -5,6 +5,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -68,6 +69,7 @@ public class ReservationService {
 	 * @return calendarDateList
 	 */
 	public List<CalendarDate> makeDesignatedMonthCalendar(String designatedMonth) {
+		// 文字列から日付に変換
 		YearMonth yearMonth = YearMonth.parse(designatedMonth, DateTimeFormatter.ofPattern("yyyyMM"));
 		// 取得した月の1日の曜日をintで取得
 		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
@@ -131,6 +133,26 @@ public class ReservationService {
 		return calendarDateList;
 	}
 
+	/**
+	 * カレンダー月移動時のURLチェック
+	 *
+	 * @param designatedMonth
+	 * @return エラーの有無
+	 */
+	public boolean urlHasErrors(String designatedMonth) {
+		if (!Pattern.matches("[0-9]{6}",designatedMonth)) {
+			return true;
+		}
+		int yearMonth = Integer.parseInt(designatedMonth.substring(0, 4));
+		if (2015 >= yearMonth || 2100 <= yearMonth) {
+			return true;
+		}
+		int day = Integer.parseInt(designatedMonth.substring(4));
+		if (0 >= day || 12 < day) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 選択日の予約情報を取得する

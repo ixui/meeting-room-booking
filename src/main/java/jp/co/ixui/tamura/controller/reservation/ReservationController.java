@@ -63,6 +63,9 @@ public class ReservationController {
 	public ModelAndView referDesignatedMonthCalendar(
 			@PathVariable String designatedMonth,
 			ModelAndView mav) {
+		if (this.reservationService.urlHasErrors(designatedMonth)) {
+			return new ModelAndView("redirect:/calendar");
+		}
 		// カレンダーに表示する日付インスタンスを取得
 		List<CalendarDate> calendarDateList = this.reservationService.makeDesignatedMonthCalendar(designatedMonth);
 
