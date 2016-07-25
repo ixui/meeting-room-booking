@@ -216,6 +216,14 @@ public class ReservationController {
 		return mav;
 	}
 
+	@RequestMapping(value="/reservation/new", method = RequestMethod.POST)
+	public ModelAndView registration(
+			@ModelAttribute("formModel") Reservation reservation,
+			ModelAndView mav) {
+		mav.setViewName("register-reserve");
+		return mav;
+	}
+
 	/**
 	 * 新規予約処理
 	 *
