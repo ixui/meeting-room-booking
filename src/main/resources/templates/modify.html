@@ -20,7 +20,7 @@
 		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
 			<div class="table-responsive col-sm-offset-3 col-sm-6">
-				<form action="/reservation/modify" id="modifyForm" method="post" th:object="${formModel}">
+				<form action="/reservation/modify" id="registerForm" method="post" th:object="${formModel}">
 					<div align="left">
 						<ul>
 							<li th:each="error : ${#fields.errors('global')}" th:text="${error}" class="err"/>
@@ -67,7 +67,7 @@
 				<p>入力した内容は消えてしまいます。</p>
 				<p>本当に戻りますか？</p>
 				<hr></hr>
-				<button type="submit" class="btn btn-default btn-sm active">はい</button>
+				<button type="submit" class="btn btn-default btn-sm active return">はい</button>
 				<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
 				<input type="hidden" name="calendarDate" id="calendarDate"/>
 			</form>
@@ -75,14 +75,14 @@
 		<div id="confirm-register" title="予約登録">
 			<p>登録いたしますか？</p>
 			<hr></hr>
-			<button type="submit" class="btn btn-default btn-sm active" id="modify-reservation">はい</button>
+			<button type="submit" class="btn btn-default btn-sm active" id="register-reservation">はい</button>
 			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
 		</div>
 		<div id="confirm-delete" title="予約取消">
 			<form action="/reservation/delete" method="post">
 				<p>本当に取り消しますか？</p>
 				<hr/>
-				<button type="submit" class="btn btn-default btn-sm active">はい</button>
+				<button type="submit" class="btn btn-default btn-sm active" id="delete">はい</button>
 				<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
 				<input type="hidden" name="deleteId" id="deleteId" />
 				<input type="hidden" name="reservationDate" id="reservationDate" />

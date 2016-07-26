@@ -6,3 +6,9 @@ $(function() {
 		return false;
 	});
 });
+
+$(function() {
+	$('#newRegistration').click(function(){
+		window.location = '/reservation/new';
+	});
+});
