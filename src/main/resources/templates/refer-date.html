@@ -31,15 +31,15 @@
 							<td><button type="submit" class="btn btn-default btn-sm active confirm">確認</button>
 								<input type="hidden" th:value="${reservation.empNo}"/>
 								<input type="hidden" th:value="${reservation.id}"/>
-								<input type="hidden" id="rsvDate" th:field="*{rsvDate}" th:value="${reservation.rsvDate}"/>
+								<input type="hidden" id="rsvDate" th:value="${reservation.rsvDate}"/>
 							</td>
 						</tr>
 					</table>
 				</form>
 				<button type="button" class="btn btn-default btn-sm active" id="newRegistration">新規予約</button>
 				<button type="button" class="btn btn-default btn-sm active" onclick="location.href='/calendar'">戻る</button>
-				<form action="/reservation/new" method="post" id="registrationForm">
-					<input type="hidden" id="calendarDate"/>
+				<form action="/reservation/new" method="post" th:object="${formModel}" id="registrationForm">
+					<input type="hidden" id="calendarDate" name="calendarDate"/>
 				</form>
 			</div>
 		</div>

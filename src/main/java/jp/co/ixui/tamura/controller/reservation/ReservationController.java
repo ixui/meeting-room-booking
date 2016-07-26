@@ -218,8 +218,10 @@ public class ReservationController {
 
 	@RequestMapping(value="/reservation/new", method = RequestMethod.POST)
 	public ModelAndView registration(
+			@RequestParam(value="calendarDate") String rsvDate,
 			@ModelAttribute("formModel") Reservation reservation,
 			ModelAndView mav) {
+		mav.addObject("rsvDate", rsvDate);
 		mav.setViewName("register-reserve");
 		return mav;
 	}

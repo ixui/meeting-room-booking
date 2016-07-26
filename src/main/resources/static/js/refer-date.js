@@ -8,7 +8,7 @@ $(function() {
 $(function() {
 	$('#newRegistration').click(function(){
 		var rsvDate = $('#rsvDate').attr('value');
-		$('#reservationDate').val('rsvDate');
+		$('input#calendarDate').val(rsvDate);
 		$('#registrationForm').submit();
 	})
 })
