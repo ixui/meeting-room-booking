@@ -5,3 +5,9 @@ $(function() {
 		$('form').submit();
 	});
 });
+
+$(function() {
+	$('#newRegistration').click(function(){
+		window.location = '/reservation/new';
+	});
+});
