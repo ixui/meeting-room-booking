@@ -1,4 +1,28 @@
 $(function() {
+
+	isChange = false;
+
+	$('#rsvDate').change(function() {
+		isChange = true;
+	});
+	$('#title').change(function() {
+		isChange = true;
+	});
+	$('#startTime').change(function() {
+		isChange = true;
+	});
+	$('#endTime').change(function() {
+		isChange = true;
+	});
+	$('#detail').change(function() {
+		isChange = true;
+	});
+	$('#memo').change(function() {
+		isChange = true;
+	});
+});
+
+$(function() {
 	$('#confirm-return').dialog({
 		autoOpen: false,
 		modal: true,
@@ -6,10 +30,20 @@ $(function() {
 	});
 
 	$('#return').click(function(){
-		$('#confirm-return').dialog('open');
 		var rsvDate = $('#rsvDate').attr('value');
 		var reservationDate = rsvDate.replace(/-/g, '');
 		document.getElementById('calendarDate').value = reservationDate;
+
+		if ($('#principal').attr('value') == "false") {
+			$('#returnForm').submit();
+			return;
+		};
+
+		if (isChange) {
+			$('#confirm-return').dialog('open');
+		} else {
+			$('#returnForm').submit();
+		};
 	});
 });
 
@@ -51,8 +85,6 @@ $(function() {
 
 $(function() {
 	$('.close-dialog').click(function() {
-		$('#confirm-return').dialog('close');
-		$('#confirm-register').dialog('close');
-		$('#confirm-delete').dialog('close');
+		$(this).parents('div').dialog('close');
 	});
 });
