@@ -24,7 +24,8 @@ $(function() {
 
 $(function() {
 	$('.return').click(function() {
-		$(this).attr('disabled', true);
+		$('.btn').attr('disabled', true);
+		$('#returnForm').submit();
 	});
 });
 
@@ -47,15 +48,15 @@ $(function() {
 		closeOnEscape: false
 	});
 
-	$('.delete').click(function(){
+	$('#delete').click(function(){
 		$('#confirm-delete').dialog('open');
 	});
 });
 
 $(function() {
 	$('#register-reservation').click(function() {
-		$(this).attr('disabled', true);
-		registerForm.submit();
+		$('.btn').attr('disabled', true);
+		$('#registerForm').submit();
 	});
 });
 

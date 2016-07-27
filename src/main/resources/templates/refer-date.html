@@ -29,7 +29,7 @@
 							<td th:field="*{rsvName}">[[${reservation.rsvName}]]</td>
 							<td th:field="*{startTime}">[[${#strings.substring(sTime, 0, 2)}]]時[[${#strings.substring(sTime, 2, 4)}]]分</td>
 							<td th:field="*{endTime}">[[${#strings.substring(eTime, 0, 2)}]]時[[${#strings.substring(eTime, 2, 4)}]]分</td>
-							<td><button type="submit" class="btn btn-default btn-sm active confirm">確認</button>
+							<td><button type="button" class="btn btn-default btn-sm active confirm">確認</button>
 								<input type="hidden" th:value="${reservation.empNo}"/>
 								<input type="hidden" th:value="${reservation.id}"/>
 								<input type="hidden" id="rsvDate" th:value="${reservation.rsvDate}"/>
