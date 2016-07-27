@@ -9,13 +9,14 @@ $(function() {
 		$('#confirm-return').dialog('open');
 		var rsvDate = $('#rsvDate').attr('value');
 		var reservationDate = rsvDate.replace(/-/g, '');
-		document.getElementById('calendarDate').value = reservationDate;
+		$('#calendarDate').attr('value', reservationDate);
 	});
 });
 
 $(function() {
 	$('.return').click(function() {
-		$(this).attr('disabled', true);
+		$('.btn').attr('disabled', true);
+		$('#returnForm').submit();
 	});
 });
 
@@ -38,15 +39,15 @@ $(function() {
 		closeOnEscape: false
 	});
 
-	$('.delete').click(function(){
+	$('#delete').click(function(){
 		$('#confirm-delete').dialog('open');
 	});
 });
 
 $(function() {
 	$('#register-reservation').click(function() {
-		$(this).attr('disabled', true);
-		registerForm.submit();
+		$('.btn').attr('disabled', true);
+		$('#registerForm').submit();
 	});
 });
 
