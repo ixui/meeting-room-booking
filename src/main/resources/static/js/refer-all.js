@@ -11,3 +11,10 @@ $(function() {
 		window.location = '/reservation/new';
 	});
 });
+
+$(function() {
+	$('.moveMonth').click(function(){
+		var calendarUrl = $(this).attr('href');
+		window.location = calendarUrl;
+	});
+});
