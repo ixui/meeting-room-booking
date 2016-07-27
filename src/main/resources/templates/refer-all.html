@@ -16,9 +16,15 @@
 	<body>
 		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
-			<div class="panel-body col-sm-offset-2 col-sm-8">
+			<div class="panel-body col-sm-offset-2 col-sm-8" th:with="calendar =  ${calendarDateList.get(10)}">
 				<form action="/reservationList" method="post" name="refer">
-					<h1 th:text="${#dates.format(new java.util.Date(), 'yyyy年MM月')}"></h1>
+					<h1 th:text="${calendar.getYear()} + 年  + ${calendar.getMonth()} + 月"></h1>
+					<div id="before">
+						<a th:href="@{'/calendar/' + ${calendar.getLastMonth()}}">←前月</a>
+					</div>
+					<div id="next">
+						<a th:href="@{'/calendar/' + ${calendar.getNextMonth()}}">次月→</a>
+					</div>
 					<table class="table table-bordered" th:inline="text">
 						<tr>
 							<td class="sunday">日</td><td>月</td><td>火</td><td>水</td><td>木</td><td>金</td><td class="saturday">土</td>
