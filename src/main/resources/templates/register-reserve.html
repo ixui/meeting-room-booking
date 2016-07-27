@@ -27,7 +27,7 @@
 					</div>
 					<table class="table table-bordered" th:inline="text">
 						<tr><th>日付</th>
-							<td><input type="date" name="rsvDate" th:field="*{rsvDate}" th:value="${rsvDate}"/> 例) 1990-10-28(IEの場合)
+							<td><input type="date" name="rsvDate" th:value="${rsvDate}"/> 例) 1990-10-28(IEの場合)
 								<div th:if="${#fields.hasErrors('rsvDate')}" th:errors="*{rsvDate}" th:errorclass="err"></div>
 							</td></tr>
 						<tr><th>タイトル</th>
