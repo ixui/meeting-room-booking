@@ -13,3 +13,28 @@ $(function() {
 		$('#deleteForm').submit();
 	});
 });
+
+$(function() {
+	$('#confirm-return').dialog({
+		autoOpen: false,
+		modal: true,
+		closeOnEscape: false
+	});
+
+	$('#return').click(function(){
+		var rsvDate = $('#rsvDate').attr('value');
+		var reservationDate = rsvDate.replace(/-/g, '');
+		document.getElementById('calendarDate').value = reservationDate;
+
+		if ($('#principal').attr('value') == "false") {
+			$('#returnForm').submit();
+			return;
+		};
+
+		if (isChange) {
+			$('#confirm-return').dialog('open');
+		} else {
+			$('#returnForm').submit();
+		};
+	});
+});
