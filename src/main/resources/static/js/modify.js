@@ -6,3 +6,9 @@ $(function() {
 		document.getElementById('reservationDate').value = reservationDate;
 	});
 });
+
+$(function() {
+	$('#delete').click(function(){
+		$(this).attr('disabled', true);
+	});
+});

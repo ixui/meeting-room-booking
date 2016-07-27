@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +37,7 @@ public class ReservationController {
 	UserService userService;
 
 	/**
-	 * カレンダー画面を表示する
+	 * 現在の月のカレンダーを表示する
 	 *
 	 * @param mav カレンダー表示するために使う値
 	 * @return mav カレンダーを表示するために使う値
@@ -45,7 +46,28 @@ public class ReservationController {
 	public ModelAndView referAll(ModelAndView mav) {
 
 		// カレンダーに表示する日付インスタンスを取得
-		List<CalendarDate> calendarDateList = this.reservationService.makeCalendarDateList();
+		List<CalendarDate> calendarDateList = this.reservationService.makeCurrentMonthCalendar();
+
+		mav.addObject("calendarDateList", calendarDateList);
+		mav.setViewName("refer-all");
+		return mav;
+	}
+
+	/**
+	 * URLで指定した月のカレンダーを表示
+	 *
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value = "/calendar/{designatedMonth}", method = RequestMethod.GET)
+	public ModelAndView referDesignatedMonthCalendar(
+			@PathVariable String designatedMonth,
+			ModelAndView mav) {
+		if (this.reservationService.urlHasErrors(designatedMonth)) {
+			return new ModelAndView("redirect:/calendar");
+		}
+		// カレンダーに表示する日付インスタンスを取得
+		List<CalendarDate> calendarDateList = this.reservationService.makeDesignatedMonthCalendar(designatedMonth);
 
 		mav.addObject("calendarDateList", calendarDateList);
 		mav.setViewName("refer-all");
@@ -212,6 +234,16 @@ public class ReservationController {
 	public ModelAndView newRegistration(
 			@ModelAttribute("formModel") Reservation reservation,
 			ModelAndView mav) {
+		mav.setViewName("register-reserve");
+		return mav;
+	}
+
+	@RequestMapping(value="/reservation/new", method = RequestMethod.POST)
+	public ModelAndView registration(
+			@RequestParam(value="calendarDate") String rsvDate,
+			@ModelAttribute("formModel") Reservation reservation,
+			ModelAndView mav) {
+		mav.addObject("rsvDate", rsvDate);
 		mav.setViewName("register-reserve");
 		return mav;
 	}

@@ -48,6 +48,12 @@ $(function() {
 });
 
 $(function() {
+	$('.return').click(function() {
+		$(this).attr('disabled', true);
+	});
+});
+
+$(function() {
 	$('#confirm-register').dialog({
 		autoOpen: false,
 		modal: true,
@@ -73,13 +79,8 @@ $(function() {
 
 $(function() {
 	$('#register-reservation').click(function() {
+		$(this).attr('disabled', true);
 		registerForm.submit();
-	});
-});
-
-$(function() {
-	$('#modify-reservation').click(function() {
-		modifyForm.submit();
 	});
 });
 

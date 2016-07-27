@@ -1,5 +1,7 @@
 package jp.co.ixui.tamura;
 
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import jp.co.ixui.tamura.domain.Reservation;
@@ -30,5 +32,21 @@ public class CalendarDate {
 			currentDay = 0 + currentDay;
 		}
 		return this.year + this.month + currentDay;
+	}
+
+	/**
+	 * @return 次月
+	 */
+	public String getNextMonth() {
+		String nextMonth = YearMonth.parse(year + "-" + month).plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
+		return nextMonth;
+	}
+
+	/**
+	 * @return 前月
+	 */
+	public String getLastMonth() {
+		String lastMonth = YearMonth.parse(year + "-" + month).minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
+		return lastMonth;
 	}
 }
