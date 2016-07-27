@@ -10,5 +10,11 @@ $(function() {
 		var rsvDate = $('#rsvDate').attr('value');
 		$('input#calendarDate').val(rsvDate);
 		$('#registrationForm').submit();
-	})
-})
+	});
+});
+
+$(function() {
+	$('#return').click(function(){
+		window.location = '/calendar';
+	});
+});

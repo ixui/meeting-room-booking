@@ -5,6 +5,7 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,11 +39,11 @@ public class ReservationService {
 	private static final int SUNDAY_NUMBER = 7;
 
 	/**
-	 * カレンダー作成メソッド
+	 * 現在の月のカレンダーを表示するための情報を設定
 	 *
 	 * @return calendarDateList
 	 */
-	public List<CalendarDate> makeCalendarDateList() {
+	public List<CalendarDate> makeCurrentMonthCalendar() {
 		// 現在の年月を取得
 		YearMonth yearMonth = YearMonth.now();
 		// 年月を文字列に変換
@@ -56,6 +57,48 @@ public class ReservationService {
 		// 取得した月の日数を取得
 		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
 
+		List<CalendarDate> calendarDateList = makeCalendarList(currentYearMonth, year, month, startDayOfWeek,
+				currrentMonthLastDay);
+		return calendarDateList;
+	}
+
+	/**
+	 * URLで指定した月のカレンダーを表示するための情報を設定
+	 *
+	 * @param calendarDate
+	 * @return calendarDateList
+	 */
+	public List<CalendarDate> makeDesignatedMonthCalendar(String designatedMonth) {
+		// 文字列から日付に変換
+		YearMonth yearMonth = YearMonth.parse(designatedMonth, DateTimeFormatter.ofPattern("yyyyMM"));
+		// 取得した月の1日の曜日をintで取得
+		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
+		// 取得した月の日数を取得
+		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
+
+		String year = String.valueOf(yearMonth.getYear());
+		String month = String.valueOf(yearMonth.getMonthValue());
+		if (month.length() == 1) {
+			month = "0" + month;
+		}
+
+		List<CalendarDate> calendarDateList = makeCalendarList(designatedMonth, year, month, startDayOfWeek,
+				currrentMonthLastDay);
+		return calendarDateList;
+	}
+
+	/**
+	 * カレンダーを表示するための日付インスタンスを格納
+	 *
+	 * @param currentYearMonth
+	 * @param year
+	 * @param month
+	 * @param startDayOfWeek
+	 * @param currrentMonthLastDay
+	 * @return calendarDateList
+	 */
+	public List<CalendarDate> makeCalendarList(String currentYearMonth, String year, String month, int startDayOfWeek,
+			int currrentMonthLastDay) {
 		int count = 0;
 		List<CalendarDate> calendarDateList = new ArrayList<>();
 		// カレンダーの頭の空白部分にnullを格納
@@ -90,6 +133,26 @@ public class ReservationService {
 		return calendarDateList;
 	}
 
+	/**
+	 * カレンダー月移動時のURLチェック
+	 *
+	 * @param designatedMonth
+	 * @return エラーの有無
+	 */
+	public boolean urlHasErrors(String designatedMonth) {
+		if (!Pattern.matches("[0-9]{6}",designatedMonth)) {
+			return true;
+		}
+		int yearMonth = Integer.parseInt(designatedMonth.substring(0, 4));
+		if (2015 >= yearMonth || 2100 <= yearMonth) {
+			return true;
+		}
+		int day = Integer.parseInt(designatedMonth.substring(4));
+		if (0 >= day || 12 < day) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 選択日の予約情報を取得する

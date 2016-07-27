@@ -14,6 +14,7 @@
 				th:src="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
 		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 		<script src="/js/refer-date.js" th:src="@{/js/refer-date.js}"></script>
+		<script src="/js/btn.js" th:src="@{/js/btn.js}"></script>
 	</head>
 	<body>
 		<div th:include="header :: frag_header"></div>
@@ -37,7 +38,7 @@
 					</table>
 				</form>
 				<button type="button" class="btn btn-default btn-sm active" id="newRegistration">新規予約</button>
-				<button type="button" class="btn btn-default btn-sm active" onclick="location.href='/calendar'">戻る</button>
+				<button type="button" class="btn btn-default btn-sm active" id="return">戻る</button>
 				<form action="/reservation/new" method="post" th:object="${formModel}" id="registrationForm">
 					<input type="hidden" id="calendarDate" name="calendarDate"/>
 				</form>
