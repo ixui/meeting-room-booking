@@ -7,7 +7,9 @@ $(function() {
 
 $(function() {
 	$('#newRegistration').click(function(){
-		window.location = '/reservation/new';
+		var rsvDate = $('#rsvDate').attr('value');
+		$('input#calendarDate').val(rsvDate);
+		$('#registrationForm').submit();
 	});
 });
 
