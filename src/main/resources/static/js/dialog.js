@@ -1,15 +1,24 @@
 $(function() {
-	$('#confirm-return').dialog({
-		autoOpen: false,
-		modal: true,
-		closeOnEscape: false
-	});
 
-	$('#return').click(function(){
-		$('#confirm-return').dialog('open');
-		var rsvDate = $('#rsvDate').attr('value');
-		var reservationDate = rsvDate.replace(/-/g, '');
-		$('#calendarDate').attr('value', reservationDate);
+	isChange = false;
+
+	$('#rsvDate').change(function() {
+		isChange = true;
+	});
+	$('#title').change(function() {
+		isChange = true;
+	});
+	$('#startTime').change(function() {
+		isChange = true;
+	});
+	$('#endTime').change(function() {
+		isChange = true;
+	});
+	$('#detail').change(function() {
+		isChange = true;
+	});
+	$('#memo').change(function() {
+		isChange = true;
 	});
 });
 
@@ -53,8 +62,6 @@ $(function() {
 
 $(function() {
 	$('.close-dialog').click(function() {
-		$('#confirm-return').dialog('close');
-		$('#confirm-register').dialog('close');
-		$('#confirm-delete').dialog('close');
+		$(this).parents('div').dialog('close');
 	});
 });
