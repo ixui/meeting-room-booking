@@ -13,7 +13,14 @@ $(function() {
 });
 
 $(function() {
-	$('.moveMonth').click(function(){
+	$('#nextMonth').click(function(){
+		var calendarUrl = $(this).attr('href');
+		window.location = calendarUrl;
+	});
+});
+
+$(function() {
+	$('#lastMonth').click(function(){
 		var calendarUrl = $(this).attr('href');
 		window.location = calendarUrl;
 	});
