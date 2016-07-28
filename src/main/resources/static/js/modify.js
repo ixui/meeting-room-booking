@@ -24,7 +24,7 @@ $(function() {
 	$('#return').click(function(){
 		var rsvDate = $('#rsvDate').attr('value');
 		var reservationDate = rsvDate.replace(/-/g, '');
-		document.getElementById('calendarDate').value = reservationDate;
+		$('#calendarDate').attr('value', reservationDate);
 
 		if ($('#principal').attr('value') == "false") {
 			$('#returnForm').submit();
@@ -36,5 +36,12 @@ $(function() {
 		} else {
 			$('#returnForm').submit();
 		};
+	});
+});
+
+$(function() {
+	$('.return').click(function() {
+		$('.btn').attr('disabled', true);
+		$('#returnForm').submit();
 	});
 });
