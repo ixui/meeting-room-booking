@@ -23,13 +23,6 @@ $(function() {
 });
 
 $(function() {
-	$('.return').click(function() {
-		$('.btn').attr('disabled', true);
-		$('#returnForm').submit();
-	});
-});
-
-$(function() {
 	$('#confirm-register').dialog({
 		autoOpen: false,
 		modal: true,

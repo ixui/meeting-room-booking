@@ -139,6 +139,7 @@ public class ReservationService {
 	 * @param designatedMonth
 	 * @return エラーの有無
 	 */
+	@SuppressWarnings("static-method")
 	public boolean urlHasErrors(String designatedMonth) {
 		if (!Pattern.matches("[0-9]{6}",designatedMonth)) {
 			return true;
