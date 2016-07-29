@@ -238,6 +238,15 @@ public class ReservationController {
 		return mav;
 	}
 
+	/**
+	 * 新規予約画面を表示する(選択日)
+	 *
+	 * @param rsvDate
+	 * @param reservation
+	 * @param mav
+	 * @return mav
+	 */
+	@SuppressWarnings("static-method")
 	@RequestMapping(value="/reservation/new", method = RequestMethod.POST)
 	public ModelAndView registration(
 			@RequestParam(value="calendarDate") String rsvDate,
@@ -265,6 +274,7 @@ public class ReservationController {
 			ModelAndView mav) {
 		// エラーがある場合新規予約画面へ戻す
 		if (result.hasErrors()) {
+			mav.addObject("rsvDate", reservationForm.getRsvDate());
 			mav.setViewName("register-reserve");
 			return mav;
 		}
