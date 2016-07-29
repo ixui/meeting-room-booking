@@ -21,10 +21,10 @@
 				<form action="/reservationList" method="post" name="refer">
 					<h1 th:text="${calendar.getYear()} + 年  + ${calendar.getMonth()} + 月"></h1>
 					<div id="before">
-						<a th:href="@{'/calendar/' + ${calendar.getLastMonth()}}" class="moveMonth">←前月</a>
+						<a th:href="@{'/calendar/' + ${calendar.getLastMonth()}}">←前月</a>
 					</div>
 					<div id="next">
-						<a th:href="@{'/calendar/' + ${calendar.getNextMonth()}}" class="moveMonth">次月→</a>
+						<a th:href="@{'/calendar/' + ${calendar.getNextMonth()}}">次月→</a>
 					</div>
 					<table class="table table-bordered" th:inline="text">
 						<tr>
