@@ -18,3 +18,9 @@ $(function() {
 		window.location = calendarUrl;
 	});
 });
+
+$(function() {
+	$('#userRegistration').click(function(){
+		window.location = '/update';
+	});
+});

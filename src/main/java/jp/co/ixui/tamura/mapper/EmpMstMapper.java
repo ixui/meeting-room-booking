@@ -28,4 +28,9 @@ public interface EmpMstMapper {
 	 */
 	void create(EmpMst employee);
 
+	/**
+	 * @param employee
+	 */
+	void update(EmpMst employee);
+
 }

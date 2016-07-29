@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.ixui.tamura.controller.login.LoginForm;
 import jp.co.ixui.tamura.controller.signup.SignupForm;
+import jp.co.ixui.tamura.controller.user.UserForm;
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
 
@@ -87,6 +88,34 @@ public class UserService {
 		employee.setMail(signupDTO.getEmail());
 		employee.setPass(UserService.getSafetyPassword(signupDTO.getPass(), signupDTO.getEmpNo()));
 		this.empMstMapper.create(employee);
+	}
+
+	/**
+	 * ユーザー情報の更新
+	 *
+	 * @param request
+	 * @param userDTO
+	 */
+	public void updateUser(HttpServletRequest request, UserForm userDTO) {
+		HttpSession session = request.getSession();
+		String sessionEmpNo = (String)session.getAttribute("empNo");
+		EmpMst employee = new EmpMst();
+		employee.setName(userDTO.getName());
+		employee.setMail(userDTO.getEmail());
+		employee.setPass(UserService.getSafetyPassword(userDTO.getPass(), sessionEmpNo));
+		this.empMstMapper.update(employee);
+	}
+
+	/**
+	 * 	セッションに変更後のユーザー名を保存する
+	 *
+	 * @param request
+	 * @param UserDTO
+	 */
+	@SuppressWarnings("static-method")
+	public void setUserNameSession(HttpServletRequest request,UserForm UserDTO) {
+		HttpSession session = request.getSession();
+		session.setAttribute("userName", UserDTO.getName());
 	}
 
 	 /** パスワードを安全にするためのアルゴリズム */
