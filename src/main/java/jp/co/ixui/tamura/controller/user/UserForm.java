@@ -1,4 +1,4 @@
-package jp.co.ixui.tamura.controller.signup;
+package jp.co.ixui.tamura.controller.user;
 
 import javax.validation.constraints.Size;
 
@@ -6,22 +6,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import jp.co.ixui.tamura.controller.signup.validator.annotation.PasswordEquals;
-import jp.co.ixui.tamura.controller.signup.validator.annotation.UserExists;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author kawasaki
- *
- */
 @Getter
 @Setter
-@UserExists
 @PasswordEquals(fieldPass="pass", fieldConfirmPass="confirmPass")
-public class SignupForm {
-
-	@NotEmpty(message="社員番号を入力してください")
-	private String empNo;
+public class UserForm {
 
 	@NotEmpty(message="名前を入力してください")
 	private String name;

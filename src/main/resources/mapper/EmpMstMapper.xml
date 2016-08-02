@@ -23,5 +23,12 @@
 				#{mail}
 			)
 	</insert>
+	<update id="update">
+		UPDATE EMP_MST
+		   SET PASS = #{pass},
+			   NAME = #{name},
+			   MAIL = #{mail}
+		 WHERE EMP_NO = #{empNo}
+	</update>
 
 </mapper>

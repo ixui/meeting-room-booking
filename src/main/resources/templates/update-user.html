@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>ユーザー情報更新</title>
+		<link href="css/bootstrap.css" rel="stylesheet" />
+		<link href="css/bootstrap.theme.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="/js/btn.js" th:src="@{/js/btn.js}"></script>
+		<script src="/js/update-user.js" th:src="@{/js/update-user.js}"></script>
+	</head>
+	<body>
+		<div th:include="header :: frag_header"></div>
+		<div class="container text-center">
+
+			<div class="spacer"></div>
+
+			<h1 class="center-block">ユーザ情報更新</h1>
+
+			<div class="spacer"></div>
+
+			<form action="/update" method="post" th:object="${formModel}" class="form-horizontal" id="userUpdateForm">
+
+				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err"></div>
+
+				<div class="spacer"></div>
+
+				<div class="form-group">
+    		        <div class="col-xs-2 col-xs-offset-2">
+	    		        <label>名前</label>
+					</div>
+    		        <div class="col-xs-4">
+            			<input type="text" name="name" th:field="*{name}" th:value="*{name}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+				<div class="form-group">
+    		        <div class="col-xs-2 col-xs-offset-2">
+	    		        <label>メールアドレス</label>
+					</div>
+    		        <div class="col-xs-4">
+            			<input type="text" name="email" th:field="*{email}" th:value="*{email}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+				<div class="form-group">
+    		        <div class="col-xs-2 col-xs-offset-2">
+	    		        <label>パスワード</label>
+					</div>
+    		        <div class="col-xs-4">
+            			<input type="password" name="pass" th:field="*{pass}" th:value="*{pass}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+				<div class="form-group">
+    		        <div class="col-xs-2 col-xs-offset-2">
+	    		        <label>確認用パスワード</label>
+					</div>
+    		        <div class="col-xs-4">
+            			<input type="password" name="confirmPass" th:field="*{confirmPass}" th:value="*{confirmPass}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('confirmPass')}" th:errors="*{confirmPass}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+				<button type="submit" class="btn btn-default btn-sm active" id="registration">登録する</button>
+
+				<div class="spacer"></div>
+				<div class="spacer"></div>
+
+				<a href="/calendar" class="btn btn-default btn-sm active">カレンダーへ戻る</a>
+
+			</form>
+		</div>
+
+	</body>
+</html>

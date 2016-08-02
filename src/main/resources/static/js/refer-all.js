@@ -11,3 +11,9 @@ $(function() {
 		window.location = '/reservation/new';
 	});
 });
+
+$(function() {
+	$('#userRegistration').click(function(){
+		window.location = '/update';
+	});
+});
