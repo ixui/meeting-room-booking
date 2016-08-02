@@ -100,6 +100,7 @@ public class UserService {
 		HttpSession session = request.getSession();
 		String sessionEmpNo = (String)session.getAttribute("empNo");
 		EmpMst employee = new EmpMst();
+		employee.setEmpNo(sessionEmpNo);
 		employee.setName(userDTO.getName());
 		employee.setMail(userDTO.getEmail());
 		employee.setPass(UserService.getSafetyPassword(userDTO.getPass(), sessionEmpNo));

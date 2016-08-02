@@ -60,7 +60,7 @@ public class UserController {
 		// ユーザー名に変更がある場合sessionに変更後のユーザー名を保存
 		HttpSession session = request.getSession();
 		String sessionUserName = (String)session.getAttribute("userName");
-		if (sessionUserName.equals(userForm.getName())) {
+		if (!sessionUserName.equals(userForm.getName())) {
 			this.userService.setUserNameSession(request, userForm);
 		}
 
