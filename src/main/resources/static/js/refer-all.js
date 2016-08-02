@@ -13,13 +13,6 @@ $(function() {
 });
 
 $(function() {
-	$('.moveMonth').click(function(){
-		var calendarUrl = $(this).attr('href');
-		window.location = calendarUrl;
-	});
-});
-
-$(function() {
 	$('#userRegistration').click(function(){
 		window.location = '/update';
 	});
