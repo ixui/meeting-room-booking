@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @UserExists
-@PasswordEquals
+@PasswordEquals(fieldPass="pass", fieldConfirmPass="confirmPass")
 public class SignupForm {
 
 	@NotEmpty(message="社員番号を入力してください")

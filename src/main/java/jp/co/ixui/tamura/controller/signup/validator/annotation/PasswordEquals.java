@@ -32,6 +32,10 @@ public @interface PasswordEquals {
 
 	Class<? extends Payload>[] payload() default {};
 
+	// アノテーションに渡すパラメータを定義する
+	String fieldPass() default "pass";
+	String fieldConfirmPass() default "confirmPass";
+
 	@Target({ ElementType.TYPE, ElementType.FIELD })
 	@Retention(RetentionPolicy.RUNTIME)
 	@Documented

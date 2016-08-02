@@ -5,11 +5,13 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import jp.co.ixui.tamura.controller.signup.validator.annotation.PasswordEquals;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@PasswordEquals(fieldPass="pass", fieldConfirmPass="confirmPass")
 public class UserForm {
 
 	@NotEmpty(message="名前を入力してください")
