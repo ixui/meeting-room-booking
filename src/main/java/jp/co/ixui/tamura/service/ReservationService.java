@@ -74,7 +74,7 @@ public class ReservationService {
 		// 取得した月の1日の曜日をintで取得
 		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
 		// 取得した月の日数を取得
-		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
+		int designatedMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
 
 		String year = String.valueOf(yearMonth.getYear());
 		String month = String.valueOf(yearMonth.getMonthValue());
@@ -83,22 +83,22 @@ public class ReservationService {
 		}
 
 		List<CalendarDate> calendarDateList = makeCalendarList(designatedMonth, year, month, startDayOfWeek,
-				currrentMonthLastDay);
+				designatedMonthLastDay);
 		return calendarDateList;
 	}
 
 	/**
 	 * カレンダーを表示するための日付インスタンスを格納
 	 *
-	 * @param currentYearMonth
+	 * @param yearMonth
 	 * @param year
 	 * @param month
 	 * @param startDayOfWeek
-	 * @param currrentMonthLastDay
+	 * @param monthLastDay
 	 * @return calendarDateList
 	 */
-	public List<CalendarDate> makeCalendarList(String currentYearMonth, String year, String month, int startDayOfWeek,
-			int currrentMonthLastDay) {
+	public List<CalendarDate> makeCalendarList(String yearMonth, String year, String month, int startDayOfWeek,
+			int monthLastDay) {
 		int count = 0;
 		List<CalendarDate> calendarDateList = new ArrayList<>();
 		// カレンダーの頭の空白部分にnullを格納
@@ -108,19 +108,18 @@ public class ReservationService {
 				count++;
 			}
 		}
-		// 今月の日付の情報を格納
-		for (int i = 1; i <= currrentMonthLastDay; i++) {
+		for (int i = 1; i <= monthLastDay; i++) {
 			CalendarDate calendarDate = new CalendarDate();
 			calendarDate.setYear(year);
 			calendarDate.setMonth(month);
 			calendarDate.setDay(i);
-			calendarDate.setDayOfWeek(YearMonth.now().atDay(i).getDayOfWeek().getValue());
+			calendarDate.setDayOfWeek(YearMonth.of(Integer.parseInt(year), Integer.parseInt(month)).atDay(i).getDayOfWeek().getValue());
 			String currentDay = String.valueOf(i);
 			// iが一桁のとき dd の形にする
 			if (10 > i) {
 				currentDay = 0 + currentDay;
 			}
-			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(currentYearMonth + currentDay);
+			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(yearMonth + currentDay);
 			calendarDate.setReservationList(reservationList);
 			calendarDateList.add(calendarDate);
 			count++;
