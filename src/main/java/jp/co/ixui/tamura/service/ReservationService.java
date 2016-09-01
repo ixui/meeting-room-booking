@@ -108,6 +108,7 @@ public class ReservationService {
 				count++;
 			}
 		}
+		// 受け取った月の日付の情報を格納
 		for (int i = 1; i <= monthLastDay; i++) {
 			CalendarDate calendarDate = new CalendarDate();
 			calendarDate.setYear(year);
