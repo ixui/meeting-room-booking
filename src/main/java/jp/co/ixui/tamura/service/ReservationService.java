@@ -39,36 +39,12 @@ public class ReservationService {
 	private static final int SUNDAY_NUMBER = 7;
 
 	/**
-	 * 現在の月のカレンダーを表示するための情報を設定
-	 *
-	 * @return calendarDateList
-	 */
-	public List<CalendarDate> makeCurrentMonthCalendar() {
-		// 現在の年月を取得
-		YearMonth yearMonth = YearMonth.now();
-		// 年月を文字列に変換
-		DateTimeFormatter formatCurrentYearMonth = DateTimeFormatter.ofPattern("yyyyMM");
-		String currentYearMonth = formatCurrentYearMonth.format(yearMonth);
-		// 年と月をそれぞれ切り取る
-		String year = currentYearMonth.substring(0, 4);
-		String month = currentYearMonth.substring(4, 6);
-		// 取得した月の1日の曜日をintで取得
-		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
-		// 取得した月の日数を取得
-		int currrentMonthLastDay = yearMonth.lengthOfMonth();
-
-		List<CalendarDate> calendarDateList = makeCalendarList(currentYearMonth, year, month, startDayOfWeek,
-				currrentMonthLastDay);
-		return calendarDateList;
-	}
-
-	/**
-	 * URLで指定した月のカレンダーを表示するための情報を設定
+	 * 指定した月のカレンダーを表示するための情報を設定
 	 *
 	 * @param calendarDate
 	 * @return calendarDateList
 	 */
-	public List<CalendarDate> makeDesignatedMonthCalendar(String designatedMonth) {
+	public List<CalendarDate> makeCalendar(String designatedMonth) {
 		// 文字列から日付に変換
 		YearMonth yearMonth = YearMonth.parse(designatedMonth, DateTimeFormatter.ofPattern("yyyyMM"));
 		// 取得した月の1日の曜日をintで取得
@@ -78,9 +54,6 @@ public class ReservationService {
 
 		String year = String.valueOf(yearMonth.getYear());
 		String month = String.valueOf(yearMonth.getMonthValue());
-		if (month.length() == 1) {
-			month = "0" + month;
-		}
 
 		List<CalendarDate> calendarDateList = makeCalendarList(designatedMonth, year, month, startDayOfWeek,
 				designatedMonthLastDay);
@@ -112,7 +85,12 @@ public class ReservationService {
 		for (int i = 1; i <= monthLastDay; i++) {
 			CalendarDate calendarDate = new CalendarDate();
 			calendarDate.setYear(year);
-			calendarDate.setMonth(month);
+			// monthが一ケタの場合"0"をたして"08"の形にする
+			if (month.length() == 1) {
+				calendarDate.setMonth("0" + month);
+			} else {
+				calendarDate.setMonth(month);
+			}
 			calendarDate.setDay(i);
 			calendarDate.setDayOfWeek(YearMonth.of(Integer.parseInt(year), Integer.parseInt(month)).atDay(i).getDayOfWeek().getValue());
 			String currentDay = String.valueOf(i);

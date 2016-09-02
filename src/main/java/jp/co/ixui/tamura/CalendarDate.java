@@ -38,7 +38,7 @@ public class CalendarDate {
 	 * @return 次月
 	 */
 	public String getNextMonth() {
-		String nextMonth = YearMonth.parse(year + "-" + month).plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
+		String nextMonth = YearMonth.parse(this.year + "-" + this.month).plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
 		return nextMonth;
 	}
 
@@ -46,7 +46,7 @@ public class CalendarDate {
 	 * @return 前月
 	 */
 	public String getLastMonth() {
-		String lastMonth = YearMonth.parse(year + "-" + month).minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
+		String lastMonth = YearMonth.parse(this.year + "-" + this.month).minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
 		return lastMonth;
 	}
 }
