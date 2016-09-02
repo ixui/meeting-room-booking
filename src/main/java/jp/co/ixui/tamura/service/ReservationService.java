@@ -85,12 +85,7 @@ public class ReservationService {
 		for (int i = 1; i <= monthLastDay; i++) {
 			CalendarDate calendarDate = new CalendarDate();
 			calendarDate.setYear(year);
-			// monthが一ケタの場合"0"をたして"08"の形にする
-			if (month.length() == 1) {
-				calendarDate.setMonth("0" + month);
-			} else {
-				calendarDate.setMonth(month);
-			}
+			calendarDate.setMonth(month);
 			calendarDate.setDay(i);
 			calendarDate.setDayOfWeek(YearMonth.of(Integer.parseInt(year), Integer.parseInt(month)).atDay(i).getDayOfWeek().getValue());
 			String currentDay = String.valueOf(i);

@@ -23,6 +23,18 @@ public class CalendarDate {
 	private List<Reservation> reservationList;
 
 	/**
+	 * @param month
+	 */
+	public void setMonth(String month){
+		// monthが一ケタの場合"0"をたして"08"の形にする
+		if (month.length() == 1) {
+			this.month = "0" + month;
+		} else {
+			this.month = month;
+		}
+	}
+
+	/**
 	 * @return 'yyyyMMdd'形式の日付文字列
 	 *
 	 */
