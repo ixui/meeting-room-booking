@@ -55,7 +55,7 @@ public class ReservationService {
 		// 取得した月の1日の曜日をintで取得
 		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
 		// 取得した月の日数を取得
-		int currrentMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
+		int currrentMonthLastDay = yearMonth.lengthOfMonth();
 
 		List<CalendarDate> calendarDateList = makeCalendarList(currentYearMonth, year, month, startDayOfWeek,
 				currrentMonthLastDay);
@@ -74,7 +74,7 @@ public class ReservationService {
 		// 取得した月の1日の曜日をintで取得
 		int startDayOfWeek = yearMonth.atDay(1).getDayOfWeek().getValue();
 		// 取得した月の日数を取得
-		int designatedMonthLastDay = yearMonth.atEndOfMonth().lengthOfMonth();
+		int designatedMonthLastDay = yearMonth.lengthOfMonth();
 
 		String year = String.valueOf(yearMonth.getYear());
 		String month = String.valueOf(yearMonth.getMonthValue());
