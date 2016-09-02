@@ -114,17 +114,15 @@ public class ReservationService {
 	 */
 	@SuppressWarnings("static-method")
 	public boolean urlHasErrors(String designatedMonth) {
-		if (!Pattern.matches("[0-9]{6}",designatedMonth)) {
-			return true;
-		}
+
+		if (!Pattern.matches("[0-9]{6}",designatedMonth)) return true;
+
 		int yearMonth = Integer.parseInt(designatedMonth.substring(0, 4));
-		if (2015 >= yearMonth || 2100 <= yearMonth) {
-			return true;
-		}
+		if (2015 >= yearMonth || 2100 <= yearMonth) return true;
+
 		int day = Integer.parseInt(designatedMonth.substring(4));
-		if (0 >= day || 12 < day) {
-			return true;
-		}
+		if (0 >= day || 12 < day) return true;
+
 		return false;
 	}
 
@@ -162,11 +160,8 @@ public class ReservationService {
 		HttpSession session = request.getSession();
 		String sessionEmpNo = (String)session.getAttribute("empNo");
 		// 予約者かどうか調べる
-		boolean principal = false;
-		if (sessionEmpNo.equals(empNo)) {
-			principal = true;
-		}
-		return principal;
+		if (sessionEmpNo.equals(empNo)) return true;
+		return false;
 	}
 
 	/**
