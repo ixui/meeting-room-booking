@@ -1,6 +1,7 @@
 package jp.co.ixui.tamura.controller.reservation;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -46,7 +47,8 @@ public class ReservationController {
 	public ModelAndView referAll(ModelAndView mav) {
 
 		// カレンダーに表示する日付インスタンスを取得
-		List<CalendarDate> calendarDateList = this.reservationService.makeCurrentMonthCalendar();
+		String designatedMonth = YearMonth.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
+		List<CalendarDate> calendarDateList = this.reservationService.makeCalendar(designatedMonth);
 
 		mav.addObject("calendarDateList", calendarDateList);
 		mav.setViewName("refer-all");
@@ -67,7 +69,7 @@ public class ReservationController {
 			return new ModelAndView("redirect:/calendar");
 		}
 		// カレンダーに表示する日付インスタンスを取得
-		List<CalendarDate> calendarDateList = this.reservationService.makeDesignatedMonthCalendar(designatedMonth);
+		List<CalendarDate> calendarDateList = this.reservationService.makeCalendar(designatedMonth);
 
 		mav.addObject("calendarDateList", calendarDateList);
 		mav.setViewName("refer-all");
