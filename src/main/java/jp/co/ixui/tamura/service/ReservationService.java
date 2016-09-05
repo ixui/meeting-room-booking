@@ -72,8 +72,10 @@ public class ReservationService {
 	 */
 	public List<CalendarDate> makeCalendarList(String yearMonth, String year, String month, int startDayOfWeek,
 			int monthLastDay) {
+
 		int count = 0;
 		List<CalendarDate> calendarDateList = new ArrayList<>();
+
 		// カレンダーの頭の空白部分にnullを格納
 		if (SUNDAY_NUMBER != startDayOfWeek) {
 			for (int i = 1; i <= startDayOfWeek; i++) {
@@ -81,7 +83,7 @@ public class ReservationService {
 				count++;
 			}
 		}
-		// 受け取った月の日付の情報を格納
+		// 受け取った月の日付の情報を calendarDate に格納
 		for (int i = 1; i <= monthLastDay; i++) {
 			CalendarDate calendarDate = new CalendarDate();
 			calendarDate.setYear(year);
@@ -89,10 +91,9 @@ public class ReservationService {
 			calendarDate.setDay(i);
 			calendarDate.setDayOfWeek(YearMonth.of(Integer.parseInt(year), Integer.parseInt(month)).atDay(i).getDayOfWeek().getValue());
 			String currentDay = String.valueOf(i);
+			// 日付ごとの予約情報を取得し calendarDate に格納
 			// iが一桁のとき dd の形にする
-			if (10 > i) {
-				currentDay = 0 + currentDay;
-			}
+			if (10 > i) currentDay = 0 + currentDay;
 			List<Reservation> reservationList = this.reservationMapper.selectReservationByCurrentDay(yearMonth + currentDay);
 			calendarDate.setReservationList(reservationList);
 			calendarDateList.add(calendarDate);
