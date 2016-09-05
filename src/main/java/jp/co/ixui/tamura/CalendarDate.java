@@ -23,6 +23,18 @@ public class CalendarDate {
 	private List<Reservation> reservationList;
 
 	/**
+	 * @param month
+	 */
+	public void setMonth(String month){
+		// monthが一ケタの場合"0"をたして"08"の形にする
+		if (month.length() == 1) {
+			this.month = "0" + month;
+		} else {
+			this.month = month;
+		}
+	}
+
+	/**
 	 * @return 'yyyyMMdd'形式の日付文字列
 	 *
 	 */
@@ -38,7 +50,7 @@ public class CalendarDate {
 	 * @return 次月
 	 */
 	public String getNextMonth() {
-		String nextMonth = YearMonth.parse(year + "-" + month).plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
+		String nextMonth = YearMonth.parse(this.year + "-" + this.month).plusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
 		return nextMonth;
 	}
 
@@ -46,7 +58,7 @@ public class CalendarDate {
 	 * @return 前月
 	 */
 	public String getLastMonth() {
-		String lastMonth = YearMonth.parse(year + "-" + month).minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
+		String lastMonth = YearMonth.parse(this.year + "-" + this.month).minusMonths(1).format(DateTimeFormatter.ofPattern("yyyyMM"));
 		return lastMonth;
 	}
 }
