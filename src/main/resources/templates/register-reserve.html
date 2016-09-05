@@ -8,6 +8,7 @@
 		<link rel="stylesheet"  href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
 		<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
+		<link rel="stylesheet" href="/css/jquery.timepicker.css" th:href="@{/css/jquery.timepicker.css}"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
 				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
@@ -15,6 +16,7 @@
 		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
 		<script src="/js/date-and-timepicker.js" th:src="@{/js/date-and-timepicker.js}"></script>
+		<script src="/js/jquery.timepicker.min.js" th:src="@{/js/jquery.timepicker.min.js}"></script>
 		<script src="/js/register-reserve.js" th:src="@{/js/register-reserve.js}"></script>
 	</head>
 	<body>
@@ -37,11 +39,11 @@
 								<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:errorclass="err"></div>
 							</td></tr>
 						<tr><th>開始時間</th>
-							<td><input type="text" name="startTime" th:field="*{startTime}"/> 例) 10時00分 → 1000
+							<td><input type="text" name="startTime" id="startTime" th:field="*{startTime}"/> 例) 10時00分 → 1000
 								<div th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}" th:errorclass="err"></div>
 							</td></tr>
 						<tr><th>終了時間</th>
-							<td><input type="text" name="endTime" th:field="*{endTime}"/> 例) 10時30分 → 1030
+							<td><input type="text" name="endTime" id="endTime" th:field="*{endTime}"/> 例) 10時30分 → 1030
 								<div th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}" th:errorclass="err"></div>
 							</td></tr>
 						<tr><th>詳細</th>
