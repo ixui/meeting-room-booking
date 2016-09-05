@@ -7,11 +7,12 @@
 		<title>予約修正</title>
 		<link rel="stylesheet"  href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
 		<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
-		<link type="text/css" rel="stylesheet" href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.min.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"
-				th:src="@{https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
+		<link type="text/css" rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.min.css" />
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
 		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
 		<script src="/js/modify.js" th:src="@{/js/modify.js}"></script>
@@ -28,7 +29,7 @@
 					</div>
 					<table class="table table-bordered" th:inline="text">
 						<tr><th>日付</th>
-							<td><input type="date" name="rsvDate" id="rsvDate" th:value="*{rsvDate}"/>
+							<td><input type="text" name="rsvDate" id="rsvDate" th:value="*{rsvDate}"/>
 								<div th:if="${#fields.hasErrors('rsvDate')}" th:errors="*{rsvDate}" th:errorclass="err"></div>
 							</td></tr>
 						<tr><th>タイトル</th>
