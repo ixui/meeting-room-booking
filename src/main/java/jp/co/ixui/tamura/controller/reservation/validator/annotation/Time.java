@@ -24,7 +24,7 @@ import jp.co.ixui.tamura.controller.reservation.validator.TimeValidator;
 @SuppressWarnings("javadoc")
 public @interface Time {
 
-	String message() default "時間として正しい数字を入力してください";
+	String message() default "時間として正しい数字を入力してください(00~23時, 00~59分)";
 
 	Class<?>[] groups() default {};
 

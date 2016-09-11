@@ -27,7 +27,7 @@ public class TimeValidator implements ConstraintValidator<Time, String> {
 		int minute = Integer.parseInt(value.substring(2));
 
 		// hour, minute それぞれ時間としてありえない数字の場合は false
-		if (hour > 24 && minute > 59) return false;
+		if (hour > 23 || minute > 59) return false;
 
 		return true;
 	}
