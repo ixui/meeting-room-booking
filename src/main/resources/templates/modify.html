@@ -9,15 +9,6 @@
 		<link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
 		<link rel="stylesheet" href="/css/jquery.timepicker.css" th:href="@{/css/jquery.timepicker.css}"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-				th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
-		<script src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-		<script src="/js/dialog.js" th:src="@{/js/dialog.js}"></script>
-		<script src="/js/date-and-timepicker.js" th:src="@{/js/date-and-timepicker.js}"></script>
-		<script src="/js/jquery.timepicker.min.js" th:src="@{/js/jquery.timepicker.min.js}"></script>
-		<script src="/js/modify.js" th:src="@{/js/modify.js}"></script>
 	</head>
 	<body>
 		<div th:include="header :: frag_header"></div>
@@ -91,5 +82,14 @@
 				<input type="hidden" name="reservationDate" id="reservationDate" />
 			</form>
 		</div>
+
+		<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
+		<script th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js}"></script>
+		<script th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<script th:src="@{/js/dialog.js}"></script>
+		<script th:src="@{/js/date-and-timepicker.js}"></script>
+		<script th:src="@{/js/jquery.timepicker.min.js}"></script>
+		<script th:src="@{/js/modify.js}"></script>
 	</body>
 </html>
