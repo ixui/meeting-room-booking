@@ -53,7 +53,7 @@ public class ReservationControllerTest {
     }
 
     @Test
-    public void カレンダー表示月遷移のテスト() throws Exception {
+    public void カレンダー表示月遷移の確認() throws Exception {
 
     	// 正常
     	this.mockMvc.perform(get("/calendar/201610")
@@ -214,7 +214,7 @@ public class ReservationControllerTest {
     			.sessionAttr("empNo", "5008"))
     			.andExpect(status().isOk())
     			.andExpect(model().hasErrors())
-    			.andExpect(model().errorCount(2))
+    			.andExpect(model().errorCount(4))
     			.andExpect(model().attributeHasFieldErrors("formModel", "startTime", "endTime"));
 
     	// @Duplicationの確認
@@ -245,5 +245,19 @@ public class ReservationControllerTest {
     			.andExpect(model().hasErrors())
     			.andExpect(model().errorCount(3))
     			.andExpect(model().attributeHasFieldErrors("formModel", "rsvDate", "title", "detail"));
+
+    	// @Timeの確認
+    	this.mockMvc.perform(post("/reservation/register")
+    			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+    			.param("rsvDate", "2099-12-31")
+    			.param("title", "Test")
+    			.param("startTime", "2360")
+    			.param("endTime", "2400")
+    			.param("detail", "test")
+    			.sessionAttr("empNo", "5008"))
+    			.andExpect(status().isOk())
+    			.andExpect(model().hasErrors())
+    			.andExpect(model().errorCount(2))
+    			.andExpect(model().attributeHasFieldErrors("formModel", "startTime", "endTime"));
     }
 }
