@@ -6,6 +6,7 @@ import jp.co.ixui.tamura.controller.reservation.validator.annotation.Duplication
 import jp.co.ixui.tamura.controller.reservation.validator.annotation.EndTime;
 import jp.co.ixui.tamura.controller.reservation.validator.annotation.Future;
 import jp.co.ixui.tamura.controller.reservation.validator.annotation.MeetingTime;
+import jp.co.ixui.tamura.controller.reservation.validator.annotation.Time;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,9 +26,11 @@ public class ReservationForm {
 	@NotEmpty(message="タイトルを入力してください")
 	private String title;
 
+	@Time
 	@MeetingTime
 	private String startTime;
 
+	@Time
 	@MeetingTime
 	private String endTime;
 
