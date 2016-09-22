@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -30,16 +29,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// 認可処理、loginFormにはすべてのユーザがアクセスできるようにする
 		http.authorizeRequests()
-//				.antMatchers("/loginForm").permitAll()
+				.antMatchers("/login").permitAll()
 				.anyRequest().authenticated();
 
 		// ログイン
 		// フォーム認証を有効に
 		http.formLogin()
+				// ログインフォーム表示パス
+				.loginPage("/login")
 				// 認証処理のパス
 //				.loginProcessingUrl("/login")
-				// ログインフォーム表示パス
-//				.loginPage("/loginForm")
 				// 認証失敗時の遷移先
 //				.failureUrl("/login?error")
 				// 認証成功時の遷移先
@@ -50,10 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// ログアウト
 		http.logout()
-				// ログアウト処理のパス
-				.logoutRequestMatcher(new AntPathRequestMatcher("logout**"))
 				// ログアウト完了後の遷移先
-				.logoutSuccessUrl("/loginForm");
+				.logoutSuccessUrl("/login");
 	}
 
 	@Configuration
@@ -65,15 +62,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		public void init(AuthenticationManagerBuilder auth) throws Exception {
 
+			// DaoAuthenticationProviderのフィールドsaltsourceに入力されたempNoが設定されるようにする
 			ReflectionSaltSource rss = new ReflectionSaltSource();
 			rss.setUserPropertyToUse("getSalt");
 			DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 			provider.setSaltSource(rss);
+
+			// 認証処理
 			provider.setUserDetailsService(this.userDetailsService);
 			provider.setPasswordEncoder(new LoginPasswordEncoder());
 			auth.authenticationProvider(provider);
 
-//			auth.userDetailsService(this.userDetailsService).passwordEncoder(new LoginPasswordEncoder());
 		}
 	}
 }

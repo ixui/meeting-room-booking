@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,8 +56,17 @@ public class UserService {
         	return false;
         }
 
-        if (currentSession.getAttribute("empNo") == null ||
-    		"".equals(currentSession.getAttribute("empNo"))){
+        // セッションに保存されている認証情報から社員番号を取得する
+        String empNo = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+        	empNo = ((UserDetails)principal).getUsername();
+        } else {
+        	empNo = principal.toString();
+        }
+
+        if (empNo == null ||
+    		"".equals(empNo)) {
 
         	return false;
 		}

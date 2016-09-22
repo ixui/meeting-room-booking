@@ -15,6 +15,8 @@ public class LoginPasswordEncoder implements PasswordEncoder{
 	@Override
 	public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
 
+		if (null == salt) return false;
+
 		String empNo = (String) salt;
 		String encodedPassword = UserService.getSafetyPassword(rawPass, empNo);
 
