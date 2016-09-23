@@ -66,7 +66,8 @@ public class UserService {
         }
 
         if (empNo == null ||
-    		"".equals(empNo)) {
+    		"".equals(empNo) ||
+    		"anonymousUser".equals(empNo)) {
 
         	return false;
 		}

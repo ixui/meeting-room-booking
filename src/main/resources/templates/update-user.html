@@ -23,7 +23,7 @@
 
 			<div class="spacer"></div>
 
-			<form action="/update" method="post" th:object="${formModel}" class="form-horizontal" id="userUpdateForm">
+			<form th:action="@{/update}" method="post" th:object="${formModel}" class="form-horizontal" id="userUpdateForm">
 
 				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err"></div>
 

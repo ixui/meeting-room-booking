@@ -4,9 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,43 +41,29 @@ public class LoginController {
 		return mav;
 	}
 
-	/**
-	 * 入力チェックをする、エラーがない場合はカレンダー画面へリダイレクト
-	 *
-	 * @param loginDTO
-	 * @param result
-	 * @param request
-	 * @param mav
-	 * @return mav
-	 */
-	@RequestMapping(value="/login/error")
-	public ModelAndView login(
-			@ModelAttribute("formModel") @Validated LoginForm loginDTO,
-			BindingResult result,
-			HttpServletRequest request,
-			ModelAndView mav) {
-		// バリデーションの結果をチェック
-		if (!result.hasErrors()) {
-			// セッションに社員番号とユーザー名を格納
-			this.userService.setEmpNoSession(request, loginDTO);
-			// カレンダー表示画面にリダイレクト
-			return new ModelAndView("redirect:/calendar");
-		}
-		mav.setViewName("index");
-		return mav;
-	}
-
 //	/**
-//	 * ログアウトする
+//	 * 入力チェックをする、エラーがない場合はカレンダー画面へリダイレクト
 //	 *
+//	 * @param loginDTO
+//	 * @param result
 //	 * @param request
 //	 * @param mav
 //	 * @return mav
 //	 */
-//	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-//	public static ModelAndView logout(HttpServletRequest request, ModelAndView mav) {
-//		// セッションを破棄する
-//		request.getSession(false).invalidate();
-//		return new ModelAndView("redirect:/login");
+//	@RequestMapping(value="/login/error")
+//	public ModelAndView login(
+//			@ModelAttribute("formModel") @Validated LoginForm loginDTO,
+//			BindingResult result,
+//			HttpServletRequest request,
+//			ModelAndView mav) {
+//		// バリデーションの結果をチェック
+//		if (!result.hasErrors()) {
+//			// セッションに社員番号とユーザー名を格納
+//			this.userService.setEmpNoSession(request, loginDTO);
+//			// カレンダー表示画面にリダイレクト
+//			return new ModelAndView("redirect:/calendar");
+//		}
+//		mav.setViewName("index");
+//		return mav;
 //	}
 }
