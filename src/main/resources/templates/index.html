@@ -19,7 +19,7 @@
 		</div>
 		<div class="container" align="center">
 			<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
-				<p class="text-danger" th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"></p>
+				<p class="text-danger">入力された 社員番号 あるいは パスワード が正しくありません</p>
 			</div>
 			<form th:action="@{/login}" method="post" id="loginForm">
 				<p>社員番号<input type="text" name="empNo" /></p>

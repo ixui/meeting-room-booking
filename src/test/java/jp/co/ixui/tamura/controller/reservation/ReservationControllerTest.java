@@ -2,6 +2,8 @@ package jp.co.ixui.tamura.controller.reservation;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -41,7 +43,10 @@ public class ReservationControllerTest {
 
     @Before
     public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
+        		.defaultRequest(get("/").with(csrf()).with(user("user").password("pass")))
+        		.apply(springSecurity())
+        		.build();
     }
 
     @Test
@@ -109,13 +114,14 @@ public class ReservationControllerTest {
     	this.mockMvc.perform(post("/reservation/confirm")
     			.accept(MediaType.parseMediaType("application/html;charset=UTF-8"))
     			.param("rsvId", "1")
-    			.param("empNo", "5008")
-    			.sessionAttr("empNo", "5008"))
+    			.param("empNo", "5008"))
     			.andExpect(status().isOk());
     }
 
     @Test
     public void 新規予約登録の確認() throws Exception {
+
+    	doNothing().when(this.reservationService).registerReservation(anyObject());
 
     	this.mockMvc.perform(post("/reservation/register")
     			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -125,13 +131,12 @@ public class ReservationControllerTest {
     			.param("startTime", "1200")
     			.param("endTime", "1300")
     			.param("detail", "test")
-    			.param("memo", "memo")
-    			.sessionAttr("empNo", "5008"))
+    			.param("memo", "memo"))
     			.andExpect(status().isOk())
     			.andExpect(model().hasNoErrors());
 
     	// 登録が行われていることを確認
-    	verify(this.reservationService).registerReservation(anyObject(), anyObject());
+    	verify(this.reservationService).registerReservation(anyObject());
     }
 
     @Test
@@ -147,13 +152,12 @@ public class ReservationControllerTest {
     			.param("title", "Test")
     			.param("startTime", "2200")
     			.param("endTime", "2300")
-    			.param("detail", "test")
-    			.sessionAttr("empNo", "5008"))
+    			.param("detail", "test"))
     			.andExpect(status().isOk())
     			.andExpect(model().hasNoErrors());
 
     	// 登録が行われていることを確認
-    	verify(this.reservationService).updateReservation(anyObject(), anyObject());
+    	verify(this.reservationService).updateReservation(anyObject());
     }
 
     @Test
@@ -182,8 +186,7 @@ public class ReservationControllerTest {
     			.param("title", "Test")
     			.param("startTime", "1200")
     			.param("endTime", "1300")
-    			.param("detail", "test")
-    			.sessionAttr("empNo", "5008"))
+    			.param("detail", "test"))
     			.andExpect(status().isOk())
     			.andExpect(model().hasErrors())
     			.andExpect(model().errorCount(1))
@@ -196,65 +199,60 @@ public class ReservationControllerTest {
     			.param("title", "Test")
     			.param("startTime", "1300")
     			.param("endTime", "1300")
-    			.param("detail", "test")
-    			.sessionAttr("empNo", "5008"))
+    			.param("detail", "test"))
     			.andExpect(status().isOk())
     			.andExpect(model().hasErrors())
     			.andExpect(model().errorCount(1))
     			.andExpect(model().attributeHasErrors("formModel"));
 
     	// @MeetingTimeの確認
-    	this.mockMvc.perform(post("/reservation/register")
+    	this.mockMvc.perform(post("/reservation/register").with(user("admin").password("pass"))
     			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
     			.param("rsvDate", "2099-09-03")
     			.param("title", "Test")
     			.param("startTime", "333")
     			.param("endTime", "55555")
-    			.param("detail", "test")
-    			.sessionAttr("empNo", "5008"))
+    			.param("detail", "test"))
     			.andExpect(status().isOk())
     			.andExpect(model().hasErrors())
     			.andExpect(model().errorCount(4))
     			.andExpect(model().attributeHasFieldErrors("formModel", "startTime", "endTime"));
 
     	// @Duplicationの確認
-    	this.mockMvc.perform(post("/reservation/register")
+    	this.mockMvc.perform(post("/reservation/register").with(user("admin").password("pass"))
     			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
     			.param("rsvDate", "2099-10-28")
     			.param("title", "Test")
     			.param("startTime", "1100")
     			.param("endTime", "1201")
     			.param("detail", "test")
-    			.param("memo", "memo")
-    			.sessionAttr("empNo", "5008"))
+    			.param("memo", "memo"))
     			.andExpect(status().isOk())
     			.andExpect(model().hasErrors())
     			.andExpect(model().errorCount(1))
     			.andExpect(model().attributeHasErrors("formModel"));
 
     	// @NotEmptyの確認
-    	this.mockMvc.perform(post("/reservation/register")
+    	this.mockMvc.perform(post("/reservation/register").with(user("admin").password("pass"))
     			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
     			.param("rsvDate", "")
     			.param("title", "")
     			.param("startTime", "1200")
     			.param("endTime", "1300")
-    			.param("detail", "")
-    			.sessionAttr("empNo", "5008"))
+    			.param("detail", ""))
     			.andExpect(status().isOk())
     			.andExpect(model().hasErrors())
     			.andExpect(model().errorCount(3))
     			.andExpect(model().attributeHasFieldErrors("formModel", "rsvDate", "title", "detail"));
 
     	// @Timeの確認
-    	this.mockMvc.perform(post("/reservation/register")
+    	this.mockMvc.perform(post("/reservation/register").with(user("admin").password("pass"))
     			.contentType(MediaType.APPLICATION_FORM_URLENCODED)
     			.param("rsvDate", "2099-12-31")
     			.param("title", "Test")
     			.param("startTime", "2360")
     			.param("endTime", "2400")
-    			.param("detail", "test")
-    			.sessionAttr("empNo", "5008"))
+    			.param("detail", "test"))
     			.andExpect(status().isOk())
     			.andExpect(model().hasErrors())
     			.andExpect(model().errorCount(2))

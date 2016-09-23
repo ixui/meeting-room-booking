@@ -30,7 +30,7 @@ public class SignupController {
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView signup(HttpServletRequest request, ModelAndView mav) {
 
-		if (UserService.isValidUserSession(request)) {
+		if (this.userService.isValidUserSession(request)) {
 			return new ModelAndView("redirect:/calendar");
 		}
 
@@ -56,7 +56,7 @@ public class SignupController {
 			return mav;
 		}
 
-		userService.createUser(signupForm);
+		this.userService.createUser(signupForm);
 
 		mav.setViewName("redirect:login");
 		return mav;

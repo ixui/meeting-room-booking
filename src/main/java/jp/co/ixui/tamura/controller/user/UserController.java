@@ -1,8 +1,5 @@
 package jp.co.ixui.tamura.controller.user;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -47,7 +44,6 @@ public class UserController {
 	public ModelAndView update(
 			@ModelAttribute("formModel") @Validated UserForm userForm,
 			BindingResult result,
-			HttpServletRequest request,
 			ModelAndView mav) {
 		// 入力チェック
 		if (result.hasErrors()) {
@@ -55,14 +51,10 @@ public class UserController {
 			return mav;
 		}
 		// ユーザー情報更新処理
-		this.userService.updateUser(request, userForm);
+		this.userService.updateUser(userForm);
 
-		// ユーザー名に変更がある場合sessionに変更後のユーザー名を保存
-		HttpSession session = request.getSession();
-		String sessionUserName = (String)session.getAttribute("userName");
-		if (!sessionUserName.equals(userForm.getName())) {
-			this.userService.setUserNameSession(request, userForm);
-		}
+		// 変更後のユーザ情報に認証情報を変更する。
+		this.userService.setAuthentication(userForm);
 
 		mav.setViewName("redirect:/calendar");
 		return mav;

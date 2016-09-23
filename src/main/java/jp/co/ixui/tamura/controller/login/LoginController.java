@@ -29,11 +29,11 @@ public class LoginController {
 	 * @return mav
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public static ModelAndView index(
+	public ModelAndView index(
 			HttpServletRequest request,
 			ModelAndView mav) {
 
-		if (UserService.isValidUserSession(request)) {
+		if (this.userService.isValidUserSession(request)) {
 			return new ModelAndView("redirect:/calendar");
 		}
 
