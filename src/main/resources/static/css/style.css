@@ -5,7 +5,7 @@
     }
 
 .header-left {
-	padding: 10px 60px;
+	padding: 14px 10px;
 	float: left;
 	font-size: 15px;
 	font-weight: bold;
@@ -13,7 +13,7 @@
 }
 
 .header-right {
-	padding: 10px 60px;
+	padding: 14px 10px;
 	float: right;
 }
 
