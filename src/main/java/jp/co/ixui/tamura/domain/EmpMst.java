@@ -38,4 +38,10 @@ public class EmpMst {
 	 */
 	@NotNull
 	private String mail;
+
+	/**
+	 * 権限
+	 */
+	@NotNull
+	private String auth;
 }
