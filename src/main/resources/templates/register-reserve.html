@@ -14,7 +14,7 @@
 		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
 			<div class="table-responsive col-sm-offset-3 col-sm-6">
-				<form action="/reservation/register" id="registerForm" method="post" th:object="${formModel}">
+				<form th:action="@{/reservation/register}" id="registerForm" method="post" th:object="${formModel}">
 					<div align="left">
 						<ul>
 							<li th:each="error : ${#fields.errors('global')}" th:text="${error}" class="err"/>
@@ -63,7 +63,7 @@
 			<hr></hr>
 			<button type="button" class="btn btn-default btn-sm active return">はい</button>
 			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
-			<form action="/reservationList" id="returnForm" method="post">
+			<form th:action="@{/reservationList}" id="returnForm" method="post">
 				<input type="hidden" name="calendarDate" id="calendarDate"/>
 			</form>
 		</div>

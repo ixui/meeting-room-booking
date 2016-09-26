@@ -18,7 +18,7 @@
 		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
 			<div class="panel-body col-sm-offset-2 col-sm-8" th:with="calendar =  ${calendarDateList.get(10)}">
-				<form action="/reservationList" method="post" name="refer">
+				<form th:action="@{/reservationList}" method="post" name="refer">
 					<h1 th:text="${calendar.getYear()} + 年  + ${calendar.getMonth()} + 月"></h1>
 					<div id="before">
 						<a th:href="@{'/calendar/' + ${calendar.getLastMonth()}}">←前月</a>

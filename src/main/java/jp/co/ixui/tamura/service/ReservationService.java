@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +24,9 @@ public class ReservationService {
 
 	@Autowired
 	ReservationMapper reservationMapper;
+
+	@Autowired
+	UserService userService;
 
 	/**
 	 * カレンダーのセル数
@@ -156,12 +156,11 @@ public class ReservationService {
 	 * @param request
 	 * @return principal
 	 */
-	public static boolean booleanPrincipal(String empNo, HttpServletRequest request) {
-		// セッション情報から社員番号を取得
-		HttpSession session = request.getSession();
-		String sessionEmpNo = (String)session.getAttribute("empNo");
+	public boolean booleanPrincipal(String empNo) {
+		// 認証情報から社員番号を取得
+		String AuthenticationEmpNo = this.userService.getEmpNoFromAuthentication();
 		// 予約者かどうか調べる
-		if (sessionEmpNo.equals(empNo)) return true;
+		if (AuthenticationEmpNo.equals(empNo)) return true;
 		return false;
 	}
 
@@ -179,12 +178,10 @@ public class ReservationService {
 	 *
 	 * @param rsvDate 予約日
 	 * @param reservation エンティティ
-	 * @param request
 	 */
-	public void registerReservation(Reservation reservation, HttpServletRequest request) {
-		// セッションに保存されているempNoをreservation.empNoに追加
-		HttpSession session = request.getSession();
-		String empNo = (String) session.getAttribute("empNo");
+	public void registerReservation(Reservation reservation) {
+		// 認証情報のempNoをreservation.empNoに追加
+		String empNo = this.userService.getEmpNoFromAuthentication();
 		reservation.setEmpNo(empNo);
 		// 予約を登録する
 		this.reservationMapper.insertReservation(reservation);
@@ -197,10 +194,9 @@ public class ReservationService {
 	 * @param request
 	 *
 	 */
-	public void updateReservation(Reservation reservation, HttpServletRequest request){
-		// セッションに保存されているempNoをreservation.empNoに追加
-		HttpSession session = request.getSession();
-		String empNo = (String) session.getAttribute("empNo");
+	public void updateReservation(Reservation reservation){
+		// 認証情報のempNoをreservation.empNoに追加
+		String empNo = this.userService.getEmpNoFromAuthentication();
 		reservation.setEmpNo(empNo);
 		// 予約を更新する
 		this.reservationMapper.updateReservation(reservation);
@@ -215,15 +211,13 @@ public class ReservationService {
 	 * @param request
 	 * @return reservation
 	 */
-	@SuppressWarnings("static-method")
-	public Reservation storeReservation(LocalDate rsvDate, ReservationForm reservationForm, HttpServletRequest request) {
-		// セッション情報から社員番号を取得
-		HttpSession session = request.getSession();
-		String sessionEmpNo = (String)session.getAttribute("empNo");
+	public Reservation storeReservation(LocalDate rsvDate, ReservationForm reservationForm) {
+		// 認証情報から社員番号を取得
+		String empNo = this.userService.getEmpNoFromAuthentication();
 		Reservation reservation = new Reservation();
 		reservation.setRsvDate(rsvDate);
 		reservation.setTitle(reservationForm.getTitle());
-		reservation.setEmpNo(sessionEmpNo);
+		reservation.setEmpNo(empNo);
 		reservation.setStartTime(reservationForm.getStartTime());
 		reservation.setEndTime(reservationForm.getEndTime());
 		reservation.setDetail(reservationForm.getDetail());

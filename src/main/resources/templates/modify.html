@@ -14,7 +14,7 @@
 		<div th:include="header :: frag_header"></div>
 		<div class="container" align="center">
 			<div class="table-responsive col-sm-offset-3 col-sm-6">
-				<form action="/reservation/modify" id="registerForm" method="post" th:object="${formModel}">
+				<form th:action="@{/reservation/modify}" id="registerForm" method="post" th:object="${formModel}">
 					<div align="left">
 						<ul>
 							<li th:each="error : ${#fields.errors('global')}" th:text="${error}" class="err"/>
@@ -57,7 +57,7 @@
 			</div>
 		</div>
 		<div id="confirm-return" title="確認">
-			<form action="/reservationList" method="post" id="returnForm">
+			<form th:action="@{/reservationList}" method="post" id="returnForm">
 				<p>入力した内容は消えてしまいます。</p>
 				<p>本当に戻りますか？</p>
 				<hr></hr>
@@ -73,7 +73,7 @@
 			<button type="button" class="btn btn-default btn-sm active close-dialog">いいえ</button>
 		</div>
 		<div id="confirm-delete" title="予約取消">
-			<form action="/reservation/delete" method="post" id="deleteForm">
+			<form th:action="@{/reservation/delete}" method="post" id="deleteForm">
 				<p>本当に取り消しますか？</p>
 				<hr/>
 				<button type="button" class="btn btn-default btn-sm active" id="delete-reservation">はい</button>

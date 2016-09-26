@@ -2,6 +2,7 @@ package jp.co.ixui.tamura;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +21,9 @@ import jp.co.ixui.tamura.service.UserService;
 @Controller
 public class ApplicationController {
 
+	@Autowired
+	UserService userService;
+
 	/**
 	 * URL ルートでの処理
 	 *
@@ -29,9 +33,9 @@ public class ApplicationController {
 	 *
 	 */
 	@RequestMapping(value="/")
-	public static ModelAndView root(HttpServletRequest request, ModelAndView mav) {
+	public ModelAndView root(HttpServletRequest request, ModelAndView mav) {
 
-		if (UserService.isValidUserSession(request)) {
+		if (this.userService.isValidUserSession(request)) {
 			return new ModelAndView("redirect:/calendar");
 		}
 
@@ -48,21 +52,21 @@ public class ApplicationController {
 	 * @return
 	 */
 	@RequestMapping(value="/timeout")
-	public static ModelAndView sessionTimeout(
+	public ModelAndView sessionTimeout(
 			@ModelAttribute("formModel") LoginForm loginDTO,
 			BindingResult result,
 			HttpServletRequest request,
 			ModelAndView mav) {
 
-		if (UserService.isValidUserSession(request)) {
+		if (this.userService.isValidUserSession(request)) {
 			// 手でURLを打ってきた場合の処理
 			return new ModelAndView("redirect:/calendar");
-		} else {
-			// 基本的にはすべてこちらに流れる
-			result.reject("jp.co.ixui.tamura.timeout", "お手数をおかけしますが、改めてログインをお願いします");
-			mav.setViewName("index");
-			return mav;
 		}
+
+		// 基本的にはすべてこちらに流れる
+		result.reject("jp.co.ixui.tamura.timeout", "お手数をおかけしますが、改めてログインをお願いします");
+		mav.setViewName("index");
+		return mav;
 
 	}
 

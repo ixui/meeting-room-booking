@@ -18,15 +18,13 @@
 			<div class="header-left">株式会社イクスイ</div>
 		</div>
 		<div class="container" align="center">
-			<p style="color:#FF0000;" th:text="${errMsg1}"></p>
-			<form action="/login/error" method="post" th:object="${formModel}" id="loginForm">
-				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err"></div>
-				<p>社員番号<input type="text" th:field="*{empNo}" /></p>
-				<div th:if="${#fields.hasErrors('empNo')}" th:errors="*{empNo}" th:errorclass="err"></div>
-				<p>パスワード<input type="password" th:field="*{pass}" /></p>
-				<div th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}" th:errorclass="err"></div>
-				<button type="button" class="btn btn-default btn-sm active" id="login">ログイン</button>
-				<button type="button" class="btn btn-default btn-sm active" id="signup">ユーザー登録</button>
+			<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
+				<p class="text-danger">入力された 社員番号 あるいは パスワード が正しくありません</p>
+			</div>
+			<form th:action="@{/login}" method="post" id="loginForm">
+				<p>社員番号<input type="text" name="empNo" /></p>
+				<p>パスワード<input type="password" name="pass" /></p>
+				<button type="submit" class="btn btn-default btn-sm active" id="login">ログイン</button>
 			</form>
 		</div>
 	</body>

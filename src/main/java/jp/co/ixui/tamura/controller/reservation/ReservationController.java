@@ -5,8 +5,6 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -153,10 +151,9 @@ public class ReservationController {
 			BindingResult result,
 			@RequestParam(value="rsvId") int id,
 			@RequestParam(value="empNo") String empNo,
-			HttpServletRequest request,
 			ModelAndView mav) {
 		// 予約者本人かどうか確認する
-		boolean principal = ReservationService.booleanPrincipal(empNo, request);
+		boolean principal = this.reservationService.booleanPrincipal(empNo);
 		// 選択日の予約情報をidから取得する
 		Reservation reservation = this.reservationService.getReservsationById(id);
 
@@ -195,7 +192,6 @@ public class ReservationController {
 			@RequestParam(value="principal") String principal,
 			@ModelAttribute("formModel")@Validated ReservationForm reservationForm,
 			BindingResult result,
-			HttpServletRequest request,
 			ModelAndView mav) {
 		// エラーがある場合予約修正画面へ戻す
 		if (result.hasErrors()) {
@@ -209,10 +205,10 @@ public class ReservationController {
 		// 受け取った日付をLocalDateに変換
 		LocalDate rsvDate = LocalDate.parse(reservationForm.getRsvDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		// 入力フォームから受け取った値をreservationに格納
-		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm, request);
+		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm);
 		reservation.setId(id);
 		// 予約情報を更新
-		this.reservationService.updateReservation(reservation, request);
+		this.reservationService.updateReservation(reservation);
 
 		// 予約情報を取得
 		String reservationDate = rsvDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -272,7 +268,6 @@ public class ReservationController {
 	public ModelAndView register(
 			@ModelAttribute("formModel") @Validated ReservationForm reservationForm,
 			BindingResult result,
-			HttpServletRequest request,
 			ModelAndView mav) {
 		// エラーがある場合新規予約画面へ戻す
 		if (result.hasErrors()) {
@@ -284,9 +279,9 @@ public class ReservationController {
 		// 受け取った日付をLocalDateに変換
 		LocalDate rsvDate = LocalDate.parse(reservationForm.getRsvDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		// 入力フォームから受け取った値をreservationに格納
-		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm, request);
+		Reservation reservation = this.reservationService.storeReservation(rsvDate, reservationForm);
 		// 予約を登録する
-		this.reservationService.registerReservation(reservation, request);
+		this.reservationService.registerReservation(reservation);
 
 		// 予約情報を取得
 		String reservationDate = rsvDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));

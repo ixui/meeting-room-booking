@@ -26,7 +26,7 @@
 
 			<div class="spacer"></div>
 
-			<form action="/signup" method="post" th:object="${formModel}" class="form-horizontal" id="userRegistrationForm">
+			<form th:action="@{/signup}" method="post" th:object="${formModel}" class="form-horizontal" id="userRegistrationForm">
 
 				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err"></div>
 

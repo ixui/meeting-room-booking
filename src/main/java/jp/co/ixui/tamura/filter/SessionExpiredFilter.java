@@ -11,12 +11,17 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jp.co.ixui.tamura.service.UserService;
 
 @Component
 public class SessionExpiredFilter implements Filter {
+
+	@Autowired
+	UserService userService;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         // 初期化処理
@@ -26,7 +31,7 @@ public class SessionExpiredFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 前処理
     	HttpServletRequest req = (HttpServletRequest) request;
-		if (isTarget(req) && !UserService.isValidUserSession(req)) {
+		if (isTarget(req) && !this.userService.isValidUserSession(req)) {
             ((HttpServletResponse) response).sendRedirect(req.getContextPath() + "/timeout");
             return;
 		}

@@ -11,10 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jp.co.ixui.tamura.controller.login.LoginForm;
 import jp.co.ixui.tamura.controller.signup.SignupForm;
 import jp.co.ixui.tamura.controller.user.UserForm;
 import jp.co.ixui.tamura.domain.EmpMst;
@@ -30,12 +34,15 @@ public class UserService {
 	@Autowired
 	EmpMstMapper empMstMapper;
 
+	@Autowired
+	AuthenticationManager authenticationManager;
+
 	/**
 	 * セッションに社員番号が存在するか確認する
 	 *
 	 * @param request
 	 */
-	public static boolean isValidUserSession(HttpServletRequest request) {
+	public boolean isValidUserSession(HttpServletRequest request) {
 
     	// セッションを取得し取得できなかった場合はタイムアウトとみなす
         HttpSession currentSession = request.getSession(false);
@@ -54,8 +61,12 @@ public class UserService {
         	return false;
         }
 
-        if (currentSession.getAttribute("empNo") == null ||
-    		"".equals(currentSession.getAttribute("empNo"))){
+        // セッションに保存されている認証情報から社員番号を取得する
+        String empNo = getEmpNoFromAuthentication();
+
+        if (empNo == null ||
+    		"".equals(empNo) ||
+    		"anonymousUser".equals(empNo)) {
 
         	return false;
 		}
@@ -64,16 +75,22 @@ public class UserService {
 	}
 
 	/**
-	 * セッションに社員番号とユーザー名を格納する
+	 * セッションに保存された認証情報から社員番号を取得する
 	 *
 	 * @param request
 	 * @param loginDTO
 	 */
-	public void setEmpNoSession(HttpServletRequest request,LoginForm loginDTO) {
-		String userName = this.empMstMapper.selectUser(loginDTO.getEmpNo()).getName();
-		HttpSession session = request.getSession();
-		session.setAttribute("empNo", loginDTO.getEmpNo());
-		session.setAttribute("userName", userName);
+	@SuppressWarnings("static-method")
+	public String getEmpNoFromAuthentication() {
+
+		String empNo = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+        	empNo = ((UserDetails)principal).getUsername();
+        } else {
+        	empNo = principal.toString();
+        }
+		return empNo;
 	}
 
 	/**
@@ -93,30 +110,28 @@ public class UserService {
 	/**
 	 * ユーザー情報の更新
 	 *
-	 * @param request
 	 * @param userDTO
 	 */
-	public void updateUser(HttpServletRequest request, UserForm userDTO) {
-		HttpSession session = request.getSession();
-		String sessionEmpNo = (String)session.getAttribute("empNo");
+	public void updateUser(UserForm userDTO) {
+		String empNo = getEmpNoFromAuthentication();
 		EmpMst employee = new EmpMst();
-		employee.setEmpNo(sessionEmpNo);
+		employee.setEmpNo(empNo);
 		employee.setName(userDTO.getName());
 		employee.setMail(userDTO.getEmail());
-		employee.setPass(UserService.getSafetyPassword(userDTO.getPass(), sessionEmpNo));
+		employee.setPass(UserService.getSafetyPassword(userDTO.getPass(), empNo));
 		this.empMstMapper.update(employee);
 	}
 
 	/**
-	 * 	セッションに変更後のユーザー名を保存する
+	 * 	認証情報の更新
 	 *
-	 * @param request
 	 * @param UserDTO
 	 */
-	@SuppressWarnings("static-method")
-	public void setUserNameSession(HttpServletRequest request,UserForm UserDTO) {
-		HttpSession session = request.getSession();
-		session.setAttribute("userName", UserDTO.getName());
+	public void setAuthentication(UserForm userDto) {
+
+		Authentication request = new UsernamePasswordAuthenticationToken(getEmpNoFromAuthentication(), userDto.getPass());
+		Authentication result = this.authenticationManager.authenticate(request);
+		SecurityContextHolder.getContext().setAuthentication(result);
 	}
 
 	 /** パスワードを安全にするためのアルゴリズム */
