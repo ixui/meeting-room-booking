@@ -1,5 +1,6 @@
 package jp.co.ixui.tamura.controller.user;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -28,4 +29,6 @@ public class UserForm {
 	@NotEmpty(message="確認用パスワードを入力してください")
 	private String confirmPass;
 
+	@NotNull
+	private String auth;
 }
