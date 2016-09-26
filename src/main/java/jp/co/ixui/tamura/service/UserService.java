@@ -3,6 +3,7 @@ package jp.co.ixui.tamura.service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.List;
 
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -36,6 +37,15 @@ public class UserService {
 
 	@Autowired
 	AuthenticationManager authenticationManager;
+
+	/**
+	 * 登録ユーザ一覧を表示するための情報を取得する。
+	 *
+	 * @return List<EmpMst>
+	 */
+	public List<EmpMst> getAllUser() {
+		return this.empMstMapper.selectAllUser();
+	}
 
 	/**
 	 * セッションに社員番号が存在するか確認する

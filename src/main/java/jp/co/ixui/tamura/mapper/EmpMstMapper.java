@@ -24,6 +24,11 @@ public interface EmpMstMapper {
 	List<EmpMst> selectAll();
 
 	/**
+	 * @return List<EmpMst>
+	 */
+	List<EmpMst> selectAllUser();
+
+	/**
 	 * @param EmpMst
 	 */
 	void create(EmpMst employee);
