@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>登録ユーザ一覧</title>
+		<link th:href="@{//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css}" rel="stylesheet" />
+		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{/css/style.css}" rel="stylesheet" />
+	</head>
+	<body>
+		<div th:include="header :: frag_header"></div>
+		<div class="spacer"></div>
+		<div class="container" align="center">
+			<div th:if="${errorMessage}">
+				<p th:text="${errorMessage}" class="err"></p>
+				<a href="/admin/showAllUser" class="btn btn-default btn-sm active">もう一度読み込む</a>
+			</div>
+			<div th:if="${userList}" th:fragment="frag_table" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
+				<form action="" method="post" id="userUpdate">
+					<table class="table table-bordered table table-striped" th:inline="text">
+						<tr>
+							<th class="col-sm-1"></th><th class="col-sm-2">社員番号</th><th class="col-sm-2">名前</th><th class="col-sm-2">権限</th><th class="col-sm-1"></th>
+						</tr>
+						<tr th:each="user : ${userList}" th:inline="text">
+							<td><input type="checkbox" class="form-control input-lg" th:name="${user.empNo}" th:value="${user.empNo}" /></td>
+							<td>[[${user.empNo}]]</td>
+							<td>[[${user.name}]]</td>
+							<td>[[${user.auth}]]</td>
+							<td><button type="button" class="btn btn-default btn-sm active" id="select">選択</button></td>
+						</tr>
+					</table>
+				</form>
+				<button type="button" class="btn btn-default btn-sm active" id="register">新規登録</button>
+				<button type="button" class="btn btn-default btn-sm active" id="delete">削除</button>
+			</div>
+		</div>
+
+		<script th:src="@{//ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js}"></script>
+		<script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<script th:src="@{/js/show-all-user.js}"></script>
+		<script th:src="@{/js/dialog.js}"></script>
+	</body>
+</html>

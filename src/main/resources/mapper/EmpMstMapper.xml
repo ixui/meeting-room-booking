@@ -9,6 +9,13 @@
 	<select id="selectAll" resultType="EmpMst">
 		SELECT * FROM EMP_MST
 	</select>
+	<select id="selectAllUser" resultType="EmpMst">
+		SELECT EMP_NO,
+			   NAME,
+			   AUTH
+		  FROM EMP_MST
+		 ORDER BY EMP_NO
+	</select>
 	<insert id="create">
 		INSERT INTO
 			EMP_MST (
