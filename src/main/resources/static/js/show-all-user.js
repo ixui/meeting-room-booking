@@ -120,6 +120,37 @@ $(function() {
 		});
 	});
 
+	// ユーザ情報削除
+	$(document).on('click', '#delete',function() {
+
+		// ボタンの無効化
+		$(".btn").prop('disabled', true);
+
+		// フォーム要素を取得
+		var form = $('#userDeleteForm');
+
+		// 送信
+		$.ajax({
+			url: form.attr('action'),
+			type: form.attr('method'),
+			data: form.serialize(),
+			timeout: 10000
+		})
+		// 通信成功時の処理
+		.done(function(data) {
+			// 登録に成功した場合、一覧表示を更新
+			showAllUser();
+		})
+		// 通信失敗時の処理
+		.fail(function() {
+			alert('エラー');
+		})
+		// 通信終了後の処理
+		.always(function() {
+			$(".btn").prop('disabled', false);
+		});
+	});
+
 	// 登録ユーザ一覧表示
 	function showAllUser() {
 		// ボタンの無効化

@@ -38,4 +38,9 @@ public interface EmpMstMapper {
 	 */
 	void update(EmpMst employee);
 
+	/**
+	 * @param empNoList
+	 */
+	void delete(List<String> empNoList);
+
 }

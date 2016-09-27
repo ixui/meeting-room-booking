@@ -149,6 +149,15 @@ public class UserService {
 	}
 
 	/**
+	 * ユーザー情報の削除(admin)
+	 *
+	 * @param userDTO
+	 */
+	public void deleteUser(List<String> empNoList) {
+		this.empMstMapper.delete(empNoList);
+	}
+
+	/**
 	 * 	認証情報の更新
 	 *
 	 * @param UserDTO

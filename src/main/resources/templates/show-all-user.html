@@ -21,13 +21,13 @@
 			</div>
 			<div id="resultTable">
 				<div th:if="${userList}" th:fragment="frag_table" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
-					<form action="" method="post" id="userUpdate">
+					<form action="/admin/delete" method="post" id="userDeleteForm">
 						<table class="table table-bordered table table-striped" th:inline="text">
 							<tr>
 								<th class="col-sm-1"></th><th class="col-sm-2">社員番号</th><th class="col-sm-2">名前</th><th class="col-sm-2">権限</th><th class="col-sm-1"></th>
 							</tr>
 							<tr th:each="user : ${userList}" th:inline="text">
-								<td><input type="checkbox" class="form-control input-sm" th:name="${user.empNo}" th:value="${user.empNo}" /></td>
+								<td><input type="checkbox" class="form-control input-sm" name="empNo" th:value="${user.empNo}" /></td>
 								<td>[[${user.empNo}]]</td>
 								<td>[[${user.name}]]</td>
 								<td>[[${user.auth}]]</td>
