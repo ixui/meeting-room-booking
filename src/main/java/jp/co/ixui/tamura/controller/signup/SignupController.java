@@ -1,7 +1,5 @@
 package jp.co.ixui.tamura.controller.signup;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,40 +23,23 @@ public class SignupController {
 	UserService userService;
 
 	/**
-	 * ユーザの新規登録画面を表示する
-	 */
-	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public ModelAndView signup(HttpServletRequest request, ModelAndView mav) {
-
-		if (this.userService.isValidUserSession(request)) {
-			return new ModelAndView("redirect:/calendar");
-		}
-
-		// バリデーション用に空の画面用DTOを設定する
-		mav.addObject("formModel",new SignupForm());
-		mav.setViewName("register-user");
-		return mav;
-	}
-
-	/**
 	 * ユーザ登録を行う
 	 */
 	@RequestMapping(value="/signup", method = RequestMethod.POST)
 	public ModelAndView signup(
 			@ModelAttribute("formModel") @Validated SignupForm signupForm,
 			BindingResult result,
-			HttpServletRequest request,
 			ModelAndView mav) {
 
 		// 入力チェック
 		if (result.hasErrors()) {
-			mav.setViewName("register-user");
+			mav.setViewName("show-all-user :: frag_registerForm");
 			return mav;
 		}
 
 		this.userService.createUser(signupForm);
 
-		mav.setViewName("redirect:login");
+		mav.setViewName("show-all-user :: frag_registerForm");
 		return mav;
 	}
 

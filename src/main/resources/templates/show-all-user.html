@@ -4,6 +4,8 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="_csrf" th:content="${_csrf.token}" />
+		<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 		<title>登録ユーザ一覧</title>
 		<link th:href="@{//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css}" rel="stylesheet" />
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
@@ -17,30 +19,93 @@
 				<p th:text="${errorMessage}" class="err"></p>
 				<a href="/admin/showAllUser" class="btn btn-default btn-sm active">もう一度読み込む</a>
 			</div>
-			<div th:if="${userList}" th:fragment="frag_table" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
-				<form action="" method="post" id="userUpdate">
-					<table class="table table-bordered table table-striped" th:inline="text">
-						<tr>
-							<th class="col-sm-1"></th><th class="col-sm-2">社員番号</th><th class="col-sm-2">名前</th><th class="col-sm-2">権限</th><th class="col-sm-1"></th>
-						</tr>
-						<tr th:each="user : ${userList}" th:inline="text">
-							<td><input type="checkbox" class="form-control input-lg" th:name="${user.empNo}" th:value="${user.empNo}" /></td>
-							<td>[[${user.empNo}]]</td>
-							<td>[[${user.name}]]</td>
-							<td>[[${user.auth}]]</td>
-							<td><button type="button" class="btn btn-default btn-sm active" id="select">選択</button></td>
-						</tr>
-					</table>
-				</form>
-				<button type="button" class="btn btn-default btn-sm active" id="register">新規登録</button>
-				<button type="button" class="btn btn-default btn-sm active" id="delete">削除</button>
+			<div id="resultTable">
+				<div th:if="${userList}" th:fragment="frag_table" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
+					<form action="" method="post" id="userUpdate">
+						<table class="table table-bordered table table-striped" th:inline="text">
+							<tr>
+								<th class="col-sm-1"></th><th class="col-sm-2">社員番号</th><th class="col-sm-2">名前</th><th class="col-sm-2">権限</th><th class="col-sm-1"></th>
+							</tr>
+							<tr th:each="user : ${userList}" th:inline="text">
+								<td><input type="checkbox" class="form-control input-sm" th:name="${user.empNo}" th:value="${user.empNo}" /></td>
+								<td>[[${user.empNo}]]</td>
+								<td>[[${user.name}]]</td>
+								<td>[[${user.auth}]]</td>
+								<td><button type="button" class="btn btn-default btn-sm active" id="select">選択</button></td>
+							</tr>
+						</table>
+					</form>
+					<button type="button" class="btn btn-default btn-sm active" id="register">新規登録</button>
+					<button type="button" class="btn btn-default btn-sm active" id="delete">削除</button>
+				</div>
 			</div>
 		</div>
 
-		<script th:src="@{//ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js}"></script>
+		<!-- ユーザ新規登録フォーム -->
+		<div id="user-registration" title="新規ユーザ登録" align="center" th:fragment="frag_registerForm">
+			<form action="/signup" method="post" class="form-horizontal" id="userRegisterForm" th:object="${formModel}">
+				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err" id="error"></div>
+				<div class="form-group">
+    		        <div class="col-xs-3 col-xs-offset-1">
+	    		        <label>社員番号</label>
+					</div>
+    		        <div class="col-xs-6">
+            			<input type="text" name="empNo" th:field="*{empNo}" th:value="*{empNo}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('empNo')}" th:errors="*{empNo}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+				<div class="form-group">
+    		        <div class="col-xs-3 col-xs-offset-1">
+	    		        <label>名前</label>
+					</div>
+    		        <div class="col-xs-6">
+            			<input type="text" name="name" th:field="*{name}" th:value="*{name}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+				<div class="form-group">
+    		        <div class="col-xs-3 col-xs-offset-1">
+	    		        <label>パスワード</label>
+					</div>
+    		        <div class="col-xs-6">
+            			<input type="password" name="pass" th:field="*{pass}" th:value="*{pass}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+				<div class="form-group">
+    		        <div class="col-xs-3 col-xs-offset-1">
+	    		        <label>確認用パスワード</label>
+					</div>
+    		        <div class="col-xs-6">
+            			<input type="password" name="confirmPass" th:field="*{confirmPass}" th:value="*{confirmPass}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('confirmPass')}" th:errors="*{confirmPass}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+        		<div class="form-group">
+    		        <div class="col-xs-3 col-xs-offset-1">
+	    		        <label>権限</label>
+					</div>
+    		        <div class="col-xs-6">
+            			<input type="radio" name="auth" th:field="*{auth}" value="ROLE_USER" checked="checked" />ROLE_USER
+            			<input type="radio" name="auth" th:field="*{auth}" value="ROLE_ADMIN" />ROLE_ADMIN
+						<p th:if="${#fields.hasErrors('auth')}" th:errors="*{auth}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+			<hr></hr>
+			<button type="button" class="btn btn-default btn-sm active" id="user-register">登録</button>
+			<button type="button" class="btn btn-default btn-sm active close-dialog">閉じる</button>
+        	</form>
+		</div>
+
+
 		<script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
+		<script th:src="@{//ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js}"></script>
 		<script th:src="@{/js/bootstrap.min.js}"></script>
 		<script th:src="@{/js/show-all-user.js}"></script>
-		<script th:src="@{/js/dialog.js}"></script>
 	</body>
 </html>

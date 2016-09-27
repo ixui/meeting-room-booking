@@ -104,6 +104,8 @@ public class UserService {
 	}
 
 	/**
+	 * 新規ユーザ登録
+	 *
 	 * @param request
 	 * @param signupDTO
 	 */
@@ -112,7 +114,8 @@ public class UserService {
 		EmpMst employee = new EmpMst();
 		employee.setEmpNo(signupDTO.getEmpNo());
 		employee.setName(signupDTO.getName());
-		employee.setMail(signupDTO.getEmail());
+		employee.setAuth(signupDTO.getAuth());
+		employee.setMail("xxx@xxx.co.jp");
 		employee.setPass(UserService.getSafetyPassword(signupDTO.getPass(), signupDTO.getEmpNo()));
 		this.empMstMapper.create(employee);
 	}
