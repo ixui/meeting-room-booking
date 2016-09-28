@@ -79,9 +79,6 @@ public class UserController {
 			ModelAndView mav) {
 		// 入力チェック
 		if (result.hasErrors()) {
-
-			String auth = userForm.getAuth();
-			System.out.println(auth);
 			mav.setViewName("show-all-user :: frag_updateForm");
 			return mav;
 		}
