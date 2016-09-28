@@ -22,11 +22,13 @@
 				EMP_NO,
 				PASS,
 				NAME,
+				AUTH,
 				MAIL
 			) VALUES (
 				#{empNo},
 				#{pass},
 				#{name},
+				#{auth},
 				#{mail}
 			)
 	</insert>
