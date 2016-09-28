@@ -32,6 +32,6 @@ public class SignupForm {
 	@NotEmpty(message="確認用パスワードを入力してください")
 	private String confirmPass;
 
-	@NotEmpty(message="")
+	@NotEmpty(message="選択してください")
 	private String auth;
 }
