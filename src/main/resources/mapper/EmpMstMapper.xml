@@ -36,7 +36,14 @@
 		UPDATE EMP_MST
 		   SET PASS = #{pass},
 			   NAME = #{name},
-			   MAIL = #{mail}
+			   MAIL = #{mail},
+			   AUTH = #{auth}
+		 WHERE EMP_NO = #{empNo}
+	</update>
+	<update id="updateUser">
+		UPDATE EMP_MST
+		   SET NAME = #{name},
+			   AUTH = #{auth}
 		 WHERE EMP_NO = #{empNo}
 	</update>
 

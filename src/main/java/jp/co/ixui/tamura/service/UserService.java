@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.ixui.tamura.controller.signup.SignupForm;
 import jp.co.ixui.tamura.controller.user.UserForm;
+import jp.co.ixui.tamura.controller.user.UserUpdateForm;
 import jp.co.ixui.tamura.domain.EmpMst;
 import jp.co.ixui.tamura.mapper.EmpMstMapper;
 
@@ -132,6 +133,18 @@ public class UserService {
 		employee.setName(userDTO.getName());
 		employee.setMail(userDTO.getEmail());
 		employee.setPass(UserService.getSafetyPassword(userDTO.getPass(), empNo));
+		this.empMstMapper.update(employee);
+	}
+
+	/**
+	 * ユーザー情報の更新(admin)
+	 *
+	 * @param userDTO
+	 */
+	public void updateUser(UserUpdateForm userDTO) {
+		EmpMst employee = this.empMstMapper.selectUser(userDTO.getEmpNo());
+		employee.setName(userDTO.getName());
+		employee.setAuth(userDTO.getAuth());
 		this.empMstMapper.update(employee);
 	}
 

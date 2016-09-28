@@ -31,7 +31,7 @@
 								<td>[[${user.empNo}]]</td>
 								<td>[[${user.name}]]</td>
 								<td>[[${user.auth}]]</td>
-								<td><button type="button" class="btn btn-default btn-sm active" id="select">選択</button></td>
+								<td><button type="button" class="btn btn-default btn-sm active select">選択</button></td>
 							</tr>
 						</table>
 					</form>
@@ -44,6 +44,7 @@
 		<!-- ユーザ新規登録フォーム -->
 		<div id="user-registration" title="新規ユーザ登録" align="center" th:fragment="frag_registerForm">
 			<form action="/signup" method="post" class="form-horizontal" id="userRegisterForm" th:object="${formModel}">
+				<div class="spacer"></div>
 				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err" id="error"></div>
 				<div class="form-group">
     		        <div class="col-xs-3 col-xs-offset-1">
@@ -90,14 +91,48 @@
 	    		        <label>権限</label>
 					</div>
     		        <div class="col-xs-6">
-            			<input type="radio" name="auth" th:field="*{auth}" value="ROLE_USER" checked="checked" />ROLE_USER
-            			<input type="radio" name="auth" th:field="*{auth}" value="ROLE_ADMIN" />ROLE_ADMIN
+            			<input type="radio" name="auth1" th:field="*{auth}" value="ROLE_USER" checked="checked" />ROLE_USER
+            			<input type="radio" name="auth2" th:field="*{auth}" value="ROLE_ADMIN" />ROLE_ADMIN
 						<p th:if="${#fields.hasErrors('auth')}" th:errors="*{auth}" th:errorclass="err"></p>
 					</div>
         		</div>
 
 			<hr></hr>
 			<button type="button" class="btn btn-default btn-sm active" id="user-register">登録</button>
+			<button type="button" class="btn btn-default btn-sm active close-dialog">閉じる</button>
+        	</form>
+		</div>
+
+		<!-- ユーザ情報更新フォーム -->
+		<div id="user-update" title="ユーザ情報更新" align="center" th:fragment="frag_updateForm">
+			<form action="/admin/update" method="post" class="form-horizontal" id="userUpdateForm" th:object="${formModel}">
+				<div class="spacer"></div>
+
+				<input type="hidden" id="updateEmpNo" th:field="*{empNo}" th:value="*{empNo}" class="form-control"/>
+
+				<div class="form-group">
+    		        <div class="col-xs-3 col-xs-offset-1">
+	    		        <label>名前</label>
+					</div>
+    		        <div class="col-xs-6">
+            			<input type="text" id="updateName" th:field="*{name}" th:value="*{name}" class="form-control"/>
+						<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+        		<div class="form-group">
+    		        <div class="col-xs-3 col-xs-offset-1">
+	    		        <label>権限</label>
+					</div>
+    		        <div class="col-xs-6">
+            			<input type="radio" id="auth3" th:field="*{auth}" value="ROLE_USER" />ROLE_USER
+            			<input type="radio" id="auth4" th:field="*{auth}" value="ROLE_ADMIN" />ROLE_ADMIN
+						<p th:if="${#fields.hasErrors('auth')}" th:errors="*{auth}" th:errorclass="err"></p>
+					</div>
+        		</div>
+
+			<hr></hr>
+			<button type="button" class="btn btn-default btn-sm active" id="update">登録</button>
 			<button type="button" class="btn btn-default btn-sm active close-dialog">閉じる</button>
         	</form>
 		</div>

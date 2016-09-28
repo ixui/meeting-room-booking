@@ -60,4 +60,30 @@ public class UserController {
 		return mav;
 	}
 
+	/**
+	 * ユーザー情報を更新する(admin)
+	 *
+	 * @param request
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value="/admin/update", method = RequestMethod.POST)
+	public ModelAndView updateUser(
+			@ModelAttribute("formModel") @Validated UserUpdateForm userForm,
+			BindingResult result,
+			ModelAndView mav) {
+		// 入力チェック
+		if (result.hasErrors()) {
+
+			String auth = userForm.getAuth();
+			System.out.println(auth);
+			mav.setViewName("show-all-user :: frag_updateForm");
+			return mav;
+		}
+		// ユーザー情報更新処理
+		this.userService.updateUser(userForm);
+
+		mav.setViewName("show-all-user :: frag_updateForm");
+		return mav;
+	}
 }
