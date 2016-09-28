@@ -93,8 +93,8 @@
 	    		        <label>権限</label>
 					</div>
     		        <div class="col-xs-6">
-            			<input type="radio" name="auth1" th:field="*{auth}" value="ROLE_USER" checked="checked" />ユーザ
-            			<input type="radio" name="auth2" th:field="*{auth}" value="ROLE_ADMIN" />管理者
+            			<input type="radio" name="user" th:field="*{auth}" value="ROLE_USER" checked="checked" />ユーザ
+            			<input type="radio" name="admin" th:field="*{auth}" value="ROLE_ADMIN" />管理者
 						<p th:if="${#fields.hasErrors('auth')}" th:errors="*{auth}" th:errorclass="err"></p>
 					</div>
         		</div>
@@ -127,8 +127,8 @@
 	    		        <label>権限</label>
 					</div>
     		        <div class="col-xs-6">
-            			<input type="radio" id="auth3" th:field="*{auth}" value="ROLE_USER" />ユーザ
-            			<input type="radio" id="auth4" th:field="*{auth}" value="ROLE_ADMIN" />管理者
+            			<input type="radio" id="user" th:field="*{auth}" value="ROLE_USER" />ユーザ
+            			<input type="radio" id="admin" th:field="*{auth}" value="ROLE_ADMIN" />管理者
 						<p th:if="${#fields.hasErrors('auth')}" th:errors="*{auth}" th:errorclass="err"></p>
 					</div>
         		</div>

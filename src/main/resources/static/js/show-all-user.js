@@ -28,9 +28,9 @@ $(function() {
 		var name = auth.prev().text();
 		var empNo = auth.prev().prev().text();
 		if (auth.text() == "ユーザ") {
-			$('#auth3').attr('checked', 'checked');
+			$('#user').prop('checked', true);
 		} else {
-			$('#auth4').attr('checked', 'checked');
+			$('#admin').prop('checked', true);
 		}
 		$('#updateName').attr('value', name);
 		$('#updateEmpNo').attr('value', empNo);
