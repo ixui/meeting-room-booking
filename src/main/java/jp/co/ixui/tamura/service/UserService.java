@@ -128,10 +128,8 @@ public class UserService {
 	 */
 	public void updateUser(UserForm userDTO) {
 		String empNo = getEmpNoFromAuthentication();
-		EmpMst employee = new EmpMst();
-		employee.setEmpNo(empNo);
+		EmpMst employee = this.empMstMapper.selectUser(empNo);
 		employee.setName(userDTO.getName());
-		employee.setMail(userDTO.getEmail());
 		employee.setPass(UserService.getSafetyPassword(userDTO.getPass(), empNo));
 		this.empMstMapper.update(employee);
 	}
