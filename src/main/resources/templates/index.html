@@ -14,9 +14,7 @@
 		<script src="/js/btn.js" th:src="@{/js/btn.js}"></script>
 	</head>
 	<body>
-		<div class="header">
-			<div class="header-left">株式会社イクスイ</div>
-		</div>
+		<div class="spacer"></div>
 		<div class="container" align="center">
 			<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
 				<p class="text-danger">入力された 社員番号 あるいは パスワード が正しくありません</p>

@@ -43,7 +43,7 @@
 
 		<!-- ユーザ新規登録フォーム -->
 		<div id="user-registration" title="新規ユーザ登録" align="center" th:fragment="frag_registerForm">
-			<form action="/signup" method="post" class="form-horizontal" id="userRegisterForm" th:object="${formModel}">
+			<form action="/admin/signup" method="post" class="form-horizontal" id="userRegisterForm" th:object="${formModel}">
 				<div class="spacer"></div>
 				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err" id="error"></div>
 				<div class="form-group">

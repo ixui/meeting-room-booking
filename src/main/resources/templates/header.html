@@ -15,7 +15,7 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">メニュー<b class="caret"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="/admin/showAllUser">登録ユーザ一覧画面</a></li>
+									<li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a href="/admin/showAllUser">登録ユーザ一覧画面</a></li>
 									<li><a href="/update">ユーザ情報更新画面</a></li>
 									<li><a href="/calendar">カレンダー画面</a></li>
 									<li class="divider"></li>
@@ -23,7 +23,7 @@
 								</ul>
 							</li>
 						</ul>
-						<div class="header-right" th:inline="text">ユーザ:[[${session.userName}]]</div>
+						<div class="header-right" th:inline="text">ユーザ:[[${#authentication.principal.username}]]</div>
 					</div>
 				</div>
 			</nav>
