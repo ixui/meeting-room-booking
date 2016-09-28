@@ -30,7 +30,8 @@
 								<td><input type="checkbox" class="form-control input-sm" name="empNo" th:value="${user.empNo}" /></td>
 								<td>[[${user.empNo}]]</td>
 								<td>[[${user.name}]]</td>
-								<td>[[${user.auth}]]</td>
+								<td th:if="${user.auth} == ROLE_USER">ユーザ</td>
+								<td th:if="${user.auth} == ROLE_ADMIN">管理者</td>
 								<td><button type="button" class="btn btn-default btn-sm active select">選択</button></td>
 							</tr>
 						</table>

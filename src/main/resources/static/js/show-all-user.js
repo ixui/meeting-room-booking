@@ -3,7 +3,7 @@ $(function() {
 	// 新規登録フォーム
 	$('#user-registration').dialog({
 		autoOpen: false,
-		height: 400,
+		height: 450,
 		width: 500,
 		modal: true,
 		closeOnEscape: false
@@ -27,7 +27,7 @@ $(function() {
 		var auth = $(this).parent().prev();
 		var name = auth.prev().text();
 		var empNo = auth.prev().prev().text();
-		if (auth.text() == "ROLE_USER") {
+		if (auth.text() == "ユーザ") {
 			$('#auth3').attr('checked', 'checked');
 		} else {
 			$('#auth4').attr('checked', 'checked');
