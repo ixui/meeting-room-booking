@@ -37,6 +37,10 @@ $(function() {
 
 		$('#user-update').dialog('open');
 	});
+
+	$('.close-dialog').click(function() {
+		$(this).parents('div').dialog('close');
+	});
 })
 
 
