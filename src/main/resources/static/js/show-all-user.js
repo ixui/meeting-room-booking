@@ -38,7 +38,7 @@ $(function() {
 		$('#user-update').dialog('open');
 	});
 
-	$('.close-dialog').click(function() {
+	$(document).on('click', '.close-dialog',function() {
 		$(this).parents('div').dialog('close');
 	});
 })
@@ -73,7 +73,7 @@ $(function() {
 		// 通信成功時の処理
 		.done(function(data) {
 			$('#user-registration').html(data);
-			if ($('.err')[0]) return;
+			if ($('#user-registration .err')[0]) return;
 			// 登録に成功した場合、一覧表示を更新
 			showAllUser();
 			$('#userRegisterForm').find(":text").val("");
@@ -108,7 +108,7 @@ $(function() {
 		// 通信成功時の処理
 		.done(function(data) {
 			$('#user-update').html(data);
-			if ($('.err')[0]) return;
+			if ($('#user-update .err')[0]) return;
 			// 登録に成功した場合、一覧表示を更新
 			showAllUser();
 			$('#userUpdateForm').find(":text").val("");

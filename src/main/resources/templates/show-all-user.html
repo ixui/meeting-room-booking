@@ -92,8 +92,8 @@
 	    		        <label>権限</label>
 					</div>
     		        <div class="col-xs-6">
-            			<input type="radio" name="auth1" th:field="*{auth}" value="ROLE_USER" checked="checked" />ROLE_USER
-            			<input type="radio" name="auth2" th:field="*{auth}" value="ROLE_ADMIN" />ROLE_ADMIN
+            			<input type="radio" name="auth1" th:field="*{auth}" value="ROLE_USER" checked="checked" />ユーザ
+            			<input type="radio" name="auth2" th:field="*{auth}" value="ROLE_ADMIN" />管理者
 						<p th:if="${#fields.hasErrors('auth')}" th:errors="*{auth}" th:errorclass="err"></p>
 					</div>
         		</div>
