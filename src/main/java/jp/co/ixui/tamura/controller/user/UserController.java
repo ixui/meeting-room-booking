@@ -101,11 +101,6 @@ public class UserController {
 			@RequestParam("empNo") List<String> empNoList,
 			ModelAndView mav) {
 
-		System.out.println(empNoList);
-
-		for (String empNo : empNoList) {
-			System.out.println(empNo);
-		}
 		// ユーザー情報削除処理
 		this.userService.deleteUser(empNoList);
 

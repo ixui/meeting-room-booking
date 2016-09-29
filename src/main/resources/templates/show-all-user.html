@@ -7,8 +7,8 @@
 		<meta name="_csrf" th:content="${_csrf.token}" />
 		<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 		<title>登録ユーザ一覧</title>
-		<link th:href="@{//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css}" rel="stylesheet" />
 		<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+		<link th:href="@{//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css}" rel="stylesheet" />
 		<link th:href="@{/css/show-all-user.css}" rel="stylesheet" />
 		<link th:href="@{/css/style.css}" rel="stylesheet" />
 	</head>
@@ -101,7 +101,7 @@
 
 			<hr></hr>
 			<button type="button" class="btn btn-default btn-sm active" id="user-register">登録</button>
-			<button type="button" class="btn btn-default btn-sm active close-dialog">閉じる</button>
+			<!-- <button type="button" class="btn btn-default btn-sm active close-dialog">閉じる</button> -->
         	</form>
 		</div>
 
@@ -135,14 +135,14 @@
 
 			<hr></hr>
 			<button type="button" class="btn btn-default btn-sm active" id="update">登録</button>
-			<button type="button" class="btn btn-default btn-sm active close-dialog">閉じる</button>
+			<!-- <button type="button" class="btn btn-default btn-sm active close-dialog">閉じる</button> -->
         	</form>
 		</div>
 
 
 		<script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
-		<script th:src="@{//ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js}"></script>
 		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<script th:src="@{//ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js}"></script>
 		<script th:src="@{/js/show-all-user.js}"></script>
 	</body>
 </html>

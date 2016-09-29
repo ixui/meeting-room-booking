@@ -32,15 +32,15 @@ $(function() {
 		} else {
 			$('#admin').prop('checked', true);
 		}
-		$('#updateName').attr('value', name);
-		$('#updateEmpNo').attr('value', empNo);
+		$('#updateName').prop('value', name);
+		$('#updateEmpNo').prop('value', empNo);
 
 		$('#user-update').dialog('open');
 	});
 
-	$(document).on('click', '.close-dialog',function() {
-		$(this).parents('div').dialog('close');
-	});
+//	$(document).on('click', '.close-dialog',function() {
+//		$(this).parents('div').dialog('close');
+//	});
 })
 
 
