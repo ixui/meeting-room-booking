@@ -40,30 +40,4 @@ public class LoginController {
 		mav.setViewName("index");
 		return mav;
 	}
-
-//	/**
-//	 * 入力チェックをする、エラーがない場合はカレンダー画面へリダイレクト
-//	 *
-//	 * @param loginDTO
-//	 * @param result
-//	 * @param request
-//	 * @param mav
-//	 * @return mav
-//	 */
-//	@RequestMapping(value="/login/error")
-//	public ModelAndView login(
-//			@ModelAttribute("formModel") @Validated LoginForm loginDTO,
-//			BindingResult result,
-//			HttpServletRequest request,
-//			ModelAndView mav) {
-//		// バリデーションの結果をチェック
-//		if (!result.hasErrors()) {
-//			// セッションに社員番号とユーザー名を格納
-//			this.userService.setEmpNoSession(request, loginDTO);
-//			// カレンダー表示画面にリダイレクト
-//			return new ModelAndView("redirect:/calendar");
-//		}
-//		mav.setViewName("index");
-//		return mav;
-//	}
 }

@@ -13,7 +13,7 @@ public class LoginUserDetails extends User {
 		super(
 				empMst.getEmpNo(),
 				empMst.getPass(),
-				AuthorityUtils.createAuthorityList("ROLE_USER")
+				AuthorityUtils.createAuthorityList(empMst.getAuth())
 				);
 		this.empMst = empMst;
 	}

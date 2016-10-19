@@ -1,17 +1,22 @@
 package jp.co.ixui.tamura.controller.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.ixui.tamura.service.UserService;
 
 @Controller
+@Transactional
 public class UserController {
 
 	@Autowired
@@ -74,9 +79,6 @@ public class UserController {
 			ModelAndView mav) {
 		// 入力チェック
 		if (result.hasErrors()) {
-
-			String auth = userForm.getAuth();
-			System.out.println(auth);
 			mav.setViewName("show-all-user :: frag_updateForm");
 			return mav;
 		}
@@ -84,6 +86,25 @@ public class UserController {
 		this.userService.updateUser(userForm);
 
 		mav.setViewName("show-all-user :: frag_updateForm");
+		return mav;
+	}
+
+	/**
+	 * ユーザー情報を削除する(admin)
+	 *
+	 * @param request
+	 * @param mav
+	 * @return mav
+	 */
+	@RequestMapping(value="/admin/delete", method = RequestMethod.POST)
+	public ModelAndView deleteUser(
+			@RequestParam("empNo") List<String> empNoList,
+			ModelAndView mav) {
+
+		// ユーザー情報削除処理
+		this.userService.deleteUser(empNoList);
+
+		mav.setViewName("show-all-user :: frag_table");
 		return mav;
 	}
 }

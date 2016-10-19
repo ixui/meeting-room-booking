@@ -46,5 +46,11 @@
 			   AUTH = #{auth}
 		 WHERE EMP_NO = #{empNo}
 	</update>
+	<delete id="delete" parameterType="java.util.List">
+		DELETE FROM EMP_MST WHERE EMP_NO IN
+		<foreach collection ="list" item= "empNo" open="(" separator="," close=")">
+			 #{empNo}
+		</foreach>
+	</delete>
 
 </mapper>

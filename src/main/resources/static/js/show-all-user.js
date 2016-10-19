@@ -3,7 +3,7 @@ $(function() {
 	// 新規登録フォーム
 	$('#user-registration').dialog({
 		autoOpen: false,
-		height: 400,
+		height: 450,
 		width: 500,
 		modal: true,
 		closeOnEscape: false
@@ -27,16 +27,20 @@ $(function() {
 		var auth = $(this).parent().prev();
 		var name = auth.prev().text();
 		var empNo = auth.prev().prev().text();
-		if (auth.text() == "ROLE_USER") {
-			$('#auth3').attr('checked', 'checked');
+		if (auth.text() == "ユーザ") {
+			$('#user').prop('checked', true);
 		} else {
-			$('#auth4').attr('checked', 'checked');
+			$('#admin').prop('checked', true);
 		}
-		$('#updateName').attr('value', name);
-		$('#updateEmpNo').attr('value', empNo);
+		$('#updateName').prop('value', name);
+		$('#updateEmpNo').prop('value', empNo);
 
 		$('#user-update').dialog('open');
 	});
+
+//	$(document).on('click', '.close-dialog',function() {
+//		$(this).parents('div').dialog('close');
+//	});
 })
 
 
@@ -69,7 +73,7 @@ $(function() {
 		// 通信成功時の処理
 		.done(function(data) {
 			$('#user-registration').html(data);
-			if ($('.err')[0]) return;
+			if ($('#user-registration .err')[0]) return;
 			// 登録に成功した場合、一覧表示を更新
 			showAllUser();
 			$('#userRegisterForm').find(":text").val("");
@@ -104,11 +108,42 @@ $(function() {
 		// 通信成功時の処理
 		.done(function(data) {
 			$('#user-update').html(data);
-			if ($('.err')[0]) return;
+			if ($('#user-update .err')[0]) return;
 			// 登録に成功した場合、一覧表示を更新
 			showAllUser();
 			$('#userUpdateForm').find(":text").val("");
 			$('#user-update').dialog('close');
+		})
+		// 通信失敗時の処理
+		.fail(function() {
+			alert('エラー');
+		})
+		// 通信終了後の処理
+		.always(function() {
+			$(".btn").prop('disabled', false);
+		});
+	});
+
+	// ユーザ情報削除
+	$(document).on('click', '#delete',function() {
+
+		// ボタンの無効化
+		$(".btn").prop('disabled', true);
+
+		// フォーム要素を取得
+		var form = $('#userDeleteForm');
+
+		// 送信
+		$.ajax({
+			url: form.attr('action'),
+			type: form.attr('method'),
+			data: form.serialize(),
+			timeout: 10000
+		})
+		// 通信成功時の処理
+		.done(function(data) {
+			// 登録に成功した場合、一覧表示を更新
+			showAllUser();
 		})
 		// 通信失敗時の処理
 		.fail(function() {

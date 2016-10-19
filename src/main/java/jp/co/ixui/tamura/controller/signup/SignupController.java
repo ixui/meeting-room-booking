@@ -25,7 +25,7 @@ public class SignupController {
 	/**
 	 * ユーザ登録を行う
 	 */
-	@RequestMapping(value="/signup", method = RequestMethod.POST)
+	@RequestMapping(value="/admin/signup", method = RequestMethod.POST)
 	public ModelAndView signup(
 			@ModelAttribute("formModel") @Validated SignupForm signupForm,
 			BindingResult result,

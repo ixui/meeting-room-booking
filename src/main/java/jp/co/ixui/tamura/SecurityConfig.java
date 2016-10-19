@@ -31,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// 認可処理、loginにはすべてのユーザがアクセスできるようにする
 		http.authorizeRequests()
 				.antMatchers("/login").permitAll()
+				.antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated();
 
 		// ログイン
