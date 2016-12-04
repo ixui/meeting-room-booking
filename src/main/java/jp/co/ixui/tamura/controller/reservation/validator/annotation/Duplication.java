@@ -26,7 +26,7 @@ import jp.co.ixui.tamura.controller.reservation.validator.DuplicationValidator;
 @SuppressWarnings("javadoc")
 public @interface Duplication {
 
-	String message() default "他の予約と時間がかぶっています";
+	String message() default "他予約と時間が重複しています";
 
 	Class<?>[] groups() default {};
 
