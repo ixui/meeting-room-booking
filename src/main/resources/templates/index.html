@@ -1,29 +1,275 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.tymeleaf.org">
-	<head>
-		<meta charset="utf-8"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<title>会議室予約管理</title>
-		<link type="text/css" rel="stylesheet"  href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
-		<link type="text/css" rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
-				th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js}"></script>
-		<script type="text/javascript" src="/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-		<script src="/js/index.js" th:src="@{/js/index.js}"></script>
-		<script src="/js/btn.js" th:src="@{/js/btn.js}"></script>
-	</head>
-	<body>
-		<div class="spacer"></div>
-		<div class="container" align="center">
-			<div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
-				<p class="text-danger">入力された 社員番号 あるいは パスワード が正しくありません</p>
-			</div>
-			<form th:action="@{/login}" method="post" id="loginForm">
-				<p>社員番号<input type="text" name="empNo" /></p>
-				<p>パスワード<input type="password" name="pass" /></p>
-				<button type="submit" class="btn btn-default btn-sm active" id="login">ログイン</button>
-			</form>
-		</div>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>会議室予約システム</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" th:href="@{//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css}" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Dosis:300,400,500,600,700" th:href="@{//fonts.googleapis.com/css?family=Dosis:300,400,500,600,700}" />
+    <link rel="stylesheet" href="/css/login.css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css" th:href="@{/css/responsive.css}" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" th:src="@{//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+  </head>
+
+
+
+  <body>
+    <header>
+      <!--ヘッダー部分-->
+      <div class="container">
+        <div class="header-left">
+          <a href="http://www.ixui.co.jp/index.html#home">
+            <img class="logo"  src="/picture/ixui_logo_full_white.png" />
+          </a>
+        </div>
+
+        <span class="fa fa-bars menu-icon"></span>
+
+
+        <div class="header-menu">
+          <ul class="header-menu-right">
+
+            <a href="#languages">使い方</a>
+
+            <a href="#students">社員の方々の声</a>
+
+            <a href="#contact">お問い合わせ</a>
+
+            <div class="header-right">
+              <div class="login" id="login-show">ログイン</div>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+
+
+
+
+
+
+    <!--モーダル-->
+    <div class="login-modal-wrapper" id="login-modal">
+      <div  class="modal1">
+        <!-- モーダルを閉じる -->
+        <div class ="close-modal">
+          <i class="fa fa-2x fa-times"></i>
+        </div>
+
+
+
+
+        <!-- ログインモーダルの表示 -->
+        <div id="login-form1">
+          <h2>社員番号、パスワードを<br/>入力してください</h2>
+          <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
+            <p class="text-danger">入力された 社員番号 あるいは パスワード が正しくありません</p>
+          </div>
+          <form th:action="@{/login}" method="post" id="loginForm">
+            <input  type="text" placeholder="社員番号" name="empNo" />
+            <input  type="password" placeholder="パスワード" name="pass" />
+            <br/>
+            <button type="submit" class="submit-btn" id="login">ログイン</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="top-wrapper">
+      <div class="container">
+        <h1>スーパー使いやすい会議室予約システム <br/><br/>ログイン画面</h1>
+      </div>
+    </div>
+
+
+
+
+
+
+    <!--使い方部分-->
+    <div id="languages" class="languages-section">
+      <div class="container">
+        <div class="section-title">
+          <h3>使い方</h3>
+        </div>
+        <div class="languages-box-wrapper">
+          <div class="languages-box languages-box1">
+            <div class="icon">
+              <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSGWlX6MsLVlwSp43805RCGanLu7nCTTQ61DHkhv2ZpDkteyI6a" />
+            </div>
+            <div class="languages-content">
+              <h4>１、まずはログイン</h4>
+              <p>社員番号、パスワードを入力</p>
+            </div>
+          </div>
+          <div class="languages-box languages-box2">
+            <div class="icon">
+              <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQvwMfFa7mBu66-638mlLBYOYDv2QrvuyUDcwxtbE17trNMiCzDlQ" class="carender" />
+            </div>
+            <div class="languages-content">
+              <h4>２、カレンダーで予約状況をチェック</h4>
+              <p>ログイン先のカレンダーで確認</p>
+            </div>
+          </div>
+          <div class="languages-box languages-box3">
+            <div class="icon">
+              <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfHTxglfReTrS8QOSYgIrwdn3kK2h8ZuIO4QllI6mE9cTIFDPJ" />
+            </div>
+            <div class="languages-content">
+              <h4>３、新規予約ボタンをクリック</h4>
+              <p>希望の日付、時間などを入力</p>
+            </div>
+          </div>
+          <div class="languages-box languages-box4">
+            <div class="icon">
+              <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSrC8cVUyeKlRqNfD3LwmfaQSBVhrUGXLAy3C9D8ykZhsSeHz-uVA" class="check" />
+            </div>
+            <div class="languages-content">
+              <h4>４、予約完了</h4>
+              <p>予約内容がカレンダーに反映されているか<br/>チェック</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <!-- スライダー -->
+
+    <div id="students" class="students-section">
+      <div class="container">
+        <div class="section-title">
+          <h3>社員の方々の声</h3>
+        </div>
+        <div id="student-carousel" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#student-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#student-carousel" data-slide-to="1"></li>
+            <li data-target="#student-carousel" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="student-box item active">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRGmkUaWO28HdBGK0g5PkSqXB7YdjyhyzoppaOixwMe4mjYmjL" class="student-image" />
+              <p>スーパー使いやすくてとても便利！</p>
+              <p>-山内</p>
+            </div>
+            <div class="student-box item">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxFqf7BrHQRHWzxNI8yX5jgqo-l9tC6WPdjHaIvYS6KJILcxIe" class="student-image" />
+              <p>こんなのみたことない！スーパー使いやすい！</p>
+              <p>-田村さん</p>
+            </div>
+            <div class="student-box item">
+              <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSr-xslnni19oReJoyxlDTp8ccB_s9WXeoVvHMBExxwBoZj8c8p" class="student-image" />
+              <p>とにかくもうスーパー使いやすい！</p>
+              <p>-中嶋さん</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    <!--お問い合わせフォーム-->
+    <!-- Contact -->
+    <div id="contact" class="contact-section">
+      <div class="contact-section-inner">
+        <div class="container">
+          <div class="section-title">
+            <h3>お問い合わせ</h3>
+          </div>
+          <div class="contact-form">
+            <h4>メッセージを送る</h4>
+            <form method="POST" enctype="text/plain"
+                  action="mailto:tamura-shunsuke@ixui.co.jp?subject=おーい&amp;body=こーい">
+
+              <div class="error-message"></div>
+              <input type="text" id="subject" name="subject" placeholder="Subject" class="contact-subject" />
+              <div class="error-message"></div>
+              <textarea id="message" name="message" placeholder="Message" class="mail-message"></textarea>
+              <!--
+              <button type="submit" class="btn btn-contact">Submit</button>
+              -->
+              <a id="sendMail" href="" class="btn btn-contact">送　信</a>
+            </form>
+          </div>
+          <div class="contact-about">
+            <h4>About Us</h4>
+            <p>なにか質問等ありましたら、こちらよりご連絡ください。
+
+            </p>
+            <h4>Address</h4>
+            <p><i class="fa fa-map-marker"></i>東京都港区新橋5－22－6 ル・グラシエルビル２ ４F</p>
+            <p><i class="fa fa-phone"></i>Phone: 03-5473-3933</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="social-section">
+      <div class="container">
+        <div class="section-title">
+          <h3>イクスイはこんな会社！</h3>
+        </div>
+        <div class="follow-us">
+          <a href="http://www.ixui.co.jp/index.html#home" class="social-icon" target='_blank'>
+            <img class="logo-ixui" src="/picture/ixui_logo_full_color.jpg" />
+            <i class="fa fa-ixui"></i>
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <footer>
+      <div class="container">
+        <div class="copyright">©2015-
+          ixui
+        </div>
+      </div>
+    </footer>
+
+    <div class="page-top">
+      <a href="#site-logo">▲<br/>Peage Top</a>
+    </div>
+
+
+
+
+
+	<script src="/js/index.js" th:src="@{/js/index.js}"></script>
+	<script src="/js/btn.js" th:src="@{/js/btn.js}"></script>
+	<script src="/js/login.js" th:src="@{/js/login.js}"></script>
+  </body>
 </html>
+
+
+
+
+
+
