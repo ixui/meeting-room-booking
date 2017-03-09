@@ -1,0 +1,554 @@
+body {
+  margin: 0;
+}
+
+
+
+
+a {
+  text-decoration: none;
+}
+
+
+
+.top-wrapper {
+  padding: 400px ;
+  background-image: url(http://www.fmkento.com/kaigi/img/room_c.jpg);
+  background-size: cover ;
+  color: white;
+  text-align: center;
+}
+
+
+
+
+.container {
+  width: 1170px;
+  padding: 0 15px;
+  margin: 0 auto;
+  color: black;
+}
+
+
+
+
+.top-wrapper h1 {
+  opacity: 0.7;
+  font-size: 45px;
+  letter-spacing: 5px;
+  font-family:Quicksand, 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+}
+
+
+
+
+.signup {
+  background-color: #239b76;
+}
+
+
+
+
+.btn {
+  padding: 8px 24px;
+  color: white;
+  display: inline-block;
+  opacity: 0.8;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.btn:hover {
+  opacity: 1;
+}
+
+
+
+
+.fa {
+  margin-right: 5px;
+}
+
+
+
+
+header .container {
+  height: 50px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  line-height: 50px;
+  box-shadow: -1px 1px 1px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+
+
+
+.header-title {
+  float: left;
+}
+
+.logo {
+  width: 124px;
+  margin-top: 10px;
+  float:left;
+}
+
+.header-left {
+  float: left;
+}
+  
+
+
+.header-menu-right {
+  float: right;
+}
+
+
+.header-menu-right a {
+  color: white;
+  font-weight: 700;
+  padding: 10px;
+
+}
+
+.header-menu-right a:hover {
+  color: #0dc0c0;
+  transition: color .3s;
+}
+
+
+.header-right {
+  float: right;
+  background-color: rgba(255,255,255,0.3);
+  transition: all 0.5s;
+}
+
+.header-right:hover {
+  background-color: rgba(255,255,255,0.5);
+}
+
+
+.header-right .login {
+  line-height: 50px;
+  padding: 0 25px;
+  color: white;
+  display:block;
+}
+
+
+
+.menu-icon {
+  color: white;
+  float: right;
+  font-size: 25px;
+  padding: 15px 0;
+  display: none;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* モーダル */
+.login-modal-wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  display: 
+}
+
+#login-show {
+  cursor: pointer;
+}
+
+
+
+.modal1 {
+  position: absolute;
+  top: 20%;
+  left: 34%;
+  background-color: #e6ecf0;
+  padding: 20px 0 40px;
+  border-radius: 10px;
+  width: 450px;
+  height: auto;
+  text-align: center;
+}
+
+
+.fa-times {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: rgba(128, 128, 128, 0.46);
+  cursor: pointer;
+}
+
+
+#login-form1 {
+  width: 100%;
+}
+
+
+#login-form1 h2 {
+  color: #5f5d60;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+}
+
+
+#login-form1 input {
+  width: 320px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  padding: 12px 12px;
+  border: 1px solid #d0d5d8;
+  border-radius: 5px;
+}
+
+
+.submit-btn {
+  display: inline-block;
+  padding: 14px 140px;
+  background-color: #5dca88;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  margin: 10px auto;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* 使い方部分 */
+
+
+#languages {
+  position:center;
+}
+
+
+
+
+.languages-section {
+  padding-top: 200px;
+  padding-bottom: 200px;
+  color: #888;
+  text-align: center;
+}
+
+.languages-box-wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.languages-box {
+  display: inline-block;
+  vertical-align: top;
+  width: 38%;
+  padding: 20px;
+  text-align: center;
+}
+
+.languages-content {
+  height: 80px;
+
+}
+
+
+
+.icon .carender {
+  width: 160px;
+  height:180px;
+}
+  
+.icon .check {
+  height: 145px;
+}
+
+
+
+
+
+
+
+/* スライダー */
+#student-carousel {
+  padding-top: 100px;
+  padding-bottom: 200px;
+}
+
+
+.students-section {
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 200px;
+}
+
+
+#students .container {
+  width: 936px;
+}
+
+
+.student-box {
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+.student-image {
+  width: 200px;
+  height: 200px;
+  margin: 10px 0;
+  padding: 0px;
+  border-radius: 50%;
+}
+
+
+#student-carousel img {
+  display: inline-block;
+}
+
+
+#student-carousel li {
+  background-color: #869791;
+
+}
+
+
+
+
+
+
+
+
+/* お問い合わせフォーム */
+
+
+
+.contact-section {
+  background: url("../picture/letter.jpg");
+  background-size: cover;
+  
+  color: white;
+  
+}
+
+
+
+.contact-section-inner {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding-bottom: 70px;
+}
+
+
+.contact-section h3, .contact-section h4 {
+  color: powderblue;
+}
+
+
+.contact-section h4 {
+  font-size: 22px;
+  padding-bottom: 10px;
+}
+
+
+.contact-form input[type="text"], .contact-form textarea {
+  margin: 0;
+  padding: 0 10px;
+  vertical-align: middle;
+  background: rgba(250, 250, 250, 0.08);
+  border: none;
+  width: 85%;
+  color: white;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  border-radius: 0;
+  box-shadow: none;
+  transition: all .3s;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+
+textarea {
+  height: 150px;
+}
+
+
+.contact-form {
+  display: inline-block;
+  vertical-align: top;
+  width: 58%;
+}
+
+
+
+
+
+
+
+
+
+.btn-contact {
+  font-family: 'Dosis', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  background: #0dc0c0;
+  border: 1px solid #09b1b9;
+  color: white;
+  box-shadow: inset 0 1px 0 #0fc8c8;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  transition: all .3s;
+  margin: 10px 0;
+  padding: 15px 35px;
+}
+
+
+.contact-about {
+  display: inline-block;
+  vertical-align: top;
+  width: 40%;
+}
+
+
+.contact-about i {
+  padding-right: 15px;
+  font-size: 18px;
+}
+
+
+.contact-about p {
+  margin: 0 0 24px;
+  line-height: 24px;
+  color: white;
+}
+
+
+.error-message {
+  color: #f51414;
+  height: 20px;
+}
+
+
+
+
+
+.social-section {
+  text-align: center;
+  padding-bottom: 50px;
+  background-color: white;
+
+}
+
+.social-section h3 {
+  font-weight: 300;
+}
+
+.social-icon {
+  text-align: center;
+  font-size: 36px;
+  line-height: 76px;
+  color: #323a45;
+  padding: 5px;
+  transition: all .3s;
+  text-align: center;
+}
+
+.logo-ixui {
+  text-align: center;
+  width: 124px;
+  margin-top: 5px;
+}
+
+
+
+
+footer {
+  text-align: center;
+  padding: 39px 0 36px;
+  background: #222;
+  color: lightcyan;
+}
+
+
+
+
+
+.page-top {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 16px;
+}
+.page-top a {
+  display: block;
+  width: 115px;
+  height: 100px;
+  background-color:#5dca88;
+  text-align: center;
+  color:#fff;
+  font-size: 20px;
+  text-decoration: none;
+  line-height: 40px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+}
+
+
+  .page-top:hover {
+    background-color: ragb#31c8aa;
+    box-shadow: 0 3px 0 #23a188;
+    
+    
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
