@@ -61,6 +61,7 @@ public class SessionExpiredFilter implements Filter {
         return (uri.indexOf("/login") < 0 &&
         		 uri.indexOf("/signup") < 0 &&
        		     uri.indexOf("/timeout") < 0 &&
+        		 uri.indexOf("/picture") < 0 &&
         		 uri.indexOf("/css") < 0 &&
         		 uri.indexOf("/js") < 0);
     }
