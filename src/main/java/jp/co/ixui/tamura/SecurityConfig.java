@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 静的リソースに対する認証処理を無効にする
-		web.ignoring().antMatchers("/css/**", "/js/**");
+		web.ignoring().antMatchers("/css/**", "/js/**", "/picture/**");
 	}
 
 	// 認証設定
