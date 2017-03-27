@@ -36,11 +36,11 @@ $(function() {
  
  
  /*---------モーダルの表示、非表示--------------*/ 
-
+/*
   $(" #login-show").click(function() {
     $("#login-modal").fadeIn();
   }); 
-
+*/
   
   
   $(".close-modal").click(function() {
@@ -52,7 +52,13 @@ $(function() {
   
   
   
-  
+  $(" #login-show").click(function() {
+  	setTimeout(function(){
+    $('#empNum').focus();
+  	}, 0);
+    $("#login-modal").fadeIn();
+    
+  }); 
   
   
 	
