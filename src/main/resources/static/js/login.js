@@ -1,5 +1,18 @@
 $(function() {
 
+
+	
+  
+  setTimeout(function(){
+    $('#empNum').focus();
+  }, 0);
+
+
+
+
+
+
+
   $('header a').click(function() {
     var id = $(this).attr('href');
     var position = $(id).offset().top;
@@ -8,12 +21,7 @@ $(function() {
   });
 
 
-/*
-  $("menu-icon").click(function() {
-    $("header-menu").show();
-  });
-*/                       
-    
+
 
     $(".menu-icon").on("click", function() {
       $(this).next().toggle();
@@ -23,28 +31,78 @@ $(function() {
   
   
   
-   /* $(".menu-close").on("click", function() {
-      $(this).next().fadeout();
-    });
-  */
   
   
-  
-  
-  
-  
-
+ 
+ 
+ /*---------モーダルの表示、非表示--------------*/ 
+/*
   $(" #login-show").click(function() {
     $("#login-modal").fadeIn();
   }); 
-
-  //モーダルを閉じる
+*/
+  
+  
   $(".close-modal").click(function() {
     $("#login-modal").fadeOut();
   }); 
 
   
   
+  
+  
+  
+  $(" #login-show").click(function() {
+  	setTimeout(function(){
+    $('#empNum').focus();
+  	}, 0);
+    $("#login-modal").fadeIn();
+    
+  }); 
+  
+  
+	
+    /*
+ 
+	$(".login-modal-wrapper").click(function() { 
+		$("#login-modal").fadeOut();
+		
+	});
+
+*/
+
+
+
+
+
+
+$(".login-modal-wrapper").on('click touchend', function(event) {
+	if (!$(event.target).closest('.modal1').length) {
+		$("#login-modal").fadeOut();
+	}
+});
+
+  
+  
+  
+  
+  
+  
+  
+	
+    
+ /*
+  $(document).click(function(event) { 
+  	if ($('#login-modal').is(':visible')) {
+    	if (!$.contains($("#login-modal")[0], event.target)&& $('#login-modal').is(':visible')) { 
+        	$("#login-modal").hide();
+    	}
+    
+  });
+*/
+
+  
+ /* -------------------------------------------*/ 
 
   
   

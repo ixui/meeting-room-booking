@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding : 0;
 }
 
 
@@ -12,19 +13,21 @@ a {
 
 
 .top-wrapper {
-  padding: 400px ;
+  
   background-image: url(http://www.fmkento.com/kaigi/img/room_c.jpg);
-  background-size: cover ;
+  background-size: cover;
   color: white;
-  text-align: center;
+  padding:420px 0;
+  height:420px;
+  
 }
 
 
 
 
 .container {
-  width: 1170px;
-  padding: 0 15px;
+  width: 900px;
+  padding: 0 ;
   margin: 0 auto;
   color: black;
 }
@@ -37,6 +40,8 @@ a {
   font-size: 45px;
   letter-spacing: 5px;
   font-family:Quicksand, 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+  text-align: center;
+  
 }
 
 
@@ -171,6 +176,7 @@ header .container {
 
 
 /* モーダル */
+
 .login-modal-wrapper {
   position: fixed;
   top: 0;
@@ -179,7 +185,7 @@ header .container {
   left: 0;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 100;
-  display: 
+  display: inline-block;
 }
 
 #login-show {
@@ -225,7 +231,7 @@ header .container {
 #login-form1 input {
   width: 320px;
   margin-bottom: 20px;
-  font-size: 12px;
+  font-size: 18px;
   padding: 12px 12px;
   border: 1px solid #d0d5d8;
   border-radius: 5px;
@@ -422,10 +428,6 @@ textarea {
 
 
 
-
-
-
-
 .btn-contact {
   font-family: 'Dosis', sans-serif;
   font-size: 18px;
@@ -465,6 +467,15 @@ textarea {
   color: #f51414;
   height: 20px;
 }
+
+
+
+/*----------ここまで問い合わせフォーム-----------*/
+
+
+
+
+
 
 
 
