@@ -4,13 +4,14 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>会議室予約システム</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css}" rel="stylesheet" />
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" th:href="@{//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css}" />
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Dosis:300,400,500,600,700" th:href="@{//fonts.googleapis.com/css?family=Dosis:300,400,500,600,700}" />
-    <link rel="stylesheet" href="/css/login.css" th:href="@{/css/login.css}" />
-    <link rel="stylesheet" type="text/css" href="/css/responsive.css" th:href="@{/css/responsive.css}" />
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" th:src="@{//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js}"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" th:href="@{//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css}" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis:300,400,500,600,700" th:href="@{//fonts.googleapis.com/css?family=Dosis:300,400,500,600,700}" />
+    <link rel="stylesheet" href="static/css/login.css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" type="text/css" href="static/css/responsive.css" th:href="@{/css/responsive.css}" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" th:src="@{//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js}"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" th:href="@{//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js}"></script>
   </head>
 
 
@@ -68,8 +69,8 @@
           <div th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null">
             <p class="text-danger">入力された 社員番号 あるいは パスワード が正しくありません</p>
           </div>
-          <form th:action="@{/login}" method="post" id="loginForm">
-            <input  type="text" placeholder="社員番号" name="empNo" />
+          <form th:action="@{/login}" method="post" id="loginForm" name ="first-modal">
+            <input  type="text" placeholder="社員番号" name="empNo" id="empNum" />
             <input  type="password" placeholder="パスワード" name="pass" />
             <br/>
             <button type="submit" class="submit-btn" id="login">ログイン</button>
@@ -262,9 +263,8 @@
 
 
 
-	<script src="/js/index.js" th:src="@{/js/index.js}"></script>
-	<script src="/js/btn.js" th:src="@{/js/btn.js}"></script>
-	<script src="/js/login.js" th:src="@{/js/login.js}"></script>
+	<script src="static/js/index.js" th:src="@{/js/index.js}"></script>
+	<script src="static/js/login.js" th:src="@{/js/login.js}"></script>
   </body>
 </html>
 
