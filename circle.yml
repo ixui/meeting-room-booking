@@ -1,6 +1,6 @@
 deployment:
   staging:
-    branch: develop  # 対象のブランチを指定する 通常はdevelopを想定　Issueブランチを個別設定する場合は　「\#48」のようにする　
+    branch: staging  # 対象のブランチを指定する 通常はdevelopを想定　Issueブランチを個別設定する場合は　「\#48」のようにする　
     heroku:
       appname: meeting-room-booking
 machine:
