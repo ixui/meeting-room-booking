@@ -2,3 +2,4 @@
 .idea
 .iml
 /.apt_generated/
+src/main/resources/public/
