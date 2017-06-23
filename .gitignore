@@ -1,5 +1,7 @@
 /target/
 .idea
 .iml
+.project
+.settings/
 /.apt_generated/
 src/main/resources/public/
