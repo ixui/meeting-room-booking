@@ -4,13 +4,7 @@ const BASE_URL = '/admin/user/';
 
 // 成功の処理
 const apiSuccess = (response) => {
-  return demoTimer().then(() => {
-    if (response.data.status === true) {
-      return response.data.userList
-    } else {
-      return Promise.reject(response.data)
-    }
-  })
+      return response.userList
 }
 
 // 失敗の処理
@@ -18,7 +12,7 @@ const apiError = (error) => Promise.reject(error.message || 'ERROR')
 
 export default {
   getUsers: () =>
-    axios.get('/admin/user/').then(apiSuccess).catch(apiError)
+    axios.get('/admin/user').then(apiSuccess).catch(apiError)
   // postUser: (id, item) =>
   //   axios.post('/admin/user/', { item: item }).then(apiSuccess).catch(apiError),
   // getUser: (id) =>
