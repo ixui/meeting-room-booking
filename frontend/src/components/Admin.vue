@@ -1,18 +1,18 @@
 <template>
-  <div class="container" align="center">
+  <div class="container" align="center" id="admin">
     <!--<div th:if="${errorMessage}">
       <p th:text="${errorMessage}" class="err"></p>
       <a href="/admin/user" class="btn btn-default btn-sm active">もう一度読み込む</a>
     </div>-->
     <div id="resultTable">
-      tamura
-      <div v-show="users.length > 0" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
+      test
+      <div v-show="users != null" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
         <form action="/admin/delete" method="post" id="userDeleteForm">
           <table class="table table-bordered table table-striped">
             <tr>
               <th class="col-sm-1"></th><th class="col-sm-3">社員番号</th><th class="col-sm-3">名前</th><th class="col-sm-3">権限</th><th class="col-sm-1"></th>
             </tr>
-            <tr v-for="user in orderList('empNo')">
+            <tr v-for="user in users">
               <td><input type="checkbox" class="form-control input-sm" name="empNo" v-model="user.empNo" /></td>
               <td>{{user.empNo}}</td>
               <td>{{user.name}}</td>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'admin',
@@ -40,15 +40,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('user', [
-      'orderList'
-    ])
+    //...mapGetters('user', [
+    //  'orderList'
+    //])
+    ...mapState({
+      users: 'users'
+    })
   },
   created () {
     // 作成時にユーザーリストを取得
     this.$store.dispatch('user/load').then(() => {
       // this.loading = false
-      console.log('取得完了')
+      alert('取得完了')
     }).catch(e => {
       console.log(e)
     })

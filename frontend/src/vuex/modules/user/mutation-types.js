@@ -1,1 +1,1 @@
-export const SET_USERS = "USERS"
+export const SET_USERS = "SET_USERS"
