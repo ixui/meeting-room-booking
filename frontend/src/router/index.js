@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Admin from '@/components/Admin'
+import Admin from '../components/Admin'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
+  base: '/admin/index/',
   routes: [
     {
-      path: '/admin/index',
+      path: '/',
       name: 'Admin',
       component: Admin
     }

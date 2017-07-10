@@ -1,55 +1,53 @@
 <template>
-  <div class="admin">
-    <div class="container" align="center">
-			<div th:if="${errorMessage}">
-				<p th:text="${errorMessage}" class="err"></p>
-				<a href="/admin/user" class="btn btn-default btn-sm active">もう一度読み込む</a>
-			</div>
-			<div id="resultTable">
-				<div th:if="${userList}" th:fragment="frag_table" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
-					<form action="/admin/delete" method="post" id="userDeleteForm">
-						<table class="table table-bordered table table-striped" th:inline="text">
-							<tr>
-								<th class="col-sm-1"></th><th class="col-sm-3">社員番号</th><th class="col-sm-3">名前</th><th class="col-sm-3">権限</th><th class="col-sm-1"></th>
-							</tr>
-							<tr v-for="user in orderList('empNo')">
-								<td><input type="checkbox" class="form-control input-sm" name="empNo" th:value="${user.empNo}" /></td>
-								<td>[[${user.empNo}]]</td>
-								<td>[[${user.name}]]</td>
-								<td th:if="${user.auth} == ROLE_USER">ユーザ</td>
-								<td th:if="${user.auth} == ROLE_ADMIN">管理者</td>
-								<td><button type="button" class="btn btn-default btn-sm active select">選択</button></td>
-							</tr>
-						</table>
-					</form>
-					<button type="button" class="btn btn-default btn-sm active" id="register">新規登録</button>
-					<button type="button" class="btn btn-default btn-sm active" id="delete">削除</button>
-				</div>
-			</div>
-		</div>
+  <div class="container" align="center" id="admin">
+    <!--<div th:if="${errorMessage}">
+      <p th:text="${errorMessage}" class="err"></p>
+      <a href="/admin/user" class="btn btn-default btn-sm active">もう一度読み込む</a>
+    </div>-->
+    <div id="resultTable">
+      <div v-show="users != null" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
+        <form action="/admin/delete" method="post" id="userDeleteForm">
+          <table class="table table-bordered table table-striped">
+            <tr>
+              <th class="col-sm-1"></th><th class="col-sm-3">社員番号</th><th class="col-sm-3">名前</th><th class="col-sm-3">権限</th><th class="col-sm-1"></th>
+            </tr>
+            <tr v-for="user in users">
+              <td><input type="checkbox" class="form-control input-sm" name="empNo" v-model="user.empNo" /></td>
+              <td>{{user.empNo}}</td>
+              <td>{{user.name}}</td>
+              <td v-show="user.auth == 'ROLE_USER'">ユーザ</td>
+              <td v-show="user.auth == 'ROLE_ADMIN'">管理者</td>
+              <td><button type="button" class="btn btn-default btn-sm active select">選択</button></td>
+            </tr>
+          </table>
+        </form>
+        <button type="button" class="btn btn-default btn-sm active" id="register">新規登録</button>
+        <button type="button" class="btn btn-default btn-sm active" id="delete">削除</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'admin',
-		data () {
-			return {
-				loading: true
-		}
+  data () {
+    return {
+      // loading: true
+    }
   },
-	computed: {
-    ...mapGetters('user', [
-      'orderList'
+  computed: {
+    ...mapState('user', [
+      'users'
     ])
   },
-  created() {
+  created () {
     // 作成時にユーザーリストを取得
     this.$store.dispatch('user/load').then(() => {
-      this.loading = false
-      console.log('取得完了')
+      // this.loading = false
+      alert('取得完了')
     }).catch(e => {
       console.log(e)
     })
@@ -78,6 +76,6 @@ a {
 }
 
 th, td {
-	font-size: 16px
+  font-size: 16px
 }
 </style>
