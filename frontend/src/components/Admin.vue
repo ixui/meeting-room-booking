@@ -5,7 +5,6 @@
       <a href="/admin/user" class="btn btn-default btn-sm active">もう一度読み込む</a>
     </div>-->
     <div id="resultTable">
-      test
       <div v-show="users != null" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
         <form action="/admin/delete" method="post" id="userDeleteForm">
           <table class="table table-bordered table table-striped">
@@ -40,12 +39,9 @@ export default {
     }
   },
   computed: {
-    //...mapGetters('user', [
-    //  'orderList'
-    //])
-    ...mapState({
-      users: 'users'
-    })
+    ...mapState('user', [
+      'users'
+    ])
   },
   created () {
     // 作成時にユーザーリストを取得
