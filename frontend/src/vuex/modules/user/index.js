@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import api from '@/api/user'
 import * as types from './mutation-types.js'
 import { orderBy, findIndex, find } from 'lodash'
@@ -19,22 +18,47 @@ const user = {
 		findIndexById: (state) => (id) =>
 			findIndex(state.users, o => o.empNo === empNo),
 		// ユーザーのempNoからユーザー情報を返す
-		findMemberById: (state) => (empNo) =>
+		findUserById: (state) => (empNo) =>
 			find(state.users, o => o.empNo === empNo)
 	},
     mutations: {
 		// 全ユーザー情報をセット
 		[types.SET_USERS] (state, userList) {
-			state.users = userList
-		}
+		  state.users = userList
+		},
+	    // ユーザー情報に追加
+	    [types.ADD_USER] (state, payload) {
+	      state.users.push(payload)
+	    },
+	    // ユーザー情報を更新
+	    [types.UPDATE_USER] (state, payload) {
+	      const idx = findIndex(state.users, o => o.empNo === payload.empNo)
+	      Vue.set(state.users, idx, payload)
+	    }
 	},
     actions: {
 		// 全ユーザーを読み込む
 		load({ commit }) {
-			return api.getUsers().then(userList => {
-				commit(types.SET_USERS, userList)
-			})
-		}
+		  return api.getUsers().then(userList => {
+			commit(types.SET_USERS, userList)
+		  })
+		},
+		// ユーザー情報を保存
+	    save({ commit }, { user, editFlg }) {
+	      // editFlgがtrueなら編集
+	      const type = editFlg ? api.putUser : api.postUser
+	      return type(user.empNo, user).then(entry => {
+	        // サーバー側で成功したらフロント側のデータを更新
+	        if (editFlg) {
+	          commit('update', entry)
+	        } else {
+	          commit('add', entry)
+	        }
+	      }).catch(error => {
+	        // サーバー側で失敗したらエラーをセット
+	        commit('setError', error)
+	      })
+	    }
 	}
 }
 export default user

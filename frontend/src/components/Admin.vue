@@ -8,18 +8,18 @@
       <div v-show="users != null" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
         <form action="/admin/delete" method="post" id="userDeleteForm">
           <el-table ref="multipleTable" :data="users" border style="width: 50%">
-            <el-table-column type="selection" width="50">
+            <el-table-column type="selection" min-width="50">
             </el-table-column>
-            <el-table-column sortable prop="empNo" label="社員番号">
+            <el-table-column sortable prop="empNo" label="社員番号" min-width="120">
             </el-table-column>
-            <el-table-column prop="name" label="名前">
+            <el-table-column prop="name" label="名前" min-width="120">
             </el-table-column>
-            <el-table-column prop="auth" label="権限">
+            <el-table-column prop="auth" label="権限" min-width="120">
             </el-table-column>
-            <el-table-column label="">
+            <el-table-column label="" min-width="150">
               <template scope="scope">
-                <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                <!-- <el-button size="small" @click="edit(scope.$index, scope.row)">編集</el-button> -->
+                <el-button size="small" @click="edit(scope.$index, scope.row)">編集</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -28,23 +28,40 @@
         <button type="button" class="btn btn-default btn-sm active" id="delete">削除</button>
       </div>
     </div>
+    <user-modal :empNo="empNo" :dialogFormVisible="dialogFormVisible" @close="dialogFormVisible=false" v-if="dialogFormVisible"></user-modal>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
+import UserModal from './UserModal'
 
 export default {
   name: 'admin',
   data () {
     return {
-      // loading: true
+      // loading: true,
+      empNo: null,
+      dialogFormVisible: false,
     }
   },
   computed: {
     ...mapState('user', [
       'users'
     ])
+  },
+  methods: {
+	  // 編集ダイアログを表示する
+	  // 引数として選択したユーザーのデータを受け取る
+	  // ダイアログにempNoを渡すためにローカルの変数に値を入れておく
+    edit(index, row) {
+      this.dialogFormVisible=true;
+      this.empNo=row.empNo;
+      console.log(index, row.empNo);
+    },
+    handleDelete(index, row) {
+      console.log(index, row);
+    }
   },
   created () {
     // 作成時にユーザーリストを取得
@@ -53,41 +70,46 @@ export default {
     }).catch(e => {
       console.log(e)
     })
-  }
+  },
+  components: { UserModal }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 
 a {
   color: #42b983;
 }
 
 table {
-	min-width: 650px;
+  min-width: 650px;
 }
 
 th, td {
   font-size: 16px
 }
 
-th:nth-child(1),
-td:nth-child(1) {
-	min-width: 50px;
-	width: 10%;
-}
-th:nth-child(2),
-td:nth-child(2),
-th:nth-child(3),
-td:nth-child(3),
-th:nth-child(4),
-td:nth-child(4) {
-	min-width: 120px;
-	width: 20%;
-}
-th:nth-child(5),
-td:nth-child(5) {
-	min-width: 200px;
-	width: 30%;
+#resultTable {
+	.el-table {
+		th:nth-child(1),
+		td:nth-child(1) {
+			min-width: 50px;
+			width: 10%;
+		}
+		th:nth-child(2),
+		td:nth-child(2),
+		th:nth-child(3),
+		td:nth-child(3),
+		th:nth-child(4),
+		td:nth-child(4) {
+			min-width: 120px;
+			width: 20%;
+		}
+		th:nth-child(5),
+		td:nth-child(5) {
+			min-width: 150px;
+			width: 30%;
+		}
+	}
 }
 </style>
