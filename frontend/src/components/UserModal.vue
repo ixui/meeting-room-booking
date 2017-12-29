@@ -42,17 +42,17 @@
   </transition> -->
   	<el-dialog title="title" width="30%" :visible="dialogFormVisible" :before-close="handleClose">
 	  <el-form :model="form">
-	    <el-form-item label="社員番号" :label-width="formLabelWidth">
+	    <el-form-item label="社員番号" :label-width="formLabelWidth" :visible="empNo==null">
 	      <el-input v-model="form.empNo" auto-complete="off"></el-input>
 	    </el-form-item>
 	    <el-form-item label="氏名" :label-width="formLabelWidth">
 	      <el-input v-model="form.name" auto-complete="off"></el-input>
 	    </el-form-item>
-	    <el-form-item label="パスワード" :label-width="formLabelWidth">
-	      <el-input v-model="form.password" auto-complete="off"></el-input>
+	    <el-form-item label="パスワード" :label-width="formLabelWidth" :visible="empNo==null">
+	      <el-input v-model="form.pass" auto-complete="off"></el-input>
 	    </el-form-item>
-	    <el-form-item label="パスワード(確認)" :label-width="formLabelWidth">
-	      <el-input v-model="form.passwordConf" auto-complete="off"></el-input>
+	    <el-form-item label="パスワード(確認)" :label-width="formLabelWidth" :visible="empNo==null">
+	      <el-input v-model="form.confirmPass" auto-complete="off"></el-input>
 	    </el-form-item>
 	    <el-form-item label="権限" :label-width="formLabelWidth">
 	      <el-select v-model="form.auth" placeholder="Please select">
@@ -83,8 +83,8 @@ export default {
       form: {
     	  empNo: '',
     	  name: '',
-    	  password: '',
-    	  passwordConf: '',
+    	  pass: '',
+    	  confirmPass: '',
     	  auth: ''
       },
       addFlg: false

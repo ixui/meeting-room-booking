@@ -24,8 +24,8 @@
             </el-table-column>
           </el-table>
         </form>
-        <button type="button" class="btn btn-default btn-sm active" id="register">新規登録</button>
-        <button type="button" class="btn btn-default btn-sm active" id="delete">削除</button>
+        <el-button size="small" @click="createUser()">新規登録</el-button>
+        <el-button size="small" @click="deleteUser()">削除</el-button>
       </div>
     </div>
     <user-modal :empNo="empNo" :dialogFormVisible="dialogFormVisible" @close="dialogFormVisible=false" v-if="dialogFormVisible"></user-modal>
@@ -51,15 +51,17 @@ export default {
     ])
   },
   methods: {
-	  // 編集ダイアログを表示する
-	  // 引数として選択したユーザーのデータを受け取る
-	  // ダイアログにempNoを渡すためにローカルの変数に値を入れておく
+	// 編集ダイアログを表示する
+	// 引数として選択したユーザーのデータを受け取る
+	// ダイアログにempNoを渡すためにローカルの変数に値を入れておく
     edit(index, row) {
       this.dialogFormVisible=true;
       this.empNo=row.empNo;
-      console.log(index, row.empNo);
     },
-    handleDelete(index, row) {
+    createUser() {
+      this.dialogFormVisible=true;
+    },
+    deleteUser(index, row) {
       console.log(index, row);
     }
   },

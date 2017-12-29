@@ -23,18 +23,18 @@ const user = {
 	},
     mutations: {
 		// 全ユーザー情報をセット
-		[types.SET_USERS] (state, userList) {
-		  state.users = userList
+		[types.SET_USERS] (state, payload) {
+		  state.users = payload
 		},
-	    // ユーザー情報に追加
-	    [types.ADD_USER] (state, payload) {
-	      state.users.push(payload)
-	    },
-	    // ユーザー情報を更新
-	    [types.UPDATE_USER] (state, payload) {
-	      const idx = findIndex(state.users, o => o.empNo === payload.empNo)
-	      Vue.set(state.users, idx, payload)
-	    }
+//	    // ユーザー情報に追加
+//	    [types.ADD_USER] (state, payload) {
+//	      state.users.push(payload)
+//	    },
+//	    // ユーザー情報を更新
+//	    [types.UPDATE_USER] (state, payload) {
+//	      const idx = findIndex(state.users, o => o.empNo === payload.empNo)
+//	      Vue.set(state.users, idx, payload)
+//	    }
 	},
     actions: {
 		// 全ユーザーを読み込む
@@ -49,14 +49,16 @@ const user = {
 	      const type = editFlg ? api.putUser : api.postUser
 	      return type(user.empNo, user).then(entry => {
 	        // サーバー側で成功したらフロント側のデータを更新
-	        if (editFlg) {
-	          commit('update', entry)
-	        } else {
-	          commit('add', entry)
-	        }
+	    	commit('types.SET_USERS', entry)
+//	        if (editFlg) {
+//	          commit('types.UPDATE_USER', entry)
+//	        } else {
+//	          commit('types.ADD_USER', entry)
+//	        }
 	      }).catch(error => {
 	        // サーバー側で失敗したらエラーをセット
-	        commit('setError', error)
+	        // commit('setError', error)
+	    	alert(error)
 	      })
 	    }
 	}

@@ -45,7 +45,9 @@ public class UserService {
 	 * @return List<EmpMst>
 	 */
 	public List<EmpMst> getAllUser() {
-		return this.empMstMapper.selectAllUser();
+		List<EmpMst> userList = this.empMstMapper.selectAllUser();
+		userList.forEach(u -> u.setAuth(u.getAuth().equals("ROLE_USER") ? "ユーザー" : "管理者"));
+		return userList;
 	}
 
 	/**
