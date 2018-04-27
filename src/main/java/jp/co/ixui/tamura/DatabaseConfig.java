@@ -39,9 +39,9 @@ public class DatabaseConfig {
 			password = dbUri.getUserInfo().split(":")[1];
 		} else {
 			//localhost
-			url = this.properties.getUrl();
-			userName = this.properties.getUsername();
-			password = this.properties.getPassword();
+			url = this.properties.determineUrl();
+			userName = this.properties.determineUsername();
+			password = this.properties.determinePassword();
 		}
 
 		DataSourceBuilder factory = DataSourceBuilder

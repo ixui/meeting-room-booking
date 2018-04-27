@@ -60,6 +60,14 @@ const user = {
 	        // commit('setError', error)
 	    	alert(error)
 	      })
+	    },
+	    delete({ commit }, { empNoList }) {
+	    	api.deleteUser(empNoList).then(entry => {
+		        // サーバー側で成功したらフロント側のデータを更新
+		    	commit('types.SET_USERS', entry)
+	    	}).catch(error => {
+	    		alert(error)
+	    	})
 	    }
 	}
 }

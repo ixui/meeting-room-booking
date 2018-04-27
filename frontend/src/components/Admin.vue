@@ -7,8 +7,8 @@
     <div id="resultTable">
       <div v-show="users != null" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
         <form action="/admin/delete" method="post" id="userDeleteForm">
-          <el-table ref="multipleTable" :data="users" border style="width: 50%">
-            <el-table-column type="selection" min-width="50">
+          <el-table ref="multipleTable" :data="users" border style="width: 50%" @selection-change="handleSelectionChange">
+            <el-table-column type="selection" min-width="50" value="empNo">
             </el-table-column>
             <el-table-column sortable prop="empNo" label="社員番号" min-width="120">
             </el-table-column>
@@ -43,6 +43,7 @@ export default {
       // loading: true,
       empNo: null,
       dialogFormVisible: false,
+      multipleSelection: []
     }
   },
   computed: {
@@ -61,8 +62,23 @@ export default {
     createUser() {
       this.dialogFormVisible=true;
     },
-    deleteUser(index, row) {
-      console.log(index, row);
+    deleteUser() {
+    	if (this.multipleSelection.length > 0) {
+    		var empNoList;
+    		// empNoのリストを作成
+    		this.multipleSelection.forEach(function(val,index,ar){
+    			empNoList.push(val.empNo);
+    		});
+    		this.$store.dispatch('user/delete', { user: this.form, editFlg: this.empNo!=null }).then(() => {
+    	        // 結果にエラーが無ければウィンドウを閉じる
+    	        // エラーがあればメッセージとして表示
+    	        if (!this.error) this.$emit('close')
+    	    })
+    	}
+    },
+    handleSelectionChange(val) {
+    	// valには選択されているrowのデータがすべて入っている(オブジェクトの配列)
+    	this.multipleSelection = val;
     }
   },
   created () {
