@@ -3,6 +3,8 @@ package jp.co.ixui.tamura.controller.admin;
 import java.io.IOException;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,7 +51,7 @@ public class AdminController {
 
 	@PostMapping(value = "/user")
 	@ResponseBody
-	public List<EmpMst> postUser(@RequestBody SignupForm user) throws JsonParseException, JsonMappingException, IOException {
+	public List<EmpMst> postUser(@RequestBody @Valid SignupForm user) throws JsonParseException, JsonMappingException, IOException {
 
 		this.userService.createUser(user);
 
@@ -58,7 +60,7 @@ public class AdminController {
 
 	@PutMapping(value = "/user/{empNo}")
 	@ResponseBody
-	public List<EmpMst> putUser(@RequestBody UserForm user) throws JsonParseException, JsonMappingException, IOException {
+	public List<EmpMst> putUser(@RequestBody @Valid UserForm user) throws JsonParseException, JsonMappingException, IOException {
 
 		userService.updateUser(user);
 
