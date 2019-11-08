@@ -17,6 +17,6 @@ $(function() {
 $(function() {
 	$('#return').click(function(){
 		var rsvDate = $('#rsvDate').attr('value').replace(/-/g, '').substr(0, 6);
-		window.location = '/calendar/' + rsvDate;
+		window.location = document.getElementById('calendar').action +'/' + rsvDate;
 	});
 });

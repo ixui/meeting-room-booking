@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>jp.co.ixui.tamura</groupId>
-	<artifactId>MeetingRoomBookingApp</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+	<artifactId>mrb</artifactId>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>MeetingRoomBookingApp</name>
@@ -144,6 +144,9 @@
 					</goals>
 					</execution>
 				</executions>
+				<configuration>
+			        <executable>true</executable>
+			    </configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -18,11 +18,11 @@
 		<div class="container" align="center">
 			<div th:if="${errorMessage}">
 				<p th:text="${errorMessage}" class="err"></p>
-				<a href="/admin/showAllUser" class="btn btn-default btn-sm active">もう一度読み込む</a>
+				<a th:href="@{/admin/showAllUser}" class="btn btn-default btn-sm active">もう一度読み込む</a>
 			</div>
 			<div id="resultTable">
 				<div th:if="${userList}" th:fragment="frag_table" class="table-responsive col-sm-offset-3 col-sm-6" align="center">
-					<form action="/admin/delete" method="post" id="userDeleteForm">
+					<form th:action="@{/admin/delete}" method="post" id="userDeleteForm">
 						<table class="table table-bordered table table-striped" th:inline="text">
 							<tr>
 								<th class="col-sm-1"></th><th class="col-sm-3">社員番号</th><th class="col-sm-3">名前</th><th class="col-sm-3">権限</th><th class="col-sm-1"></th>
@@ -45,7 +45,7 @@
 
 		<!-- ユーザ新規登録フォーム -->
 		<div id="user-registration" title="新規ユーザ登録" align="center" th:fragment="frag_registerForm">
-			<form action="/admin/signup" method="post" class="form-horizontal" id="userRegisterForm" th:object="${formModel}">
+			<form th:action="@{/admin/signup}" method="post" class="form-horizontal" id="userRegisterForm" th:object="${formModel}">
 				<div class="spacer"></div>
 				<div th:if="${#fields.hasGlobalErrors()}" th:errors="${formModel}" th:errorclass="err" id="error"></div>
 				<div class="form-group">
@@ -107,7 +107,7 @@
 
 		<!-- ユーザ情報更新フォーム -->
 		<div id="user-update" title="ユーザ情報更新" align="center" th:fragment="frag_updateForm">
-			<form action="/admin/update" method="post" class="form-horizontal" id="userUpdateForm" th:object="${formModel}">
+			<form th:action="@{/admin/update}" method="post" class="form-horizontal" id="userUpdateForm" th:object="${formModel}">
 				<div class="spacer"></div>
 
 				<input type="hidden" id="updateEmpNo" th:field="*{empNo}" th:value="*{empNo}" class="form-control"/>
@@ -138,6 +138,8 @@
 			<!-- <button type="button" class="btn btn-default btn-sm active close-dialog">閉じる</button> -->
         	</form>
 		</div>
+		
+		<form th:action="@{/admin/updateShowAllUser}" id="admin"></form>
 
 
 		<script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>

@@ -32,6 +32,6 @@ $(function() {
 //		window.location = ref;
 
 		// 戻るボタン押下時カレンダー画面へ遷移させる
-		window.location = '/calendar';
+		window.location = document.getElementById('calendar').action;;
 	});
 });

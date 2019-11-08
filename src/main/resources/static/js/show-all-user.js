@@ -161,7 +161,7 @@ $(function() {
 		$(".btn").prop('disabled', true);
 		// 送信
 		$.ajax({
-			url: '/admin/updateShowAllUser',
+			url: document.getElementById('admin').action,
 			type: 'GET',
 			timeout: 10000
 		})
