@@ -24,6 +24,7 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -74,14 +75,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- ローカルのjarをローカルMavenリポジトリに入れる -->
-		<!-- mvn install:install-file -Dfile=ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0 -Dpackaging=jar -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0</version>
-		</dependency>
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -126,14 +119,135 @@
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>net.sourceforge.nekohtml</groupId>
+			<artifactId>nekohtml</artifactId>
+			<version>1.9.22</version>
+		</dependency>
+
 	</dependencies>
+
+	<repositories>
+	    <!--other repositories if any-->
+	    <repository>
+	        <id>project.local</id>
+	        <name>project</name>
+	        <releases>
+	        <checksumPolicy>ignore</checksumPolicy>
+	    </releases>
+	        <url>file:${project.basedir}/repo</url>
+	    </repository>
+	</repositories>
 
 	<build>
 		<plugins>
+
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<workingDirectory>frontend</workingDirectory>
+				</configuration>
+				<executions>
+
+					<!-- Install our node and npm version to run npm/node scripts-->
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+						<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+						<nodeVersion>v6.9.1</nodeVersion>
+						<npmVersion>3.10.9</npmVersion>
+						<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+						<npmDownloadRoot>http://registry.npmjs.org/npm/-/</npmDownloadRoot>
+						</configuration>
+					</execution>
+
+					<!-- Set NPM Registry -->
+					<execution>
+						<id>npm set registry</id>
+						<goals>
+						<goal>npm</goal>
+						</goals>
+						<configuration>
+						<arguments>config set registry https://registry.npmjs.org</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Set SSL privilege -->
+					<execution>
+						<id>npm set non-strict ssl</id>
+						<goals>
+						<goal>npm</goal>
+						</goals>
+						<!-- Optional configuration which provides for running any npm command -->
+						<configuration>
+						<arguments>config set strict-ssl false</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Install all project dependencies -->
+					<execution>
+						<id>npm install</id>
+						<goals>
+						<goal>npm</goal>
+						</goals>
+						<!-- optional: default phase is "generate-resources" -->
+						<phase>generate-resources</phase>
+						<!-- Optional configuration which provides for running any npm command -->
+						<configuration>
+						<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build and minify static files -->
+					<execution>
+						<id>npm run build</id>
+						<goals>
+						<goal>npm</goal>
+						</goals>
+						<configuration>
+						<arguments>run build</arguments>
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>Copy App Content</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>src/main/resources/public</outputDirectory>
+							<overwrite>true</overwrite>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/frontend/target/dist</directory>
+									<includes>
+										<include>static/</include>
+										<include>index.html</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -148,19 +262,8 @@
 			        <executable>true</executable>
 			    </configuration>
 			</plugin>
+
 		</plugins>
 	</build>
-
-	<repositories>
-	    <!--other repositories if any-->
-	    <repository>
-	        <id>project.local</id>
-	        <name>project</name>
-	        <releases>
-	        <checksumPolicy>ignore</checksumPolicy>
-	    </releases>
-	        <url>file:${project.basedir}/repo</url>
-	    </repository>
-	</repositories>
 
 </project>

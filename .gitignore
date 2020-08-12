@@ -4,3 +4,4 @@
 .project
 .settings/
 /.apt_generated/
+src/main/resources/public/
